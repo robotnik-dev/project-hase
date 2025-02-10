@@ -1,10 +1,9 @@
-# Godot-Rust template
+# Project HASE
 
 ![Tested](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/ci.yaml/badge.svg)
 ![Deployed](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/cd.yaml/badge.svg)
 
-A setup to build a Godot 4 app with rust bindings.
-> To run the game you need to follow the [setup](#setup) guide even if you dont touch the rust files at all.
+> To build the game you need to follow the [setup](#setup) guide even if you dont touch the rust files at all.
 
 # Setup
 ## Windows
@@ -20,7 +19,7 @@ Make sure you have the following installed
     > This is important so that VSCode can find the godot executable.
 2. Open this folder in VSCode and install all recommended extensions (you should be asked automatically at startup)
 3. Build the project once with the shortcut "CTRL+SHIFT+B" and select "godot-rust: Build Debug"
-4. Build it again in release mode: "CTRL+SHIFT+B" and select "godot-rust: Build Release"
+4. (Optional) Build it again in release mode: "CTRL+SHIFT+B" and select "godot-rust: Build Release"
 5. Now you can close VSCode and open the game via the godot launcher
 
 # CI

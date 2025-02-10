@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://bw1q61e7mlhd1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxwv8"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_14bk6"]
+sky_material = SubResource("ProceduralSkyMaterial_jxwv8")
+
+[sub_resource type="Environment" id="Environment_4tppm"]
+background_mode = 2
+sky = SubResource("Sky_14bk6")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yga55"]
+size = Vector3(10, 4, 500)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_atbsc"]
+noise_type = 4
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6xg01"]
+noise = SubResource("FastNoiseLite_atbsc")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbn2u"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+albedo_texture = SubResource("NoiseTexture2D_6xg01")
+
+[sub_resource type="BoxMesh" id="BoxMesh_717qc"]
+size = Vector3(10, 4, 500)
+
+[node name="TestLevel" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4tppm")
+
+[node name="TestTerrain" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestTerrain"]
+shape = SubResource("BoxShape3D_yga55")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestTerrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_lbn2u")
+mesh = SubResource("BoxMesh_717qc")
