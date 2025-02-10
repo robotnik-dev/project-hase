@@ -1,0 +1,261 @@
+name: "Deployment"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'semantic version of the game (github tag)'
+        required: true
+
+env:
+  GODOT_VERSION: 4.3
+  PROJECT_PATH: godot
+
+jobs:
+  linux:
+    name: Linux Build
+    runs-on: ubuntu-20.04
+    container:
+      image: robotnikdev/godot-rust-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup
+        run: rustup default stable
+
+      - name: Build
+        working-directory: rust
+        run: cargo build --release
+
+      - name: Export
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -v -p build/linux
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/${{ vars.ITCHIO_GAMENAME }}.x86_64"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: build/linux
+
+
+  windows:
+    name: Windows Build
+    runs-on: ubuntu-20.04
+    container:
+      image: robotnikdev/godot-rust-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup
+        run: |
+          rustup default stable
+          rustup target add x86_64-pc-windows-gnu
+
+      - name: Build
+        working-directory: rust
+        run: cargo build --release --target x86_64-pc-windows-gnu
+
+      - name: Export
+        run: |
+          mv rust/target/x86_64-pc-windows-gnu/release/rust.dll rust/target/release/rust.dll
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -v -p build/windows
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ vars.ITCHIO_GAMENAME }}.exe"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: build/windows
+
+
+  web:
+    name: Web Build
+    runs-on: ubuntu-20.04
+    container:
+      image: robotnikdev/godot-rust-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          rustup default stable
+          rustup set auto-self-update disable
+          rustup toolchain install nightly
+          rustup component add rust-src --toolchain nightly
+          rustup target add wasm32-unknown-emscripten --toolchain nightly
+
+      - name: Build
+        working-directory: rust
+        shell: bash
+        run: |
+          source /emsdk/emsdk_env.sh
+          cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten --release
+
+      - name: Test
+        working-directory: rust
+        run: cargo test --no-fail-fast --release -v
+
+      - name: Export
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -v -p build/web
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: build/web
+
+
+  # Android Debug Job. It will use the generated debug.keystore.
+  android-debug:
+    name: Android Debug
+    runs-on: ubuntu-20.04
+    env:
+      CLANG_PATH: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
+      CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang
+    container:
+      image: robotnikdev/godot-rust-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup
+        run: |
+          rustup default stable
+          rustup target add aarch64-linux-android
+
+      - name: Build
+        working-directory: rust
+        run: cargo build --target aarch64-linux-android
+
+      - name: Export
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -v -p build/android
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-debug "Android Debug" "$EXPORT_DIR/android/${{ vars.ITCHIO_GAMENAME }}-debug.apk"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-debug
+          path: build/android
+
+
+  github-release:
+    name: Create github release
+    runs-on: ubuntu-20.04
+    needs: [linux, windows, web, android-debug]
+    permissions:
+      contents: write
+    steps:
+      - name: Download all Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Zip Linux Artifacts
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r linux.zip linux
+
+      - name: Zip Windows Artifacts
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r windows.zip windows
+
+      - name: Zip Web Artifacts
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r web.zip web
+
+      - name: Zip Android Debug Artifacts
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r android-debug.zip android-debug
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          make_latest: true
+          tag_name: ${{ github.event.inputs.version }}
+          files: |
+            linux.zip
+            windows.zip
+            web.zip
+            android-debug.zip
+
+
+  itchio-deploy:
+    name: Deploy to Itch.io
+    runs-on: ubuntu-20.04
+    needs: github-release
+    steps:
+      - name: Download all Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Deploy Linux
+        uses: manleydev/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: linux
+          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: linux
+          VERSION: ${{ github.event.inputs.version }}
+
+      - name: Deploy Windows
+        uses: manleydev/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: windows
+          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: windows
+          VERSION: ${{ github.event.inputs.version }}
+
+      - name: Deploy Web
+        uses: manleydev/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: web
+          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: web
+          VERSION: ${{ github.event.inputs.version }}
+
+      - name: Deploy Android Debug
+        uses: manleydev/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: android
+          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: android-debug
+          VERSION: ${{ github.event.inputs.version }}

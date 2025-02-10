@@ -1,0 +1,2 @@
+SET CLANG_PATH=%USERPROFILE%\Documents\android_sdk\ndk\23.2.8568313\toolchains\llvm\prebuilt\windows-x86_64\bin\clang.exe
+SET CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=%USERPROFILE%\Documents\android_sdk\ndk\23.2.8568313\toolchains\llvm\prebuilt\windows-x86_64\bin\aarch64-linux-android31-clang.cmd

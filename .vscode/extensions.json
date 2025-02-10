@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "geequlim.godot-tools",
+        "vadimcn.vscode-lldb",
+        "rust-lang.rust-analyzer"
+    ]
+}
