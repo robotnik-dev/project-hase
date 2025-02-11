@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bw1q61e7mlhd1"]
+[gd_scene load_steps=8 format=3 uid="uid://bw1q61e7mlhd1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxwv8"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -13,22 +13,18 @@ sky = SubResource("Sky_14bk6")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="PrismMesh" id="PrismMesh_nerg5"]
+left_to_right = -0.1
+size = Vector3(6.565, 4.065, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dqbk1"]
+points = PackedVector3Array(3.28305, -1.7943, 5.07738, 2.17169, -1.15916, 5.07738, -3.27063, -2.0325, 4.88933, 3.14784, -2.0325, -4.88933, -3.85899, 2.17385, 5.07738, -3.27063, -2.0325, -4.88933, -2.90629, 1.69729, -5.07738, 3.28305, -1.7943, -5.07738, 3.14784, -2.0325, 4.88933, -4.01836, 2.17385, -5.07738, -4.01836, 2.17385, 5.07738, -2.90629, 1.69729, 5.07738, -3.85899, 2.17385, -5.07738, 2.17169, -1.15916, -5.07738, -3.38433, -1.40199, -4.8257, -3.38433, -1.40199, 4.8257)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_yga55"]
-size = Vector3(10, 4, 500)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_atbsc"]
-noise_type = 4
-frequency = 1.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6xg01"]
-noise = SubResource("FastNoiseLite_atbsc")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbn2u"]
-albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
-albedo_texture = SubResource("NoiseTexture2D_6xg01")
+size = Vector3(10, 4, 5000)
 
 [sub_resource type="BoxMesh" id="BoxMesh_717qc"]
-size = Vector3(10, 4, 500)
+size = Vector3(5000, 4, 10)
 
 [node name="TestLevel" type="Node3D"]
 
@@ -39,14 +35,25 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4tppm")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2, 46)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_nerg5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_dqbk1")
+
 [node name="TestTerrain" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
-collision_mask = 3
+collision_mask = 7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestTerrain"]
 shape = SubResource("BoxShape3D_yga55")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TestTerrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_lbn2u")
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+transparency = 0.88
 mesh = SubResource("BoxMesh_717qc")

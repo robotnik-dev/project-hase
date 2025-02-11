@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=3 uid="uid://y8su2xkqe38s"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_bngx7"]
+[ext_resource type="CylinderMesh" uid="uid://2ne62k1rrvw5" path="res://wheel.tres" id="2_fv20m"]
+[ext_resource type="Material" uid="uid://c5us1e3pelomy" path="res://wheel_mat.tres" id="2_r5owt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_eew1d"]
+size = Vector3(1, 1, 4)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_afucg"]
+points = PackedVector3Array(-0.5, -0.5, -1.91223, 0.5, 0.5, 1.85247, 0.5, -0.484127, 1.85247, -0.5, -0.5, 1.91223, -0.484127, 0.5, 1.85247, 0.5, 0.5, -1.85247, 0.5, -0.484127, -1.85247, -0.484127, 0.5, -1.85247)
+
+[node name="Player" type="VehicleBody3D"]
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+angular_damp = 1.25
+script = ExtResource("1_bngx7")
+max_speed = 61.7
+tilt_speed = 0.86
+
+[node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.490545, 2)
+use_as_traction = true
+wheel_rest_length = 0.3
+suspension_travel = 0.5
+suspension_stiffness = 60.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_r5owt")
+mesh = ExtResource("2_fv20m")
+
+[node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.490545, -2)
+use_as_traction = true
+wheel_rest_length = 0.3
+suspension_travel = 0.5
+suspension_stiffness = 60.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D2"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_r5owt")
+mesh = ExtResource("2_fv20m")
+
+[node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.490545, 2)
+use_as_traction = true
+wheel_rest_length = 0.3
+suspension_travel = 0.5
+suspension_stiffness = 60.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D3"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_r5owt")
+mesh = ExtResource("2_fv20m")
+
+[node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.490545, -2)
+use_as_traction = true
+wheel_rest_length = 0.3
+suspension_travel = 0.5
+suspension_stiffness = 60.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D4"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_r5owt")
+mesh = ExtResource("2_fv20m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_eew1d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_afucg")
+
+[node name="PlayerInput" type="PlayerInput" parent="."]
+
+[node name="PlayerCamera" type="PlayerCamera" parent="." node_paths=PackedStringArray("follow")]
+follow = NodePath("..")
+distance = 50.0
+height = 8.0
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -50, 0, 0)
+top_level = true
+v_offset = 8.0
+projection = 1
+current = true
+size = 50.0
+
+[connection signal="drive_backward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_backward_pressed"]
+[connection signal="drive_backward_released" from="PlayerInput" to="." method="_on_player_input_drive_backward_released"]
+[connection signal="drive_forward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_forward_pressed"]
+[connection signal="drive_forward_released" from="PlayerInput" to="." method="_on_player_input_drive_forward_released"]
+[connection signal="tilt_backward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_backward_pressed"]
+[connection signal="tilt_backward_released" from="PlayerInput" to="." method="_on_player_input_tilt_backward_released"]
+[connection signal="tilt_forward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_forward_pressed"]
+[connection signal="tilt_forward_released" from="PlayerInput" to="." method="_on_player_input_tilt_forward_released"]
