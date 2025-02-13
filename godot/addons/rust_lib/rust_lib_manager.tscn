@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://bsqsy5i0srsg1"]
 
 [ext_resource type="Script" path="res://addons/rust_lib/rust_lib_manager.gd" id="1_l5upl"]
-[ext_resource type="StyleBox" uid="uid://c4lyxxb5kjjig" path="res://styles/buttons/hover.tres" id="2_ms0y7"]
-[ext_resource type="StyleBox" uid="uid://c6tpeoh0jlxxc" path="res://styles/buttons/normal.tres" id="2_tag64"]
-[ext_resource type="StyleBox" uid="uid://c212wf0kedhqk" path="res://styles/buttons/hover_pressed.tres" id="2_ucsii"]
+[ext_resource type="StyleBox" uid="uid://c4lyxxb5kjjig" path="res://addons/rust_lib/styles/buttons/hover.tres" id="2_ms0y7"]
+[ext_resource type="StyleBox" uid="uid://c6tpeoh0jlxxc" path="res://addons/rust_lib/styles/buttons/normal.tres" id="2_tag64"]
+[ext_resource type="StyleBox" uid="uid://c212wf0kedhqk" path="res://addons/rust_lib/styles/buttons/hover_pressed.tres" id="2_ucsii"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m6jjt"]
 bg_color = Color(0, 0.117647, 0.345098, 0.478431)
