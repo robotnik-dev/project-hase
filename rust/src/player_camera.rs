@@ -13,7 +13,7 @@ struct PlayerCamera {
     follow: Option<Gd<Node3D>>,
 
     /// How far away the camera appears to be.
-    #[export(range = (5., 100., 0.1))]
+    #[export(range = (5., 500., 0.1))]
     #[var(get, set = set_distance)]
     #[init(val = 20.0)]
     distance: f32,

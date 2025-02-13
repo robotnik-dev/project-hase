@@ -26,6 +26,10 @@ window/size/viewport_width.android=1280
 window/size/viewport_height.android=720
 window/stretch/aspect.android="keep"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/rust_lib/plugin.cfg")
+
 [layer_names]
 
 3d_physics/layer_1="World"

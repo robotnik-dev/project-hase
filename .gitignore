@@ -27,3 +27,5 @@ mono_crash.*.json
 
 # wasm build tool
 emsdk/
+
+backup/
