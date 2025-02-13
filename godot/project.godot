@@ -36,6 +36,12 @@ enabled=PackedStringArray("res://addons/rust_lib/plugin.cfg")
 3d_physics/layer_2="Car"
 3d_physics/layer_3="Wheel"
 
+[physics]
+
+3d/physics_engine="Rapier3D"
+3d/solver/solver_iterations=32
+rapier/solver/max_ccd_substeps=128
+
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true

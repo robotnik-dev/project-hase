@@ -1,9 +1,9 @@
 extends VehicleBody3D
 
 @export_range(1.0, 100.0, 0.1) var max_speed: float = 50.0
-@export_range(0.1, 1.0, 0.01) var acceleration: float = 0.85
-@export_range(0.1, 1.0, 0.01) var deceleration: float = 0.5
-@export_range(0.1, 1.0, 0.01) var tilt_speed: float = 0.5
+@export_range(0.1, 10.0, 0.01) var acceleration: float = 0.85
+@export_range(0.1, 10.0, 0.01) var deceleration: float = 0.5
+@export_range(0.1, 100.0, 0.01) var tilt_speed: float = 0.5
 
 var tilt_direction = 0
 var drive_direction = 0
