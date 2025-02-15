@@ -29,6 +29,9 @@ jobs:
         working-directory: rust
         run: cargo test --no-fail-fast --release -v
 
+      - name: Godot Import
+        run: timeout 10 godot --verbose --headless --import
+
       - name: Export
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -62,6 +65,9 @@ jobs:
       - name: Test
         working-directory: rust
         run: cargo test --no-fail-fast --release -v   # TODO: test for windows system
+
+      - name: Godot Import
+        run: timeout 10 godot --verbose --headless --import
 
       - name: Export
         run: |
@@ -103,6 +109,9 @@ jobs:
         working-directory: rust
         run: cargo test --no-fail-fast --release -v
 
+      - name: Godot Import
+        run: timeout 10 godot --verbose --headless --import
+
       - name: Export
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -140,6 +149,9 @@ jobs:
       - name: Test
         working-directory: rust
         run: cargo test --no-fail-fast -v   # TODO: test for android system
+
+      - name: Godot Import
+        run: timeout 10 godot --verbose --headless --import
 
       - name: Export
         run: |
