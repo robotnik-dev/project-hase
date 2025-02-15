@@ -30,6 +30,7 @@ jobs:
         run: cargo test --no-fail-fast --release -v
 
       - name: Godot Import
+        working-directory: godot
         run: timeout 10 godot --verbose --headless --import
 
       - name: Export
@@ -67,6 +68,7 @@ jobs:
         run: cargo test --no-fail-fast --release -v   # TODO: test for windows system
 
       - name: Godot Import
+        working-directory: godot
         run: timeout 10 godot --verbose --headless --import
 
       - name: Export
@@ -110,6 +112,7 @@ jobs:
         run: cargo test --no-fail-fast --release -v
 
       - name: Godot Import
+        working-directory: godot
         run: timeout 10 godot --verbose --headless --import
 
       - name: Export
@@ -151,6 +154,7 @@ jobs:
         run: cargo test --no-fail-fast -v   # TODO: test for android system
 
       - name: Godot Import
+        working-directory: godot
         run: timeout 10 godot --verbose --headless --import
 
       - name: Export
