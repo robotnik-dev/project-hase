@@ -31,7 +31,7 @@ jobs:
 
       - name: Godot Import
         working-directory: godot
-        run: timeout 10 godot --verbose --headless --import
+        run: timeout 20 godot --verbose --headless --import
 
       - name: Export
         run: |
