@@ -13,7 +13,6 @@ target/
 .import/
 export.cfg
 export/
-**/assets/**/*.bin
 
 # Imported translations (automatically generated from CSV files)
 *.translation

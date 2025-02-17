@@ -9,7 +9,7 @@ env:
 jobs:
   linux:
     name: Linux Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
       image: robotnikdev/godot-rust-ci:4.3
     steps:
@@ -45,7 +45,7 @@ jobs:
 
   windows:
     name: Windows Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
       image: robotnikdev/godot-rust-ci:4.3
     steps:
@@ -84,7 +84,7 @@ jobs:
 
   web:
     name: Web Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
       image: robotnikdev/godot-rust-ci:4.3
     steps:
@@ -128,7 +128,7 @@ jobs:
   # Android Debug Job. It will use the generated debug.keystore.
   android-debug:
     name: Android Debug Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       CLANG_PATH: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
       CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang

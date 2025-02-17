@@ -1,5 +1,5 @@
 use godot::{
-    classes::{InputEvent, InputEventKey, InputMap},
+    classes::{InputEvent, InputEventKey, InputEventScreenTouch, InputMap, Os},
     global::Key,
     obj::WithBaseField,
     prelude::*,
@@ -124,28 +124,68 @@ impl INode for PlayerInput {
         }
     }
     fn unhandled_input(&mut self, event: Gd<InputEvent>) {
-        if event.is_action_pressed("drive_forward") {
-            self.base_mut().emit_signal("drive_forward_pressed", &[]);
-        } else if event.is_action_released("drive_forward") {
-            self.base_mut().emit_signal("drive_forward_released", &[]);
-        }
+        if Os::singleton().has_feature("mobile") {
+            // get touch input
+            if let Ok(touch) = event.try_cast::<InputEventScreenTouch>() {
+                if touch.get_position().x
+                    >= self
+                        .base()
+                        .get_viewport()
+                        .unwrap()
+                        .get_window()
+                        .unwrap()
+                        .get_size()
+                        .x as f32
+                {
+                    // right side of the screen
+                    if touch.is_pressed() {
+                        self.base_mut().emit_signal("drive_forward_pressed", &[]);
+                    } else {
+                        self.base_mut().emit_signal("drive_forward_released", &[]);
+                    }
+                } else if touch.get_position().x
+                    < self
+                        .base()
+                        .get_viewport()
+                        .unwrap()
+                        .get_window()
+                        .unwrap()
+                        .get_size()
+                        .x as f32
+                {
+                    // left side of the screen
+                    if touch.is_pressed() {
+                        self.base_mut().emit_signal("drive_backward_pressed", &[]);
+                    } else {
+                        self.base_mut().emit_signal("drive_backward_released", &[]);
+                    }
+                }
+            }
+        } else {
+            // its on PC or Web
+            if event.is_action_pressed("drive_forward") {
+                self.base_mut().emit_signal("drive_forward_pressed", &[]);
+            } else if event.is_action_released("drive_forward") {
+                self.base_mut().emit_signal("drive_forward_released", &[]);
+            }
 
-        if event.is_action_pressed("drive_backward") {
-            self.base_mut().emit_signal("drive_backward_pressed", &[]);
-        } else if event.is_action_released("drive_backward") {
-            self.base_mut().emit_signal("drive_backward_released", &[]);
-        }
+            if event.is_action_pressed("drive_backward") {
+                self.base_mut().emit_signal("drive_backward_pressed", &[]);
+            } else if event.is_action_released("drive_backward") {
+                self.base_mut().emit_signal("drive_backward_released", &[]);
+            }
 
-        if event.is_action_pressed("tilt_forward") {
-            self.base_mut().emit_signal("tilt_forward_pressed", &[]);
-        } else if event.is_action_released("tilt_forward") {
-            self.base_mut().emit_signal("tilt_forward_released", &[]);
-        }
+            if event.is_action_pressed("tilt_forward") {
+                self.base_mut().emit_signal("tilt_forward_pressed", &[]);
+            } else if event.is_action_released("tilt_forward") {
+                self.base_mut().emit_signal("tilt_forward_released", &[]);
+            }
 
-        if event.is_action_pressed("tilt_backward") {
-            self.base_mut().emit_signal("tilt_backward_pressed", &[]);
-        } else if event.is_action_released("tilt_backward") {
-            self.base_mut().emit_signal("tilt_backward_released", &[]);
+            if event.is_action_pressed("tilt_backward") {
+                self.base_mut().emit_signal("tilt_backward_pressed", &[]);
+            } else if event.is_action_released("tilt_backward") {
+                self.base_mut().emit_signal("tilt_backward_released", &[]);
+            }
         }
     }
 }

@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://dif07paq3g40e"]
+[gd_scene load_steps=5 format=3 uid="uid://dif07paq3g40e"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_jngv2"]
 [ext_resource type="PackedScene" uid="uid://bw1q61e7mlhd1" path="res://maps/test_level.tscn" id="2_dpqj0"]
+[ext_resource type="PackedScene" uid="uid://1b78wtvecq6o" path="res://car/car.tscn" id="2_q2368"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ivx1m"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("start")]
 script = ExtResource("1_jngv2")
 start = NodePath("Start")
+car_scene = ExtResource("2_q2368")
 
 [node name="Start" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
