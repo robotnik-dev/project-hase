@@ -9,9 +9,6 @@ target/
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
-# Godot 4+ specific ignores
-.godot/
-
 # Godot-specific ignores
 .import/
 export.cfg
@@ -29,3 +26,8 @@ mono_crash.*.json
 emsdk/
 
 backup/
+
+# plugin freeze on github actions. This should fix it
+godot/.godot/*
+!godot/.godot/imported
+!godot/.godot/extension_list.cfg
