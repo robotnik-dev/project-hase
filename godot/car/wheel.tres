@@ -1,0 +1,6 @@
+[gd_resource type="CylinderMesh" load_steps=2 format=3 uid="uid://bddk8qjdgss7v"]
+
+[ext_resource type="Material" uid="uid://c5us1e3pelomy" path="res://car/wheel_mat.tres" id="1_75wnr"]
+
+[resource]
+material = ExtResource("1_75wnr")

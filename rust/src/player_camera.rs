@@ -1,6 +1,6 @@
 use godot::{
     builtin::Vector3,
-    classes::{camera_3d::ProjectionType, Camera3D, Engine, ICamera3D, Node3D},
+    classes::{camera_3d::ProjectionType, Camera3D, ICamera3D, Node3D},
     obj::{Base, Gd, WithBaseField},
     prelude::{godot_api, GodotClass},
 };
@@ -35,13 +35,11 @@ impl ICamera3D for PlayerCamera {
         self.base_mut().set_as_top_level(true);
         self.base_mut().make_current();
         self.base_mut().set_projection(ProjectionType::ORTHOGONAL);
+        self.set_distance(self.get_distance());
+        self.set_height(self.get_height());
     }
 
     fn process(&mut self, _delta: f64) {
-        if Engine::singleton().is_editor_hint() {
-            return;
-        }
-
         if let Some(follow) = self.get_follow() {
             let pos = follow.get_global_position();
             let self_pos = self.base().get_global_position();
