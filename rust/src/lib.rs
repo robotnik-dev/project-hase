@@ -8,4 +8,3 @@ unsafe impl ExtensionLibrary for GodotRustExtension {}
 mod car;
 mod player_camera;
 mod player_input;
-mod terrain;

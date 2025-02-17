@@ -41,7 +41,3 @@ func _on_player_input_tilt_forward_pressed() -> void:
 
 func _on_player_input_tilt_forward_released() -> void:
 	tilt_direction = 0.0
-
-
-func _on_crashed() -> void:
-	print("CRASH")

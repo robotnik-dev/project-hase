@@ -39,6 +39,7 @@ enabled=PackedStringArray("res://addons/rust_lib/plugin.cfg")
 [physics]
 
 3d/physics_engine="Rapier3D"
+common/physics_interpolation=true
 
 [rendering]
 

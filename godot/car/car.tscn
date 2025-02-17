@@ -16,15 +16,20 @@ points = PackedVector3Array(-0.5, -1, 0, -0.497651, -1, -0.0490407, -0.497651, -
 [node name="Car" type="Car" node_paths=PackedStringArray("crash_detects", "wheels")]
 crash_detects = [NodePath("MeshInstance3D/RayCast3D"), NodePath("MeshInstance3D/RayCast3D2"), NodePath("MeshInstance3D/RayCast3D3")]
 wheels = [NodePath("Wheels/WheelFront"), NodePath("Wheels/wheelBack")]
+engine_power = 1500.0
+tilt_speed = 800.0
 collision_layer = 2
 axis_lock_linear_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 40.0
+mass = 30.0
 physics_material_override = SubResource("PhysicsMaterial_3ov87")
+gravity_scale = 3.0
 can_sleep = false
 contact_monitor = true
 max_contacts_reported = 1
+linear_damp = 0.6
+angular_damp = 1.5
 script = ExtResource("1_eoges")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -73,7 +78,6 @@ projection = 1
 current = true
 size = 20.0
 
-[connection signal="crashed" from="." to="." method="_on_crashed"]
 [connection signal="drive_backward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_backward_pressed"]
 [connection signal="drive_backward_released" from="PlayerInput" to="." method="_on_player_input_drive_backward_released"]
 [connection signal="drive_forward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_forward_pressed"]
