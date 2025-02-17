@@ -37,6 +37,16 @@
 			"group": "build"
 		},
 		{
+			"label": "godot-rust: Build Web Debug",
+			"detail": "Builds debug rust game library for HTML5",
+			"type": "shell",
+			"command": "emsdk\\emsdk activate 3.1.62 && emsdk\\emsdk.bat && cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten",
+			"options": {
+				"cwd": "${cwd}/rust"
+			},
+			"group": "build"
+		},
+		{
 			"label": "godot-rust: Build Release",
 			"detail": "Builds release rust game library",
 			"type": "shell",

@@ -72,7 +72,6 @@ func build_rust() -> Array:
 
 func _on_install_pressed() -> void:
 	set_output_message("Installing rust, please wait...")
-	await get_tree().create_timer(0.5).timeout
 	var error = install_rust()
 	if error[0] == 1:
 		set_output_message_array(error[1])
@@ -83,7 +82,6 @@ func _on_install_pressed() -> void:
 
 func _on_build_pressed() -> void:
 	set_output_message("Building the project, please wait...")
-	await get_tree().create_timer(0.5).timeout
 	var error = build_rust()
 	set_output_message_array(error[1])
 	if error[0] == 1:
@@ -98,14 +96,13 @@ func _on_visibility_changed() -> void:
 	build_button.visible = false
 	if visible:
 		set_output_message("Checking rust installation, please wait...")
-		await get_tree().create_timer(1.0).timeout
 		var install_error = check_rust_installation()
 		if install_error[0] == 1:
 			set_output_message_array(install_error[1])
+			rust_is_installed(false)
 		else:
 			rust_is_installed(true)
 			set_output_message("Rust ist installed. \n Checking for new code changes, please wait...")
-			await get_tree().create_timer(1.0).timeout
 			var cargo_error = cargo_diff()
 			set_output_message_array(cargo_error[1])
 			if cargo_error[0] == 1:
