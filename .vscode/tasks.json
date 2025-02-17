@@ -10,7 +10,7 @@
 			"options": {
 				"cwd": "${config:godot-rust.environment.godotProjectPath}"
 			},
-			"command": "${config:godot-rust.environment.godotEditorPath} --editor",
+			"command": "${config:godot-rust.environment.godotEditorPath} --editor --verbose",
 			"group": "build"
 		},
 		{

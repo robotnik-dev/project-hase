@@ -11,12 +11,15 @@ func _ready() -> void:
 
 
 func start_level() -> void:
-	car = car_scene.instantiate() as Car
+	if car:
+		car.queue_free()
+	car = car_scene.instantiate()
 	add_child(car)
 	car.global_position = start.global_position
 	car.crashed.connect(_on_car_crashed)
 
 func _on_car_crashed() -> void:
-	car.crashed.disconnect(_on_car_crashed)
-	car.queue_free()
 	start_level()
+
+func _on_tree_exiting() -> void:
+	print_orphan_nodes()

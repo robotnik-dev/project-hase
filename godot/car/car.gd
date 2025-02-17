@@ -10,7 +10,7 @@ func _get_forward_input() -> float:
 func _get_tilt_input() -> float:
 	return tilt_direction
 
-# Happens once per click/hold
+
 func _on_player_input_drive_forward_pressed() -> void:
 	drive_direction = 1.0
 
