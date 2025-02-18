@@ -30,9 +30,9 @@ jobs:
         working-directory: rust
         run: cargo build --release
 
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
+      - name: Godot Import
+        working-directory: godot
+        run: timeout 10 godot --verbose --headless --import
 
       - name: Export
         run: |
@@ -70,9 +70,9 @@ jobs:
         working-directory: rust
         run: cargo build --release --target x86_64-pc-windows-gnu
 
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
+      - name: Godot Import
+        working-directory: godot
+        run: timeout 10 godot --verbose --headless --import
 
       - name: Export
         run: |
@@ -120,9 +120,9 @@ jobs:
         working-directory: rust
         run: cargo test --no-fail-fast --release -v
 
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
+      - name: Godot Import
+        working-directory: godot
+        run: timeout 10 godot --verbose --headless --import
 
       - name: Export
         run: |
@@ -164,9 +164,9 @@ jobs:
         working-directory: rust
         run: cargo build --target aarch64-linux-android
 
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
+      - name: Godot Import
+        working-directory: godot
+        run: timeout 10 godot --verbose --headless --import
 
       - name: Export
         run: |
