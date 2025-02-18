@@ -95,8 +95,7 @@ jobs:
         shell: bash
         run: |
           source /emsdk/emsdk_env.sh
-          RUSTFLAGS="-C link-args=-pthread" cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten --release
-          mv target/debug/rust.wasm target/debug/rust.threads.wasm
+          cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten --release
 
       - name: Setup Godot
         working-directory: godot
