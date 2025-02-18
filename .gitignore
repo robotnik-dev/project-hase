@@ -29,5 +29,5 @@ backup/
 
 # plugin freeze on github actions. This should fix it
 godot/.godot/*
-!godot/.godot/imported
+# !godot/.godot/imported
 !godot/.godot/extension_list.cfg

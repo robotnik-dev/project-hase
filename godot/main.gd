@@ -1,7 +1,8 @@
 extends Node
 
 @export var start: Node3D
-@export var car_scene: PackedScene
+
+var car_scene = preload("res://car/car.tscn")
 
 var car: Car
 
