@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'semantic version of the game (github tag)'
+        description: 'semantic version of the game e.g."v1.0.1" (becomes github tag)'
         required: true
 
 env:

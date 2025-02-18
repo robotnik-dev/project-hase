@@ -14,14 +14,14 @@
 			"group": "build"
 		},
 		{
-			"label": "godot-rust: Launch Release Editor",
-			"detail": "Builds release rust game library, then opens the project with Godot Editor",
+			"label": "godot-rust: Export Release",
+			"detail": "Builds release rust game library, then exports",
 			"dependsOn": "godot-rust: Build Release",
 			"type": "shell",
 			"options": {
 				"cwd": "${config:godot-rust.environment.godotProjectPath}"
 			},
-			"command": "${config:godot-rust.environment.godotEditorPath} --editor",
+			"command": "\"${config:godot-rust.environment.godotEditorPath} --headless --verbose --export-release \"Windows Desktop\" \"export\\hase.exe\"\"",
 			"group": "build"
 		},
 

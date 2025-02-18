@@ -30,6 +30,10 @@ window/stretch/aspect.android="keep"
 
 run/main_run_args="--verbose"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/rust_lib/plugin.cfg")
+
 [layer_names]
 
 3d_physics/layer_1="World"
