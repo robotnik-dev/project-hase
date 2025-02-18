@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=6 format=3 uid="uid://1b78wtvecq6o"]
 
+[ext_resource type="Script" path="res://car/car.gd" id="1_ichij"]
 [ext_resource type="CylinderMesh" uid="uid://bddk8qjdgss7v" path="res://car/wheel.tres" id="2_xim3n"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
@@ -29,6 +30,7 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 0.6
 angular_damp = 1.5
+script = ExtResource("1_ichij")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.542564, 0)
@@ -75,3 +77,12 @@ current = true
 size = 20.0
 
 [node name="PlayerInput" type="PlayerInput" parent="."]
+
+[connection signal="drive_backward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_backward_pressed"]
+[connection signal="drive_backward_released" from="PlayerInput" to="." method="_on_player_input_drive_backward_released"]
+[connection signal="drive_forward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_forward_pressed"]
+[connection signal="drive_forward_released" from="PlayerInput" to="." method="_on_player_input_drive_forward_released"]
+[connection signal="tilt_backward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_backward_pressed"]
+[connection signal="tilt_backward_released" from="PlayerInput" to="." method="_on_player_input_tilt_backward_released"]
+[connection signal="tilt_forward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_forward_pressed"]
+[connection signal="tilt_forward_released" from="PlayerInput" to="." method="_on_player_input_tilt_forward_released"]
