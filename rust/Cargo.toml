@@ -10,6 +10,3 @@ crate-type = ["cdylib"]
 git = "https://github.com/godot-rust/gdext"
 branch = "master"
 features = ["experimental-wasm", "lazy-function-tables"]
-
-[features]
-nothreads = ["gdext/experimental-wasm-nothreads"]
