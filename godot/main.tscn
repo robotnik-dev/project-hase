@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dif07paq3g40e"]
+[gd_scene load_steps=3 format=3 uid="uid://dif07paq3g40e"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_10p37"]
-[ext_resource type="PackedScene" uid="uid://bw1q61e7mlhd1" path="res://maps/test_level.tscn" id="3_vjlvt"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ivx1m"]
 
@@ -14,7 +13,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Start"]
 shape = SubResource("SphereShape3D_ivx1m")
-
-[node name="TestLevel" parent="." instance=ExtResource("3_vjlvt")]
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
