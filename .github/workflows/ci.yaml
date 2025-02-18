@@ -57,11 +57,11 @@ jobs:
       - name: Setup
         run: |
           rustup default stable
-          rustup target add x86_64-pc-windows-msvc
+          rustup target add x86_64-pc-windows-gnu
 
       - name: Build
         working-directory: rust
-        run: cargo build --target x86_64-pc-windows-msvc && cargo build --release --target x86_64-pc-windows-msvc
+        run: cargo build --release --target x86_64-pc-windows-gnu
 
       # - name: Test
       #   working-directory: rust
@@ -73,9 +73,6 @@ jobs:
 
       - name: Export
         run: |
-          mkdir -v -p rust/target/release
-          mv rust/target/x86_64-pc-windows-msvc/release/rust.dll rust/target/release/rust.dll
-          mv rust/target/x86_64-pc-windows-msvc/debug/rust.dll rust/target/debug/rust.dll
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv -v /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           mkdir -v -p build/windows
