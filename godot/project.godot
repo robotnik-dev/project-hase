@@ -26,10 +26,6 @@ window/size/viewport_width.android=1280
 window/size/viewport_height.android=720
 window/stretch/aspect.android="keep"
 
-[editor]
-
-run/main_run_args="--verbose"
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/rust_lib/plugin.cfg")
@@ -43,7 +39,6 @@ enabled=PackedStringArray("res://addons/rust_lib/plugin.cfg")
 [physics]
 
 3d/physics_engine="Rapier3D"
-common/physics_interpolation=true
 
 [rendering]
 

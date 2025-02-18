@@ -31,3 +31,6 @@ backup/
 godot/.godot/*
 # !godot/.godot/imported
 !godot/.godot/extension_list.cfg
+
+# dbg files
+*_dbg.*
