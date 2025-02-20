@@ -1,0 +1,41 @@
+name: "Deploy to Itch.io"
+
+# on:
+#   workflow_run:
+#     workflows: Release
+#     types: [completed]
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Deploy to Itch.io
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        platform:
+          - name: Windows
+            channel: channel
+
+          - name: MacOs
+            channel: mac
+
+          - name: Linux
+            channel: linux
+
+    steps:
+      - name: Download ${{ matrix.platform.name }} Artifact
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Deploy ${{ matrix.platform.name }}
+        uses: manleydev/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: ${{ matrix.platform.channel }}
+          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: ${{ matrix.platform.channel }}
+          VERSION: ${{ github.event.inputs.version }}

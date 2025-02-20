@@ -1,7 +1,7 @@
 # Project HASE
 
-![Tested](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/ci.yaml/badge.svg)
-![Deployed](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/cd.yaml/badge.svg)
+![Released](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/release.yaml/badge.svg)
+![Deployed: Itch.io](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/cd_itch.yaml/badge.svg)
 
 > To build the game you need to follow the [setup](#setup) guide even if you dont touch the rust files at all.
 

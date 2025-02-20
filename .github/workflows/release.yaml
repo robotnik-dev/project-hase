@@ -1,10 +1,13 @@
-name: "Build and Export"
+name: "Release"
 
-on: push
+on:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build:
-    name: Build - ${{ matrix.platform.os-name }}
+    name: Build - ${{ matrix.platform.os-name }} - ${{ matrix.environment }}
     strategy:
       matrix:
         environment: [debug, release]
@@ -42,7 +45,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - if: ${{ matrix.environment }} == 'release'
+      - if: matrix.environment == 'release'
         name: Build release binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
@@ -53,7 +56,7 @@ jobs:
           toolchain: ${{ matrix.platform.toolchain }}
           strip: true
 
-      - if: ${{ matrix.environment }} == 'debug'
+      - if: matrix.environment == 'debug'
         name: Build debug binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
@@ -69,38 +72,12 @@ jobs:
         with:
           name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}
           path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
+          retention-days: 1
 
   export:
     name: Export
     needs: build
     permissions: write-all
-    # strategy:
-    #   matrix:
-    #     platform:
-    #       - os-name: Linux-x86_64
-    #         runs-on: ubuntu-24.04
-    #         library-name: librust.so
-    #         export-name: Linux
-    #         godot-platform: linux.x86_64
-
-    #       # - os-name: Android
-    #       #   runs-on: ubuntu-24.04
-    #       #   library-name: librust.so
-    #       #   export-name: Android Debug
-    #       #   godot-platform: linux.x86_64
-
-    #       - os-name: Windows-x86_64
-    #         runs-on: windows-latest
-    #         library-name: rust.dll
-    #         export-name: Windows Desktop
-    #         godot-platform: win64.exe
-
-    #       - os-name: macOS-x86_64
-    #         runs-on: macOS-latest
-    #         library-name: librust.dylib
-    #         export-name: macOS
-    #         godot-platform: macos.universal
-
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -146,8 +123,10 @@ jobs:
           verbose: true
           wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: ncipollo/release-action@v1.15.0
         with:
-          name: export
-          path: ${{ steps.export.outputs.archive_directory }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
+          tag: ${{ github.ref_name }}
+          artifacts: ${{ steps.export.outputs.archive_directory }}/*
