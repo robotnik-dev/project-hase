@@ -54,41 +54,41 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.platform.os-name }}
+          name: rust-${{ matrix.platform.os-name }}
           path: rust/target/${{ matrix.platform.target }}/release/${{ matrix.platform.output }}
 
   export:
     name: Export
     needs: build
     permissions: write-all
-    strategy:
-      matrix:
-        platform:
-          - os-name: Linux-x86_64
-            runs-on: ubuntu-24.04
-            library-name: librust.so
-            export-name: Linux
-            godot-platform: linux.x86_64
+    # strategy:
+    #   matrix:
+    #     platform:
+    #       - os-name: Linux-x86_64
+    #         runs-on: ubuntu-24.04
+    #         library-name: librust.so
+    #         export-name: Linux
+    #         godot-platform: linux.x86_64
 
-          # - os-name: Android
-          #   runs-on: ubuntu-24.04
-          #   library-name: librust.so
-          #   export-name: Android Debug
-          #   godot-platform: linux.x86_64
+    #       # - os-name: Android
+    #       #   runs-on: ubuntu-24.04
+    #       #   library-name: librust.so
+    #       #   export-name: Android Debug
+    #       #   godot-platform: linux.x86_64
 
-          - os-name: Windows-x86_64
-            runs-on: windows-latest
-            library-name: rust.dll
-            export-name: Windows Desktop
-            godot-platform: win64.exe
+    #       - os-name: Windows-x86_64
+    #         runs-on: windows-latest
+    #         library-name: rust.dll
+    #         export-name: Windows Desktop
+    #         godot-platform: win64.exe
 
-          - os-name: macOS-x86_64
-            runs-on: macOS-latest
-            library-name: librust.dylib
-            export-name: macOS
-            godot-platform: macos.universal
+    #       - os-name: macOS-x86_64
+    #         runs-on: macOS-latest
+    #         library-name: librust.dylib
+    #         export-name: macOS
+    #         godot-platform: macos.universal
 
-    runs-on: ${{ matrix.platform.runs-on }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -102,32 +102,33 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ matrix.platform.os-name }}
-          path: rust/target/release/${{ matrix.platform.library-name }}
+          path: rust/target/release
+          pattern: rust-*
+          merge-multiple: true
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        if: ${{ matrix.platform.os-name }} == 'Android'
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+      # - name: Set up JDK 17
+      #   uses: actions/setup-java@v3
+      #   if: ${{ matrix.platform.os-name }} == 'Android'
+      #   with:
+      #     java-version: '17'
+      #     distribution: 'temurin'
 
-      - name: Setup Android SDK
-        if: ${{ matrix.platform.os-name }} == 'Android'
-        uses: android-actions/setup-android@v3
+      # - name: Setup Android SDK
+      #   if: ${{ matrix.platform.os-name }} == 'Android'
+      #   uses: android-actions/setup-android@v3
 
       - name: export game
         id: export
         uses: firebelley/godot-export@v6.0.0
         with:
-          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_${{ matrix.platform.godot-platform }}.zip
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_export_templates.tpz
           relative_project_path: godot
           archive_output: true
           verbose: true
 
-      - name: Upload Artifact
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.platform.os-name }}
+          name: export
           path: ${{ steps.export.outputs.archive_directory }}
