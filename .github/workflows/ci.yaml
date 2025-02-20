@@ -2,15 +2,12 @@ name: "Build and Test"
 
 on: push
 
-env:
-  GODOT_VERSION: 4.3
-
 jobs:
   linux:
     name: Linux Build
     runs-on: ubuntu-22.04
     container:
-      image: robotnikdev/godot-rust-ci:${{ github.env.GODOT_VERSION }}
+      image: robotnikdev/godot-rust-ci:${{ vars.GODOT_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +25,7 @@ jobs:
         working-directory: godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable
           mkdir -v -p build/linux
 
       - name: Export
@@ -40,7 +37,7 @@ jobs:
     name: Windows Build
     runs-on: ubuntu-22.04
     container:
-      image: robotnikdev/godot-rust-ci:$${{ github.env.GODOT_VERSION }}
+      image: robotnikdev/godot-rust-ci:$${{ vars.GODOT_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -60,7 +57,7 @@ jobs:
         working-directory: godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable
           mkdir -v -p build/windows
 
       - name: Export
@@ -72,7 +69,7 @@ jobs:
     name: Web Build
     runs-on: ubuntu-22.04
     container:
-      image: robotnikdev/godot-rust-ci:$${{ github.env.GODOT_VERSION }}
+      image: robotnikdev/godot-rust-ci:$${{ vars.GODOT_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -97,7 +94,7 @@ jobs:
         working-directory: godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable
           mkdir -v -p build/web
 
       - name: Export
@@ -113,7 +110,7 @@ jobs:
       CLANG_PATH: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
       CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang
     container:
-      image: robotnikdev/godot-rust-ci:$${{ github.env.GODOT_VERSION }}
+      image: robotnikdev/godot-rust-ci:$${{ vars.GODOT_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -135,7 +132,7 @@ jobs:
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable
           mkdir -v -p build/android-debug
 
       - name: Export
