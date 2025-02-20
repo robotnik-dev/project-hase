@@ -12,24 +12,28 @@ jobs:
             runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
             output: librust.so
+            command: both
+            toolchain: stable
 
           - os-name: Android
             runs-on: ubuntu-24.04
             target: aarch64-linux-android
             output: librust.so
+            command: both
             toolchain: nightly
 
           - os-name: Windows-x86_64
             runs-on: windows-latest
             target: x86_64-pc-windows-msvc
             output: rust.dll
+            command: both
+            toolchain: stable
 
           - os-name: macOS-x86_64
             runs-on: macOS-latest
             target: x86_64-apple-darwin
             output: librust.dylib
-        include:
-          - command: both
+            command: both
             toolchain: stable
 
     runs-on: ${{ matrix.platform.runs-on }}
