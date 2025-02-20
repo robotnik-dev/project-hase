@@ -1,27 +1,34 @@
-name: "Release"
 
-on: workflow_dispatch
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ 'feature/**', main ]
+    tags:
+      - "v*"
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
-    name: Build - ${{ matrix.platform.os-name }} - ${{ matrix.environment }}
+  test-and-build:
+    name: Test and Build - ${{ matrix.platform.os-name }} - ${{ matrix.environment }}
     strategy:
       matrix:
         environment: [debug, release]
         platform:
           - os-name: Linux-x86_64
-            runs-on: ubuntu-24.04
+            runs-on: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             output: librust.so
             command: both
             toolchain: stable
 
-          # - os-name: Android
-          #   runs-on: ubuntu-24.04
-          #   target: aarch64-linux-android
-          #   output: librust.so
-          #   command: both
-          #   toolchain: stable
+            # - os-name: Android
+            #   runs-on: ubuntu-latest
+            #   target: aarch64-linux-android
+            #   output: librust.so
+            #   command: both
+            #   toolchain: stable
 
           - os-name: Windows-x86_64
             runs-on: windows-latest
@@ -71,9 +78,10 @@ jobs:
           path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
           retention-days: 1
 
+
   export:
-    name: Export
-    needs: build
+    name: Export Game Builds
+    needs: test-and-build
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -109,21 +117,74 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Export Game
+      - name: Export Games
         id: export
         uses: firebelley/godot-export@v6.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_export_templates.tpz
           relative_project_path: godot
-          archive_output: true
+          relative_export_path: build
           verbose: true
           wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1.15.0
+      - name: Upload Development Build
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generateReleaseNotes: true
-          tag: ${{ github.ref_name }}
-          artifacts: ${{ steps.export.outputs.archive_directory }}/*
+          name: build-${{ github.sha }}
+          path: build/
+          retention-days: ${{ github.ref == 'refs/heads/main' && 90 || 1 }}
+
+
+  create-release:
+    needs: export
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.ref }}
+          name: Release v${{ github.ref }}
+          draft: false
+          prerelease: false
+          files: |
+            build/*
+
+
+  deploy:
+    name: Deploy Games
+    needs: create-release
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - name: Windows
+            channel: windows
+
+          - name: MacOs
+            channel: mac
+
+          - name: Linux
+            channel: linux
+
+    steps:
+      - name: Download Builds
+        uses: actions/download-artifact@v4
+        with:
+          name: build-${{ github.sha }}
+
+      - name: Zip Build
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r ${{ matrix.platform.channel }}.zip build/${{ matrix.platform.channel }}
+
+      - name: Deploy ${{ matrix.platform.name }}
+        uses: manleydev/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: ${{ matrix.platform.channel }}
+          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: ${{ matrix.platform.channel }}
+          VERSION: v${{ github.ref }}
