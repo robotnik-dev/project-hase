@@ -11,7 +11,7 @@ on:
 
 jobs:
   test-and-build:
-    name: Test and Build - ${{ matrix.platform.os-name }} - ${{ matrix.environment }}
+    name: ${{ matrix.platform.os-name }} - ${{ matrix.environment }}
     strategy:
       matrix:
         environment: [debug, release]
