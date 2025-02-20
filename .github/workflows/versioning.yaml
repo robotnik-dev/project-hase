@@ -18,4 +18,5 @@ jobs:
 
       - uses: phish108/autotag-action@v1.1.64
         with:
+          with-v: true
           github-token: ${{ secrets.PAT }}

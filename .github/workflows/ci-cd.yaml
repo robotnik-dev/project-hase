@@ -4,7 +4,7 @@ name: CI/CD Pipeline
 on:
   push:
     tags:
-      - "*"
+      - "v*"
   pull_request:
     types: [opened, edited, reopened]
     branches: [ main ]
@@ -137,6 +137,7 @@ jobs:
 
 
   create-release:
+    name: Create Github Realease
     needs: export
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
@@ -144,8 +145,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ github.ref }}
-          name: Release v${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          name: Release ${{ github.ref }}
           draft: false
           prerelease: false
           files: |
@@ -154,7 +155,7 @@ jobs:
 
   deploy:
     name: Deploy Games
-    needs: create-release
+    needs: export
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -187,4 +188,4 @@ jobs:
           ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
           ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
           PACKAGE: ${{ matrix.platform.channel }}
-          VERSION: v${{ github.ref }}
+          VERSION: ${{ github.ref }}
