@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ 'feature/**', main ]
     tags:
       - "v*"
   pull_request:
+    types: [opened, edited, reopened]
     branches: [ main ]
 
 jobs:
@@ -74,7 +74,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}
+          name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}-${{ github.sha }}
           path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
           retention-days: 1
 
@@ -131,7 +131,7 @@ jobs:
       - name: Upload Development Build
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ github.sha }}
+          name: games
           path: build/
           retention-days: ${{ github.ref == 'refs/heads/main' && 90 || 1 }}
 
@@ -172,7 +172,7 @@ jobs:
       - name: Download Builds
         uses: actions/download-artifact@v4
         with:
-          name: build-${{ github.sha }}
+          name: games
 
       - name: Zip Build
         uses: montudor/action-zip@v1
