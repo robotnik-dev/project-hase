@@ -156,6 +156,7 @@ jobs:
   deploy:
     name: Deploy Games
     needs: export
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -178,7 +179,7 @@ jobs:
       - name: Zip Build
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r ${{ matrix.platform.channel }}.zip build/${{ matrix.platform.channel }}
+          args: zip -qq -r ${{ matrix.platform.channel }}.zip games/${{ matrix.platform.channel }}
 
       - name: Deploy ${{ matrix.platform.name }}
         uses: manleydev/butler-publish-itchio-action@v1.0.3
