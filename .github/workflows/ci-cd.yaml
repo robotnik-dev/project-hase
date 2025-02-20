@@ -3,11 +3,10 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches-ignore:
-      - main
     tags:
       - "v*"
   pull_request:
+    types: [opened, edited]
     branches: [ main ]
 
 jobs:
@@ -75,7 +74,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: rust-${{ matrix.environment }}-${{ github.sha }}
+          name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}-${{ github.sha }}
           path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
           retention-days: 1
 
