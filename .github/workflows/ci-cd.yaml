@@ -4,7 +4,7 @@ name: CI/CD Pipeline
 on:
   push:
     tags:
-      - "v*"
+      - "*"
   pull_request:
     types: [opened, edited, reopened]
     branches: [ main ]
