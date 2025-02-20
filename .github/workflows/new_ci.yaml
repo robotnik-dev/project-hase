@@ -93,11 +93,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: install wine
-      #   id: wine_install
-      #   run: |
-      #     sudo apt install wine64
-      #     echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+      - name: install wine
+        id: wine_install
+        run: |
+          sudo apt install wine64
+          echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
 
       - name: Download Artifact
         uses: actions/download-artifact@v4
@@ -106,16 +106,14 @@ jobs:
           pattern: rust-*
           merge-multiple: true
 
-      # - name: Set up JDK 17
-      #   uses: actions/setup-java@v3
-      #   if: ${{ matrix.platform.os-name }} == 'Android'
-      #   with:
-      #     java-version: '17'
-      #     distribution: 'temurin'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-      # - name: Setup Android SDK
-      #   if: ${{ matrix.platform.os-name }} == 'Android'
-      #   uses: android-actions/setup-android@v3
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: export game
         id: export
@@ -126,6 +124,7 @@ jobs:
           relative_project_path: godot
           archive_output: true
           verbose: true
+          wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
