@@ -7,6 +7,7 @@ jobs:
     name: Build - ${{ matrix.platform.os-name }}
     strategy:
       matrix:
+        environment: [debug, release]
         platform:
           - os-name: Linux-x86_64
             runs-on: ubuntu-24.04
@@ -41,7 +42,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build binary
+      - if: ${{ matrix.environment }} == 'release'
+        name: Build release binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
@@ -51,11 +53,22 @@ jobs:
           toolchain: ${{ matrix.platform.toolchain }}
           strip: true
 
+      - if: ${{ matrix.environment }} == 'debug'
+        name: Build debug binary
+        uses: houseabsolute/actions-rust-cross@v1.0.3
+        with:
+          working-directory: rust
+          command: ${{ matrix.platform.command }}
+          target: ${{ matrix.platform.target }}
+          args: "--locked"
+          toolchain: ${{ matrix.platform.toolchain }}
+          strip: true
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: rust-${{ matrix.platform.os-name }}
-          path: rust/target/${{ matrix.platform.target }}/release/${{ matrix.platform.output }}
+          name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}
+          path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
 
   export:
     name: Export
@@ -93,17 +106,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: install wine
+      - name: Install wine
         id: wine_install
         run: |
           sudo apt install wine64
           echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
 
-      - name: Download Artifact
+      - name: Download Release Artifacts
         uses: actions/download-artifact@v4
         with:
           path: rust/target/release
-          pattern: rust-*
+          pattern: rust-release-*
+          merge-multiple: true
+
+      - name: Download Debug Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: rust/target/debug
+          pattern: rust-debug-*
           merge-multiple: true
 
       - name: Set up JDK 17
@@ -115,7 +135,7 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: export game
+      - name: Export Game
         id: export
         uses: firebelley/godot-export@v6.0.0
         with:
