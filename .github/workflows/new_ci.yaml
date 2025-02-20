@@ -11,22 +11,26 @@ jobs:
           - os-name: Linux-x86_64
             runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
-            command: both
+            output: librust.so
 
           - os-name: Android
             runs-on: ubuntu-24.04
             target: aarch64-linux-android
-            command: both
+            output: librust.so
+            toolchain: nightly
 
           - os-name: Windows-x86_64
             runs-on: windows-latest
             target: x86_64-pc-windows-msvc
-            command: both
+            output: rust.dll
 
           - os-name: macOS-x86_64
             runs-on: macOS-latest
             target: x86_64-apple-darwin
-            command: both
+            output: librust.dylib
+        include:
+          - command: both
+            toolchain: stable
 
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
@@ -40,13 +44,14 @@ jobs:
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: "--locked --release"
+          toolchain: ${{ matrix.platform.toolchain }}
           strip: true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.platform.runs-on }}
-          path: ${{ matrix.platform.target }}
+          name: ${{ matrix.platform.os-name }}
+          path: rust/target/${{ matrix.platform.target }}/release/${{ matrix.platform.output }}
 
   # export:
   #   needs: Build - ${{ matrix.platform.os-name }}
