@@ -4,11 +4,14 @@ compatibility_minimum = 4.3
 reloadable = false
 
 [libraries]
-linux.x86_64 =              "res://../rust/target/release/librust.so"
-windows.x86_64 =            "res://../rust/target/x86_64-pc-windows-gnu/release/rust.dll"
-macos.debug =               "res://../rust/target/debug/librust.dylib"
-macos.release =             "res://../rust/target/release/librust.dylib"
-macos.debug.arm64 =         "res://../rust/target/debug/librust.dylib"
-macos.release.arm64 =       "res://../rust/target/release/librust.dylib"
-android.arm64 =             "res://../rust/target/aarch64-linux-android/debug/librust.so"
-web.wasm32 =                "res://../rust/target/wasm32-unknown-emscripten/release/rust.wasm"
+linux.debug.x86_64 =     "res://../rust/target/debug/librust.so"
+linux.release.x86_64 =   "res://../rust/target/release/librust.so"
+windows.debug.x86_64 =   "res://../rust/target/debug/rust.dll"
+windows.release.x86_64 = "res://../rust/target/release/rust.dll"
+macos.debug =            "res://../rust/target/debug/librust.dylib"
+macos.release =          "res://../rust/target/release/librust.dylib"
+macos.debug.arm64 =      "res://../rust/target/debug/librust.dylib"
+macos.release.arm64 =    "res://../rust/target/release/librust.dylib"
+web.debug.wasm32 =       "res://../rust/target/wasm32-unknown-emscripten/debug/rust.wasm"
+web.release.wasm32 =     "res://../rust/target/wasm32-unknown-emscripten/release/rust.wasm"
+android.debug.arm64 =    "res://../rust/target/aarch64-linux-android/debug/librust.so"

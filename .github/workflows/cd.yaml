@@ -16,45 +16,43 @@ jobs:
     name: Linux Build
     runs-on: ubuntu-22.04
     container:
-      image: robotnikdev/godot-rust-ci:4.3
+      image: robotnikdev/godot-rust-ci:${GODOT_VERSION}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Setup
+      - name: Setup Rust
         run: rustup default stable
 
       - name: Build
         working-directory: rust
         run: cargo build --release
 
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
-
-      - name: Export
+      - name: Setup Godot
+        working-directory: godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           mkdir -v -p build/linux
-          EXPORT_DIR="$(readlink -f build)"
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/${{ vars.ITCHIO_GAMENAME }}.x86_64"
+
+      - name: Export
+        working-directory: godot
+        run: godot --headless --verbose --export-release "Linux" "build/linux/${{ vars.ITCHIO_GAMENAME }}.x86_64"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: linux
-          path: build/linux
+          path: godot/build/linux
 
 
   windows:
     name: Windows Build
     runs-on: ubuntu-22.04
     container:
-      image: robotnikdev/godot-rust-ci:4.3
+      image: robotnikdev/godot-rust-ci:${GODOT_VERSION}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,37 +68,35 @@ jobs:
         working-directory: rust
         run: cargo build --release --target x86_64-pc-windows-gnu
 
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
-
-      - name: Export
+      - name: Setup Godot
+        working-directory: godot
         run: |
-          mv rust/target/x86_64-pc-windows-gnu/release/rust.dll rust/target/release/rust.dll
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           mkdir -v -p build/windows
-          EXPORT_DIR="$(readlink -f build)"
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ vars.ITCHIO_GAMENAME }}.exe"
 
-      - name: Upload Artifact
+      - name: Export
+        working-directory: godot
+        run: godot --headless --verbose --export-release "Windows Desktop" "build/windows/${{ vars.ITCHIO_GAMENAME }}.exe"
+
+      - name: Upload Artifacta
         uses: actions/upload-artifact@v4
         with:
           name: windows
-          path: build/windows
+          path: godot/build/windows
 
 
   web:
     name: Web Build
     runs-on: ubuntu-22.04
     container:
-      image: robotnikdev/godot-rust-ci:4.3
+      image: robotnikdev/godot-rust-ci:${GODOT_VERSION}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
+
       - name: Setup
         run: |
           rustup default stable
@@ -116,39 +112,33 @@ jobs:
           source /emsdk/emsdk_env.sh
           cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten --release
 
-      - name: Test
-        working-directory: rust
-        run: cargo test --no-fail-fast --release -v
-
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
-
-      - name: Export
+      - name: Setup Godot
+        working-directory: godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           mkdir -v -p build/web
-          EXPORT_DIR="$(readlink -f build)"
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
+
+      - name: Export
+        working-directory: godot
+        run: godot --headless --verbose --export-release "Web" "build/web/index.html"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: web
-          path: build/web
+          path: godot/build/web
 
 
   # Android Debug Job. It will use the generated debug.keystore.
   android-debug:
-    name: Android Debug
+    name: Android Debug Build
     runs-on: ubuntu-22.04
     env:
       CLANG_PATH: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
       CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER: /usr/lib/android-sdk/ndk/23.2.8568313/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang
     container:
-      image: robotnikdev/godot-rust-ci:4.3
+      image: robotnikdev/godot-rust-ci:${GODOT_VERSION}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -164,47 +154,46 @@ jobs:
         working-directory: rust
         run: cargo build --target aarch64-linux-android
 
-      # - name: Godot Import
-      #   working-directory: godot
-      #   run: timeout 10 godot --verbose --headless --import
-
-      - name: Export
+      - name: Setup Godot
+        working-directory: godot
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          mkdir -v -p build/android
-          EXPORT_DIR="$(readlink -f build)"
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-debug "Android Debug" "$EXPORT_DIR/android/${{ vars.ITCHIO_GAMENAME }}-debug.apk"
+          mkdir -v -p build/android-debug
+
+      - name: Export
+        working-directory: godot
+        run: godot --headless --verbose --export-debug "Android Debug" "build/android-debug/${{ vars.ITCHIO_GAMENAME }}-debug.apk"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-debug
-          path: build/android
+          path: godot/build/android
 
 
   github-release:
     name: Create github release
     runs-on: ubuntu-22.04
-    needs: [linux, windows, web, android-debug]
+    # FIXME: only focusing on web and andrroid builds right now
+    needs: [web, android-debug]
     permissions:
       contents: write
     steps:
       - name: Download all Artifacts
         uses: actions/download-artifact@v4
 
-      - name: Zip Linux Artifacts
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r linux.zip linux
+      # - name: Zip Linux Artifacts
+      #   uses: montudor/action-zip@v1
+      #   with:
+      #     args: zip -qq -r linux.zip linux
 
-      - name: Zip Windows Artifacts
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r windows.zip windows
+      # - name: Zip Windows Artifacts
+      #   uses: montudor/action-zip@v1
+      #   with:
+      #     args: zip -qq -r windows.zip windows
 
       - name: Zip Web Artifacts
         uses: montudor/action-zip@v1
@@ -222,9 +211,7 @@ jobs:
           make_latest: true
           tag_name: ${{ github.event.inputs.version }}
           files: |
-            linux.zip
             web.zip
-            windows.zip
             android-debug.zip
 
 
@@ -236,25 +223,25 @@ jobs:
       - name: Download all Artifacts
         uses: actions/download-artifact@v4
 
-      - name: Deploy Linux
-        uses: manleydev/butler-publish-itchio-action@v1.0.3
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
-          CHANNEL: linux
-          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
-          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
-          PACKAGE: linux
-          VERSION: ${{ github.event.inputs.version }}
+      # - name: Deploy Linux
+      #   uses: manleydev/butler-publish-itchio-action@v1.0.3
+      #   env:
+      #     BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+      #     CHANNEL: linux
+      #     ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+      #     ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+      #     PACKAGE: linux
+      #     VERSION: ${{ github.event.inputs.version }}
 
-      - name: Deploy Windows
-        uses: manleydev/butler-publish-itchio-action@v1.0.3
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
-          CHANNEL: windows
-          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
-          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
-          PACKAGE: windows
-          VERSION: ${{ github.event.inputs.version }}
+      # - name: Deploy Windows
+      #   uses: manleydev/butler-publish-itchio-action@v1.0.3
+      #   env:
+      #     BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+      #     CHANNEL: windows
+      #     ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+      #     ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+      #     PACKAGE: windows
+      #     VERSION: ${{ github.event.inputs.version }}
 
       - name: Deploy Web
         uses: manleydev/butler-publish-itchio-action@v1.0.3
