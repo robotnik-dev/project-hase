@@ -15,12 +15,12 @@ jobs:
             command: both
             toolchain: stable
 
-          - os-name: Android
-            runs-on: ubuntu-24.04
-            target: aarch64-linux-android
-            output: librust.so
-            command: both
-            toolchain: nightly
+          # - os-name: Android
+          #   runs-on: ubuntu-24.04
+          #   target: aarch64-linux-android
+          #   output: librust.so
+          #   command: both
+          #   toolchain: stable
 
           - os-name: Windows-x86_64
             runs-on: windows-latest
@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build binary
-        uses: houseabsolute/actions-rust-cross@v1
+        uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
           command: ${{ matrix.platform.command }}
@@ -57,27 +57,77 @@ jobs:
           name: ${{ matrix.platform.os-name }}
           path: rust/target/${{ matrix.platform.target }}/release/${{ matrix.platform.output }}
 
-  # export:
-  #   needs: Build - ${{ matrix.platform.os-name }}
-  #   strategy:
-  #     matrix:
-  #       platform:
-  #         - os-name: Linux-x86_64
-  #           runs-on: ubuntu-24.04
-  #           target: x86_64-unknown-linux-musl
-  #           command: both
+  export:
+    name: Export
+    needs: build
+    permissions: write-all
+    strategy:
+      matrix:
+        platform:
+          - os-name: Linux-x86_64
+            runs-on: ubuntu-24.04
+            library-name: librust.so
+            export-name: Linux
+            godot-platform: linux.x86_64
 
-  #         - os-name: Android
-  #           runs-on: ubuntu-24.04
-  #           target: aarch64-linux-android
-  #           command: both
+          # - os-name: Android
+          #   runs-on: ubuntu-24.04
+          #   library-name: librust.so
+          #   export-name: Android Debug
+          #   godot-platform: linux.x86_64
 
-  #         - os-name: Windows-x86_64
-  #           runs-on: windows-latest
-  #           target: x86_64-pc-windows-msvc
-  #           command: both
+          - os-name: Windows-x86_64
+            runs-on: windows-latest
+            library-name: rust.dll
+            export-name: Windows Desktop
+            godot-platform: win64.exe
 
-  #         - os-name: macOS-x86_64
-  #           runs-on: macOS-latest
-  #           target: x86_64-apple-darwin
-  #           command: both
+          - os-name: macOS-x86_64
+            runs-on: macOS-latest
+            library-name: librust.dylib
+            export-name: macOS
+            godot-platform: macos.universal
+
+    runs-on: ${{ matrix.platform.runs-on }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # - name: install wine
+      #   id: wine_install
+      #   run: |
+      #     sudo apt install wine64
+      #     echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.platform.os-name }}
+          path: rust/target/release/${{ matrix.platform.library-name }}
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        if: ${{ matrix.platform.os-name }} == 'Android'
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        if: ${{ matrix.platform.os-name }} == 'Android'
+        uses: android-actions/setup-android@v3
+
+      - name: export game
+        id: export
+        uses: firebelley/godot-export@v6.0.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_${{ matrix.platform.godot-platform }}.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_export_templates.tpz
+          relative_project_path: godot
+          archive_output: true
+          verbose: true
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform.os-name }}
+          path: ${{ steps.export.outputs.archive_directory }}
