@@ -25,6 +25,7 @@ mono_crash.*.json
 # wasm build tool
 emsdk/
 
+# rust_lib plugin
 backup/
 
 # plugin freeze on github actions. This should fix it
@@ -34,3 +35,6 @@ godot/.godot/*
 
 # dbg files
 *_dbg.*
+
+# rapier plugin
+~*rapier**.dll
