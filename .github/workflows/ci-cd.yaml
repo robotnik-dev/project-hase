@@ -139,6 +139,8 @@ jobs:
   create-release:
     name: Create Github Realease
     needs: export
+    permissions:
+      contents: write
     if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
@@ -146,6 +148,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref }}
+          make_latest: true
           name: Release ${{ github.ref }}
           draft: false
           prerelease: false
@@ -175,6 +178,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: games
+          merge-multiple: true
 
       - name: Zip Build
         uses: montudor/action-zip@v1
