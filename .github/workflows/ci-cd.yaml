@@ -139,7 +139,7 @@ jobs:
   create-release:
     name: Create Github Realease
     needs: export
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - name: Create GitHub Release
@@ -156,7 +156,7 @@ jobs:
   deploy:
     name: Deploy Games
     needs: export
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     strategy:
       matrix:
