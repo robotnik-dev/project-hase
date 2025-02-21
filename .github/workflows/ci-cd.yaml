@@ -178,12 +178,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: games
-          merge-multiple: true
+          path: build/
 
       - name: Zip Build
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r ${{ matrix.platform.channel }}.zip games/${{ matrix.platform.channel }}
+          args: zip -qq -r ${{ matrix.platform.channel }}.zip build/${{ matrix.platform.channel }}
 
       - name: Deploy ${{ matrix.platform.name }}
         uses: manleydev/butler-publish-itchio-action@v1.0.3
