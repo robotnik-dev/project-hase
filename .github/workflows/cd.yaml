@@ -19,13 +19,6 @@ jobs:
             command: both
             toolchain: stable
 
-          # - os-name: Android
-          #   runs-on: ubuntu-latest
-          #   target: aarch64-linux-android
-          #   output: librust.so
-          #   command: both
-          #   toolchain: stable
-
           - os-name: Windows-x86_64
             runs-on: windows-latest
             target: x86_64-pc-windows-msvc
@@ -45,21 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - if: matrix.platform.os-name == 'Web'
-        name: Build ${{ matrix.environment }} binary
-        uses: houseabsolute/actions-rust-cross@v1.0.3
-        with:
-          working-directory: rust
-          # FIXME: https://github.com/cross-rs/cross/issues/1222
-          # cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
-          command: ${{ matrix.platform.command }}
-          target: ${{ matrix.platform.target }}
-          args: ${{ matrix.environment == 'release' && '-Zbuild-std --locked --release' || '-Zbuild-std --locked' }}
-          toolchain: ${{ matrix.platform.toolchain }}
-          strip: true
-
-      - if: matrix.platform.os-name != 'Web'
-        name: Build ${{ matrix.environment }} binary
+      - name: Build ${{ matrix.environment }} binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
@@ -70,6 +49,13 @@ jobs:
           args: ${{ matrix.environment == 'release' && '--locked --release' || '--locked' }}
           toolchain: ${{ matrix.platform.toolchain }}
           strip: true
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}-${{ github.sha }}
+          path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
+          retention-days: 1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -107,23 +93,6 @@ jobs:
           path: rust/target/debug
           pattern: rust-debug-*
           merge-multiple: true
-
-      # - name: Set up JDK 17
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     java-version: '17'
-      #     distribution: 'temurin'
-
-      # - name: Setup Android SDK
-      #   uses: android-actions/setup-android@v3
-
-      # - name: Generate android debug keystore
-      #   run: keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore debug.keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999
-
-      # - name: Use custom editor settings
-      #   run: |
-      #     mkdir -v -p ~/.config/godot
-      #     cp ${{ github.workspace }}/editor_settings-4.tres ~/.config/godot/
 
       - name: Export Games
         id: export
@@ -166,11 +135,6 @@ jobs:
         with:
           args: zip -qq -r release/linux.zip build/linux
 
-      - name: Zip Android Artifacts
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r release/android-debug.zip build/android-debug
-
       - name: Zip Windows Artifacts
         uses: montudor/action-zip@v1
         with:
@@ -210,9 +174,6 @@ jobs:
 
           - name: Linux
             channel: linux
-
-          - name: Android
-            channel: android-debug
 
     steps:
       - name: Download Builds
