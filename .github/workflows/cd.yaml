@@ -57,13 +57,6 @@ jobs:
           path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
           retention-days: 1
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}-${{ github.sha }}
-          path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
-          retention-days: 1
-
 
   export:
     name: Export Game Builds
