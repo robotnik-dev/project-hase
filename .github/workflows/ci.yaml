@@ -19,12 +19,12 @@ jobs:
             command: both
             toolchain: stable
 
-          - os-name: Android
-            runs-on: ubuntu-latest
-            target: aarch64-linux-android
-            output: librust.so
-            command: both
-            toolchain: stable
+          # - os-name: Android
+          #   runs-on: ubuntu-latest
+          #   target: aarch64-linux-android
+          #   output: librust.so
+          #   command: both
+          #   toolchain: stable
 
           - os-name: Windows-x86_64
             runs-on: windows-latest
@@ -40,35 +40,41 @@ jobs:
             command: both
             toolchain: stable
 
+          - os-name: Web
+            runs-on: ubuntu-latest
+            target: wasm32-unknown-emscripten
+            output: rust.wasm
+            command: both
+            toolchain: nightly
+
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-        # FIXME: remove when exporting to release android build with real key
-      - if: matrix.environment == 'release' && matrix.platform.os-name != 'Android'
-        name: Build release binary
+      - if: matrix.platform.os-name == 'Web'
+        name: Build ${{ matrix.environment }} binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
           # FIXME: https://github.com/cross-rs/cross/issues/1222
-          cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
+          # cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
-          args: "--locked --release"
+          args: ${{ matrix.environment == 'release' && '-Zbuild-std --locked --release' || '-Zbuild-std --locked' }}
           toolchain: ${{ matrix.platform.toolchain }}
           strip: true
 
-      - if: matrix.environment == 'debug'
-        name: Build debug binary
+      - if: matrix.platform.os-name != 'Web'
+        name: Build ${{ matrix.environment }} binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
           # FIXME: https://github.com/cross-rs/cross/issues/1222
-          cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
+          # cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
-          args: "--locked"
+          args: ${{ matrix.environment == 'release' && '--locked --release' || '--locked' }}
           toolchain: ${{ matrix.platform.toolchain }}
           strip: true
 
@@ -109,22 +115,22 @@ jobs:
           pattern: rust-debug-*
           merge-multiple: true
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+      # - name: Set up JDK 17
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     java-version: '17'
+      #     distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      # - name: Setup Android SDK
+      #   uses: android-actions/setup-android@v3
 
-      - name: Generate android debug keystore
-        run: keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore debug.keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999
+      # - name: Generate android debug keystore
+      #   run: keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore debug.keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999
 
-      - name: Use custom editor settings
-        run: |
-          mkdir -v -p ~/.config/godot
-          cp ${{ github.workspace }}/editor_settings-4.tres ~/.config/godot/
+      # - name: Use custom editor settings
+      #   run: |
+      #     mkdir -v -p ~/.config/godot
+      #     cp ${{ github.workspace }}/editor_settings-4.tres ~/.config/godot/
 
       - name: Export Games
         id: export
