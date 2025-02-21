@@ -2,9 +2,10 @@ name: Comment Game Download URL on PR
 
 on:
   workflow_run:
-    workflows: ["CI Pipeline"]
     types:
       - completed
+    workflows:
+      - "CI Pipeline"
 
 jobs:
   comment-on-pr:
