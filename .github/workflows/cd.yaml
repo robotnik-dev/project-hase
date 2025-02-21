@@ -45,11 +45,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - if: matrix.environment == 'release'
+        # FIXME: remove when exporting to release android build with real key
+      - if: matrix.environment == 'release' && matrix.platform.os-name != 'Android'
         name: Build release binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
+          # FIXME: https://github.com/cross-rs/cross/issues/1222
+          cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: "--locked --release"
@@ -61,6 +64,8 @@ jobs:
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
+          # FIXME: https://github.com/cross-rs/cross/issues/1222
+          cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: "--locked"
@@ -112,6 +117,14 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+
+      - name: Generate android debug keystore
+        run: keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore debug.keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999
+
+      - name: Use custom editor settings
+        run: |
+          mkdir -v -p ~/.config/godot
+          cp ${{ github.workspace }}/editor_settings-4.tres ~/.config/godot/
 
       - name: Export Games
         id: export
@@ -198,6 +211,9 @@ jobs:
 
           - name: Linux
             channel: linux
+
+          - name: Android
+            channel: android-debug
 
     steps:
       - name: Download Builds
