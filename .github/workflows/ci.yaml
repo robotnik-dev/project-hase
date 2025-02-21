@@ -51,7 +51,7 @@ jobs:
         with:
           working-directory: rust
           # FIXME: https://github.com/cross-rs/cross/issues/1222
-          cross-version: HEAD
+          cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: "--locked --release"
@@ -64,7 +64,7 @@ jobs:
         with:
           working-directory: rust
           # FIXME: https://github.com/cross-rs/cross/issues/1222
-          cross-version: HEAD
+          cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: "--locked"
