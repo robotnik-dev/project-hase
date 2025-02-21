@@ -132,7 +132,7 @@ jobs:
         with:
           name: games
           path: build/
-          retention-days: ${{ github.ref == 'refs/heads/main' && 90 || 1 }}
+          retention-days: ${{ github.ref == 'refs/heads/main' && 90 || 5 }}
 
 
   create-release:
@@ -143,6 +143,12 @@ jobs:
     if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
+      - name: Download Builds
+        uses: actions/download-artifact@v4
+        with:
+          name: games
+          path: build/
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -179,11 +185,6 @@ jobs:
           name: games
           path: build/
 
-      - name: Zip Build
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r ${{ matrix.platform.channel }}.zip build/${{ matrix.platform.channel }}
-
       - name: Deploy ${{ matrix.platform.name }}
         uses: manleydev/butler-publish-itchio-action@v1.0.3
         env:
@@ -191,5 +192,5 @@ jobs:
           CHANNEL: ${{ matrix.platform.channel }}
           ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
           ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
-          PACKAGE: ${{ matrix.platform.channel }}
+          PACKAGE: build/${{ matrix.platform.channel }}
           VERSION: ${{ github.ref_name }}
