@@ -1,15 +1,14 @@
-name: Comment Artifact URL on PR
+name: Comment Game Download URL on PR
 
 on:
   workflow_run:
+    workflows: ["CI Pipeline"]
     types:
-      - "completed"
-    workflows:
-      - "CI/CD Pipeline"
+      - completed
 
 jobs:
   comment-on-pr:
-    if: github.event.workflow_run.conclusion == 'success' && github.ref != 'refs/heads/main'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Get Artifact and Pull request info
@@ -67,6 +66,7 @@ jobs:
             ![badge]
 
             You can find the link to the games down below.
+            The link is only valid for 5 days!
 
             | Name     | Link                    |
             | -------- | ----------------------- |

@@ -1,6 +1,6 @@
 # Project HASE
 
-![CI/CD](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/ci-cd.yaml/badge.svg)
+![CI](https://github.com/robotnik-dev/rust-godot-template/actions/workflows/ci.yaml/badge.svg)
 
 > To build the game you need to follow the [setup](#setup) guide even if you dont touch the rust files at all.
 
