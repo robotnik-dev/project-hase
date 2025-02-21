@@ -19,13 +19,6 @@ jobs:
             command: both
             toolchain: stable
 
-            # - os-name: Android
-            #   runs-on: ubuntu-latest
-            #   target: aarch64-linux-android
-            #   output: librust.so
-            #   command: both
-            #   toolchain: stable
-
           - os-name: Windows-x86_64
             runs-on: windows-latest
             target: x86_64-pc-windows-msvc
@@ -45,25 +38,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - if: matrix.environment == 'release'
-        name: Build release binary
+      - name: Build ${{ matrix.environment }} binary
         uses: houseabsolute/actions-rust-cross@v1.0.3
         with:
           working-directory: rust
+          # FIXME: https://github.com/cross-rs/cross/issues/1222
+          # cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
-          args: "--locked --release"
-          toolchain: ${{ matrix.platform.toolchain }}
-          strip: true
-
-      - if: matrix.environment == 'debug'
-        name: Build debug binary
-        uses: houseabsolute/actions-rust-cross@v1.0.3
-        with:
-          working-directory: rust
-          command: ${{ matrix.platform.command }}
-          target: ${{ matrix.platform.target }}
-          args: "--locked"
+          args: ${{ matrix.environment == 'release' && '--locked --release' || '--locked' }}
           toolchain: ${{ matrix.platform.toolchain }}
           strip: true
 
@@ -103,15 +86,6 @@ jobs:
           path: rust/target/debug
           pattern: rust-debug-*
           merge-multiple: true
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
 
       - name: Export Games
         id: export
