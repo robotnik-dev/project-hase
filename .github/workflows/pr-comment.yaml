@@ -2,14 +2,18 @@ name: Comment Game Download URL on PR
 
 on:
   workflow_run:
-    workflows: ["CI Pipeline"]
     types:
       - completed
+    workflows:
+      - "CI Pipeline"
 
 jobs:
   comment-on-pr:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
     steps:
       - name: Get Artifact and Pull request info
         env:
@@ -46,12 +50,14 @@ jobs:
 
           echo "Head SHA: $HEAD_SHA"
           echo "HEAD_SHA=$HEAD_SHA" >> "$GITHUB_ENV"
+
       - name: Find Comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         id: find-comment
         with:
           issue-number: ${{ env.PR_NUMBER }}
           comment-author: 'github-actions[bot]'
+
       - name: Update Comment
         env:
           JOB_PATH: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.PREVIOUS_JOB_ID }}"
@@ -59,6 +65,7 @@ jobs:
           HEAD_SHA: "${{ env.HEAD_SHA }}"
         uses: peter-evans/create-or-update-comment@v4
         with:
+          token: ${{ secrets.PAT }}
           issue-number: ${{ env.PR_NUMBER }}
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           edit-mode: replace
@@ -66,7 +73,7 @@ jobs:
             ![badge]
 
             You can find the link to the games down below.
-            The link is only valid for 5 days!
+            Beware, the link is only valid for 24 hours!
 
             | Name     | Link                    |
             | -------- | ----------------------- |

@@ -146,6 +146,9 @@ jobs:
           name: games
           path: build/
 
+      - name: Create Release Directory
+        run: mkdir -v -p release
+
       - name: Zip Linux Artifacts
         uses: montudor/action-zip@v1
         with:
