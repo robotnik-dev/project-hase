@@ -16,12 +16,12 @@ jobs:
       matrix:
         environment: [debug, release]
         platform:
-          - os-name: Linux-x86_64
-            runs-on: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            output: librust.so
-            command: both
-            toolchain: stable
+          # - os-name: Linux-x86_64
+          #   runs-on: ubuntu-latest
+          #   target: x86_64-unknown-linux-gnu
+          #   output: librust.so
+          #   command: both
+          #   toolchain: stable
 
             # - os-name: Android
             #   runs-on: ubuntu-latest
@@ -37,12 +37,12 @@ jobs:
             command: both
             toolchain: stable
 
-          - os-name: macOS-x86_64
-            runs-on: macOS-latest
-            target: x86_64-apple-darwin
-            output: librust.dylib
-            command: both
-            toolchain: stable
+          # - os-name: macOS-x86_64
+          #   runs-on: macOS-latest
+          #   target: x86_64-apple-darwin
+          #   output: librust.dylib
+          #   command: both
+          #   toolchain: stable
 
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
@@ -147,9 +147,9 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
           make_latest: true
-          name: Release ${{ github.ref }}
+          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
           files: |
@@ -193,4 +193,4 @@ jobs:
           ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
           ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
           PACKAGE: ${{ matrix.platform.channel }}
-          VERSION: ${{ github.ref }}
+          VERSION: ${{ github.ref_name }}
