@@ -48,12 +48,14 @@ jobs:
 
           echo "Head SHA: $HEAD_SHA"
           echo "HEAD_SHA=$HEAD_SHA" >> "$GITHUB_ENV"
+
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: find-comment
         with:
           issue-number: ${{ env.PR_NUMBER }}
           comment-author: 'github-actions[bot]'
+
       - name: Update Comment
         env:
           JOB_PATH: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.PREVIOUS_JOB_ID }}"
@@ -61,6 +63,7 @@ jobs:
           HEAD_SHA: "${{ env.HEAD_SHA }}"
         uses: peter-evans/create-or-update-comment@v4
         with:
+          token: ${{ secrets.PAT }}
           issue-number: ${{ env.PR_NUMBER }}
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           edit-mode: replace
