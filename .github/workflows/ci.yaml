@@ -129,4 +129,4 @@ jobs:
         with:
           name: games
           path: build/
-          retention-days: 3
+          retention-days: 1
