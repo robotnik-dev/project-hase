@@ -33,6 +33,13 @@ jobs:
             command: both
             toolchain: stable
 
+          - os-name: Android
+            runs-on: ubuntu-latest
+            target: aarch64-linux-android
+            output: librust.so
+            command: both
+            toolchain: stable
+
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
       - name: Checkout
@@ -43,7 +50,7 @@ jobs:
         with:
           working-directory: rust
           # FIXME: https://github.com/cross-rs/cross/issues/1222
-          # cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
+          cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: ${{ matrix.environment == 'release' && '--locked --release' || '--locked' }}
@@ -62,45 +69,68 @@ jobs:
     name: Export Game Builds
     needs: test-and-build
     permissions: write-all
+    strategy:
+      matrix:
+        platform:
+          - os-name: Linux-x86_64
+            export-name: linux
+            output-file: linux.x86_64
+            channel: release
+
+          - os-name: Windows-x86_64
+            export-name: windows
+            output-file: windows.exe
+            channel: release
+
+          - os-name: macOS-x86_64
+            export-name: mac
+            output-file: mac.zip
+            channel: release
+
+          - os-name: Android
+            export-name: android-debug
+            output-file: android-debug.apk
+            channel: debug
+
     runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:${{ vars.GODOT_VERSION }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
-      - name: Install wine
-        id: wine_install
-        run: |
-          sudo apt install wine64
-          echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
-
-      - name: Download Release Artifacts
+      - name: Download Release Artifact
         uses: actions/download-artifact@v4
         with:
           path: rust/target/release
-          pattern: rust-release-*
-          merge-multiple: true
+          pattern: rust-release-${{ matrix.platform.os-name }}-*
 
-      - name: Download Debug Artifacts
+      - name: Download Debug Artifact
         uses: actions/download-artifact@v4
         with:
           path: rust/target/debug
-          pattern: rust-debug-*
-          merge-multiple: true
+          pattern: rust-debug-${{ matrix.platform.os-name }}-*
 
-      - name: Export Games
-        id: export
-        uses: firebelley/godot-export@v6.0.0
-        with:
-          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_export_templates.tpz
-          relative_project_path: godot
-          relative_export_path: build
-          verbose: true
-          wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.stable
+
+      - name: Export
+        working-directory: godot
+        run: |
+          mkdir -v -p export/${{ matrix.platform.export-name }}
+          godot --headless --verbose -e --quit
+          godot --headless --verbose --export-${{ matrix.platform.channel }} "${{ matrix.platform.export-name }}" "export/${{ matrix.platform.export-name }}/${{ matrix.platform.output-file }}"
 
       - name: Upload Development Build
         uses: actions/upload-artifact@v4
         with:
-          name: games
-          path: build/
+          name: ${{ matrix.platform.export-name }}
+          path: export/${{ matrix.platform.export-name }}
           retention-days: 1
