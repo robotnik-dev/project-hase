@@ -2,112 +2,127 @@
 extends Control
 class_name RustLibManager
 
-@export var install_button: Button
-@export var build_button: Button
 @export var output: Label
 
-func rust_is_installed(value: bool):
-	install_button.visible = !value
+class Process:
+	signal finished(error)
+	
+	var stdio: FileAccess
+	var stderr: FileAccess
+	var pid: int
+	
+	func tick():
+		if !_is_process_running():
+			finished.emit(OS.get_process_exit_code(pid))
+	
+	func _is_process_running() -> bool:
+		return OS.is_process_running(pid)
+	
+	func kill() -> int:
+		return OS.kill(pid)
+	
+	func next_line() -> String:
+		return stdio.get_line()
 
-func needs_to_rebuild(value: bool):
-	build_button.visible = value
+var processes: Array[Process] = []
+var rust_installed: bool = false
+var need_rebuild: bool = false
 
-func project_built(value: bool):
-	build_button.visible = !value
+func _process(delta: float) -> void:
+	for process in processes:
+		append_output_message(process.next_line())
+		process.tick()
 
 func set_output_message_array(msg: PackedStringArray):
 	var str = "\n".join(msg)
 	output.text = str
 
 func append_output_message(msg: String):
-	output.text = output.text + "\n" + msg
+	if msg == "":
+		return
+	
+	var time = Time.get_time_string_from_system()
+	var formated_msg = time + ": " + msg
+	output.text = output.text + "\n" + formated_msg + "\n"
 
 func set_output_message(msg: String):
 	output.text = msg
 
-func cargo_diff() -> Array:
-	var output = []
-	var exit_code = OS.execute("CMD.exe", ["/C", "addons\\rust_lib\\helper\\cargo_diff.bat"], output, true)
-	var pretty: PackedStringArray = []
-	for out in output:
-		out = out as String
-		out.replace("\r", "")
-		pretty.append_array(out.split("\n"))
+func clear_output_message():
+	output.text = ""
+
+func execute(os: String, cmd: String) -> Process:
+	var process = Process.new()
+	var process_dict: Dictionary = {}
+	match os:
+		"Windows":
+			process_dict = OS.execute_with_pipe("CMD.exe", ["/C", "addons\\rust_lib\\helper\\" + cmd + ".bat"])
+		"MacOS":
+			# TODO
+			pass
+		"Linux":
+			# TODO
+			pass
 	
-	return [exit_code, pretty]
-
-func check_rust_installation() -> Array:
-	var output = []
-	var exit_code = OS.execute("CMD.exe", ["/C", "addons\\rust_lib\\helper\\check_rust.bat"], output, true)
-	var pretty: PackedStringArray = []
-	for out in output:
-		out = out as String
-		out.replace("\r", "")
-		pretty.append_array(out.split("\n"))
+	process.stdio = process_dict["stdio"]
+	process.stderr = process_dict["stderr"]
+	process.pid = process_dict["pid"]
 	
-	return [exit_code, pretty]
+	return process
 
-func install_rust() -> Array:
-	var output = []
-	var exit_code = OS.execute("CMD.exe", ["/C", "addons\\rust_lib\\helper\\install_rust.bat"], output, true)
-	var pretty: PackedStringArray = []
-	for out in output:
-		out = out as String
-		out.replace("\r", "")
-		pretty.append_array(out.split("\n"))
+func cargo_diff() -> Process:
+	return execute(OS.get_name(), "cargo_diff")
+
+func check_rust() -> Process:
+	return execute(OS.get_name(), "check_rust")
+
+func install_rust() -> Process:
+	return execute(OS.get_name(), "install_rust")
+
+func build_rust() -> Process:
+	return execute(OS.get_name(), "build_rust")
+
+func _on_check_rust_finished(error: int, process: Process):
+	processes.erase(process)
+	if error != OK:
+		append_output_message("Rust will be installed. Please wait ...")
+		var p_install_rust = install_rust()
+		processes.append(p_install_rust)
+		p_install_rust.finished.connect(_on_install_rust_finished.bind(p_install_rust))
 	
-	return [exit_code, pretty]
-
-func build_rust() -> Array:
-	var output = []
-	var exit_code = OS.execute("CMD.exe", ["/C", "addons\\rust_lib\\helper\\build_rust.bat"], output, true)
-	var pretty: PackedStringArray = []
-	for out in output:
-		out = out as String
-		out.replace("\r", "")
-		pretty.append_array(out.split("\n"))
-	
-	return [exit_code, pretty]
-
-
-func _on_install_pressed() -> void:
-	set_output_message("Installing rust, please wait...")
-	var error = install_rust()
-	if error[0] == 1:
-		set_output_message_array(error[1])
 	else:
-		rust_is_installed(true)
-		set_output_message("Rust was installed. \n Please reload the project!")
+		# check latest changes
+		var p_cargo_diff = cargo_diff()
+		processes.append(p_cargo_diff)
+		p_cargo_diff.finished.connect(_on_cargo_diff_finished.bind(p_cargo_diff))
 
-
-func _on_build_pressed() -> void:
-	set_output_message("Building the project, please wait...")
-	var error = build_rust()
-	set_output_message_array(error[1])
-	if error[0] == 1:
-		needs_to_rebuild(true)
+func _on_cargo_diff_finished(error: int, process: Process):
+	processes.erase(process)
+	if error == OK:
+		append_output_message("Rebuilding the project. Please wait ...")
+		var p_build_rust = build_rust()
+		processes.append(p_build_rust)
+		p_build_rust.finished.connect(_on_build_rust_finished.bind(p_build_rust))
 	else:
-		project_built(true)
-		append_output_message("Everything up to date")
-		set_output_message("Everything up to date. \n Please reload the project!")
+		append_output_message("Code is up to date!")
 
-func _on_visibility_changed() -> void:
-	install_button.visible = false
-	build_button.visible = false
-	if visible:
-		set_output_message("Checking rust installation, please wait...")
-		var install_error = check_rust_installation()
-		if install_error[0] == 1:
-			set_output_message_array(install_error[1])
-			rust_is_installed(false)
-		else:
-			rust_is_installed(true)
-			set_output_message("Rust ist installed. \n Checking for new code changes, please wait...")
-			var cargo_error = cargo_diff()
-			set_output_message_array(cargo_error[1])
-			if cargo_error[0] == 1:
-				needs_to_rebuild(true)
-				append_output_message("Please rebuild")
-			else:
-				append_output_message("Everything up to date")
-				needs_to_rebuild(false)
+func _on_build_rust_finished(error: int, process: Process):
+	processes.erase(process)
+	if error == OK:
+		append_output_message("Code is up to date!")
+		append_output_message("Please RELOAD! the project for changes to take effect.")
+	else:
+		append_output_message("Some error happend while building. Please try again")
+
+func _on_install_rust_finished(error: int, process: Process):
+	processes.erase(process)
+	if error == OK:
+		append_output_message("Please RELOAD! the project for changes to take effect.")
+	else:
+		append_output_message("Some error happend while installing. Please try again")
+
+func _on_reload_pressed() -> void:
+	clear_output_message()
+	var p_check_rust = check_rust()
+	processes.append(p_check_rust)
+	p_check_rust.finished.connect(_on_check_rust_finished.bind(p_check_rust))
