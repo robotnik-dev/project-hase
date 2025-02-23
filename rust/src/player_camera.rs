@@ -29,7 +29,7 @@ struct PlayerCamera {
 
 #[godot_api]
 impl ICamera3D for PlayerCamera {
-    fn enter_tree(&mut self) {
+    fn ready(&mut self) {
         self.base_mut()
             .set_rotation_degrees(Vector3::new(0., -90., 0.));
         self.base_mut().set_as_top_level(true);
@@ -53,9 +53,6 @@ impl ICamera3D for PlayerCamera {
 impl PlayerCamera {
     #[func]
     fn set_distance(&mut self, value: f32) {
-        if !self.base().is_inside_tree() {
-            return;
-        }
         let new_distance = value;
         self.distance = new_distance;
         self.base_mut().set_size(new_distance);
@@ -65,9 +62,6 @@ impl PlayerCamera {
     }
     #[func]
     fn set_height(&mut self, value: f32) {
-        if !self.base().is_inside_tree() {
-            return;
-        }
         let new_height = value;
         self.height = new_height;
         self.base_mut().set_v_offset(new_height);
