@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7o1mgn5e233"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_a036d"]
+resource_local_to_scene = true
+
+[node name="Output" type="Label"]
+label_settings = SubResource("LabelSettings_a036d")
+horizontal_alignment = 1
+vertical_alignment = 1

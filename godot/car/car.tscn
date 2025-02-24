@@ -16,8 +16,6 @@ points = PackedVector3Array(-0.5, -1, 0, -0.497651, -1, -0.0490407, -0.497651, -
 [node name="Car" type="Car" node_paths=PackedStringArray("crash_detects", "wheels")]
 crash_detects = [NodePath("MeshInstance3D/RayCast3D"), NodePath("MeshInstance3D/RayCast3D2"), NodePath("MeshInstance3D/RayCast3D3")]
 wheels = [NodePath("Wheels/WheelFront"), NodePath("Wheels/wheelBack")]
-engine_power = 1500.0
-tilt_speed = 800.0
 collision_layer = 2
 axis_lock_linear_x = true
 axis_lock_angular_y = true
