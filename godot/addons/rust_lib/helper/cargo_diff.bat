@@ -4,14 +4,14 @@ setlocal enabledelayedexpansion
 :: Set your source and backup directories here
 set "SOURCE_DIR=%CD%\..\rust\src"
 set "BACKUP_DIR=%CD%\..\backup"
-set "CHANGES_DETECTED=0"
+set "CHANGES_DETECTED=1"
 
 :: Create backup directory if it doesn't exist
 if not exist "%BACKUP_DIR%" (
     mkdir "%BACKUP_DIR%"
     echo Created backup directory: %BACKUP_DIR%
     echo.
-    set "CHANGES_DETECTED=1"
+    set "CHANGES_DETECTED=0"
 )
 
 :: First, check for new or modified files
@@ -25,12 +25,12 @@ for %%F in ("%SOURCE_DIR%\*.*") do (
         if errorlevel 1 (
             echo Modified file detected: !FILENAME!
             set "FOUND_CHANGES=1"
-            set "CHANGES_DETECTED=1"
+            set "CHANGES_DETECTED=0"
         )
     ) else (
         echo New file detected: !FILENAME!
         set "FOUND_CHANGES=1"
-        set "CHANGES_DETECTED=1"
+        set "CHANGES_DETECTED=0"
     )
 
     :: If changes found, update backup
@@ -44,12 +44,8 @@ for %%F in ("%BACKUP_DIR%\*.*") do (
     set "FILENAME=%%~nxF"
     if not exist "%SOURCE_DIR%\!FILENAME!" (
         del "%BACKUP_DIR%\!FILENAME!"
-        set "CHANGES_DETECTED=1"
+        set "CHANGES_DETECTED=0"
     )
-)
-
-if %CHANGES_DETECTED% equ 0 (
-    echo No changes detected.
 )
 
 exit /b %CHANGES_DETECTED%

@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bsqsy5i0srsg1"]
+[gd_scene load_steps=6 format=3 uid="uid://bsqsy5i0srsg1"]
 
 [ext_resource type="Script" path="res://addons/rust_lib/rust_lib_manager.gd" id="1_l5upl"]
-[ext_resource type="StyleBox" uid="uid://c4lyxxb5kjjig" path="res://addons/rust_lib/styles/buttons/hover.tres" id="2_ms0y7"]
-[ext_resource type="StyleBox" uid="uid://c6tpeoh0jlxxc" path="res://addons/rust_lib/styles/buttons/normal.tres" id="2_tag64"]
-[ext_resource type="StyleBox" uid="uid://c212wf0kedhqk" path="res://addons/rust_lib/styles/buttons/hover_pressed.tres" id="2_ucsii"]
+[ext_resource type="Texture2D" uid="uid://bog6jccwusk1f" path="res://addons/rust_lib/assets/reload-icon.png" id="2_3n5xs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m6jjt"]
 bg_color = Color(0, 0.117647, 0.345098, 0.478431)
@@ -24,7 +22,7 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-[node name="RustLibManager" type="Control" node_paths=PackedStringArray("install_button", "build_button", "output")]
+[node name="RustLibManager" type="Control" node_paths=PackedStringArray("label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,9 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("1_l5upl")
-install_button = NodePath("PanelContainer/VBoxContainer/CenterContainer/Install")
-build_button = NodePath("PanelContainer/VBoxContainer/CenterContainer/Build")
-output = NodePath("PanelContainer/VBoxContainer/HBoxContainer3/PanelContainer/Output")
+label_container = NodePath("PanelContainer/VBoxContainer/HBoxContainer3/PanelContainer/ScrollContainer/VBoxContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -52,41 +48,24 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Rust library manager"
 label_settings = SubResource("LabelSettings_a7swj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Reload" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("2_3n5xs")
+flat = true
+
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Install" type="Button" parent="PanelContainer/VBoxContainer/CenterContainer"]
-visible = false
-custom_minimum_size = Vector2(300, 200)
-layout_mode = 2
-theme_override_font_sizes/font_size = 45
-theme_override_styles/hover_pressed = ExtResource("2_ucsii")
-theme_override_styles/hover = ExtResource("2_ms0y7")
-theme_override_styles/pressed = ExtResource("2_ucsii")
-theme_override_styles/normal = ExtResource("2_tag64")
-text = "install Rust"
-
-[node name="Build" type="Button" parent="PanelContainer/VBoxContainer/CenterContainer"]
-custom_minimum_size = Vector2(300, 200)
-layout_mode = 2
-theme_override_font_sizes/font_size = 45
-theme_override_styles/hover_pressed = ExtResource("2_ucsii")
-theme_override_styles/hover = ExtResource("2_ms0y7")
-theme_override_styles/pressed = ExtResource("2_ucsii")
-theme_override_styles/normal = ExtResource("2_tag64")
-text = "build
-project"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -97,16 +76,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_6eam1")
 
-[node name="Output" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HBoxContainer3/PanelContainer"]
 layout_mode = 2
-size_flags_vertical = 1
-text = "Monitoring file: C:\\Users\\robot\\Documents\\projects\\project-hase\\godot\\..\\rust\\target\\debug\\rust.dll
-Build has changed!
 
-Please rebuild"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer3/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/CenterContainer/Install" to="." method="_on_install_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/CenterContainer/Build" to="." method="_on_build_pressed"]
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Reload" to="." method="_on_reload_pressed"]

@@ -16,11 +16,11 @@ struct Car {
     wheels: Array<Gd<MeshInstance3D>>,
 
     #[export]
-    #[init(val = 1000.)]
+    #[init(val = 1800.)]
     engine_power: f32,
 
     #[export]
-    #[init(val = 400.)]
+    #[init(val = 800.)]
     tilt_speed: f32,
 
     base: Base<RigidBody3D>,
