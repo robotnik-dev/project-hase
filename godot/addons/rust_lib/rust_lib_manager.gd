@@ -2,7 +2,9 @@
 extends Control
 class_name RustLibManager
 
-@export var output: Label
+@export var label_container: VBoxContainer
+
+var label_scene = preload("res://addons/rust_lib/scenes/output_label.tscn")
 
 class Process:
 	signal finished(error)
@@ -10,6 +12,11 @@ class Process:
 	var stdio: FileAccess
 	var stderr: FileAccess
 	var pid: int
+	
+	func _init(process_dict: Dictionary) -> void:
+		self.stdio = process_dict["stdio"]
+		self.stderr = process_dict["stderr"]
+		self.pid = process_dict["pid"]
 	
 	func tick():
 		if !_is_process_running():
@@ -22,70 +29,54 @@ class Process:
 		return OS.kill(pid)
 	
 	func next_line() -> String:
-		return stdio.get_line()
+		var next = stdio.get_line()
+		return next if next != "" else stderr.get_line()
 
 var processes: Array[Process] = []
-var rust_installed: bool = false
-var need_rebuild: bool = false
 
 func _process(delta: float) -> void:
 	for process in processes:
 		append_output_message(process.next_line())
 		process.tick()
 
-func set_output_message_array(msg: PackedStringArray):
-	var str = "\n".join(msg)
-	output.text = str
 
-func append_output_message(msg: String):
+func append_output_message(msg: String, color: Color = Color.AZURE):
 	if msg == "":
 		return
 	
 	var time = Time.get_time_string_from_system()
 	var formated_msg = time + ": " + msg
-	output.text = output.text + "\n" + formated_msg + "\n"
-
-func set_output_message(msg: String):
-	output.text = msg
+	var label: Label = label_scene.instantiate()
+	label.text = formated_msg
+	label.label_settings.font_color = color
+	
+	label_container.add_child(label)
 
 func clear_output_message():
-	output.text = ""
+	for c in label_container.get_children():
+		c.queue_free()
 
-func execute(os: String, cmd: String) -> Process:
-	var process = Process.new()
-	var process_dict: Dictionary = {}
-	match os:
-		"Windows":
-			process_dict = OS.execute_with_pipe("CMD.exe", ["/C", "addons\\rust_lib\\helper\\" + cmd + ".bat"])
-		"MacOS":
-			# TODO
-			pass
-		"Linux":
-			# TODO
-			pass
-	
-	process.stdio = process_dict["stdio"]
-	process.stderr = process_dict["stderr"]
-	process.pid = process_dict["pid"]
-	
-	return process
+func execute(cmd: String, extra_args: Array = []) -> Process:
+	var args = ["/C", "addons\\rust_lib\\helper\\" + cmd + ".bat"]
+	args.append_array(extra_args)
+	return Process.new(OS.execute_with_pipe("CMD.exe", args))
 
 func cargo_diff() -> Process:
-	return execute(OS.get_name(), "cargo_diff")
+	return execute("cargo_diff")
 
 func check_rust() -> Process:
-	return execute(OS.get_name(), "check_rust")
+	return execute("check_rust")
 
 func install_rust() -> Process:
-	return execute(OS.get_name(), "install_rust")
+	return execute("install_rust")
 
 func build_rust() -> Process:
-	return execute(OS.get_name(), "build_rust")
+	return execute("build_rust")
 
 func _on_check_rust_finished(error: int, process: Process):
 	processes.erase(process)
 	if error != OK:
-		append_output_message("Rust will be installed. Please wait ...")
+		append_output_message("Rust will be installed. Please wait ...", Color.DEEP_PINK)
 		var p_install_rust = install_rust()
 		processes.append(p_install_rust)
 		p_install_rust.finished.connect(_on_install_rust_finished.bind(p_install_rust))
@@ -99,30 +90,50 @@ func _on_check_rust_finished(error: int, process: Process):
 func _on_cargo_diff_finished(error: int, process: Process):
 	processes.erase(process)
 	if error == OK:
-		append_output_message("Rebuilding the project. Please wait ...")
+		append_output_message("Rebuilding the project. Please wait ...", Color.DEEP_PINK)
 		var p_build_rust = build_rust()
 		processes.append(p_build_rust)
 		p_build_rust.finished.connect(_on_build_rust_finished.bind(p_build_rust))
 	else:
-		append_output_message("Code is up to date!")
+		append_output_message("Code is up to date!", Color.CHARTREUSE)
 
 func _on_build_rust_finished(error: int, process: Process):
 	processes.erase(process)
 	if error == OK:
-		append_output_message("Code is up to date!")
-		append_output_message("Please RELOAD! the project for changes to take effect.")
+		append_output_message(
+			"Please RELOAD the Editor (and any other terminal or VSCode) for changes to take effect. \n
+			If this message keeps reappearing, restart your computer",
+			Color.ORANGE_RED
+		)
 	else:
-		append_output_message("Some error happend while building. Please try again")
+		append_output_message(
+			"Some error happend while building. Please try again",
+			Color.ORANGE_RED
+		)
 
 func _on_install_rust_finished(error: int, process: Process):
 	processes.erase(process)
 	if error == OK:
-		append_output_message("Please RELOAD! the project for changes to take effect.")
+		append_output_message(
+			"Please RELOAD the Editor (and any other terminal or VSCode) for changes to take effect. \n
+			If this message keeps reappearing, restart your computer",
+			Color.ORANGE_RED
+		)
 	else:
-		append_output_message("Some error happend while installing. Please try again")
+		append_output_message(
+			"Some error happend while building. Please try again",
+			Color.ORANGE_RED
+		)
 
 func _on_reload_pressed() -> void:
 	clear_output_message()
+	if OS.get_name() != "Windows":
+		append_output_message(
+			"This works only on Windows machines. \n
+			Install Rust and build the project manually",
+			Color.ORANGE_RED
+		)
+		return
 	var p_check_rust = check_rust()
 	processes.append(p_check_rust)
 	p_check_rust.finished.connect(_on_check_rust_finished.bind(p_check_rust))
