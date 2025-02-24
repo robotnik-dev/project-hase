@@ -16,7 +16,7 @@ struct Car {
     wheels: Array<Gd<MeshInstance3D>>,
 
     #[export]
-    #[init(val = 1900.)]
+    #[init(val = 1800.)]
     engine_power: f32,
 
     #[export]
