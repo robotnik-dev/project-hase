@@ -1,6 +1,8 @@
 use godot::{
-    classes::{InputEvent, InputEventKey, InputEventScreenTouch, InputMap, Os},
-    global::Key,
+    classes::{
+        InputEvent, InputEventJoypadButton, InputEventKey, InputMap,
+    },
+    global::{JoyButton, Key},
     obj::WithBaseField,
     prelude::*,
 };
@@ -27,16 +29,16 @@ impl CustomPlayerInput {
 #[class(base=Node)]
 struct PlayerInput {
     #[export]
-    drive_forward: Array<Gd<InputEventKey>>,
+    drive_forward: Array<Gd<InputEvent>>,
 
     #[export]
-    drive_backward: Array<Gd<InputEventKey>>,
+    drive_backward: Array<Gd<InputEvent>>,
 
     #[export]
-    tilt_forward: Array<Gd<InputEventKey>>,
+    tilt_forward: Array<Gd<InputEvent>>,
 
     #[export]
-    tilt_backward: Array<Gd<InputEventKey>>,
+    tilt_backward: Array<Gd<InputEvent>>,
 
     base: Base<Node>,
 }
@@ -74,14 +76,33 @@ impl INode for PlayerInput {
         let mut right_key = InputEventKey::new_gd();
         right_key.set_keycode(Key::RIGHT);
 
-        drive_forward.push(&w_key);
-        drive_forward.push(&up_key);
-        drive_backward.push(&s_key);
-        drive_backward.push(&down_key);
-        tilt_forward.push(&d_key);
-        tilt_forward.push(&right_key);
-        tilt_backward.push(&a_key);
-        tilt_backward.push(&left_key);
+        let mut a_button = InputEventJoypadButton::new_gd();
+        a_button.set_button_index(JoyButton::A);
+
+        let mut b_button = InputEventJoypadButton::new_gd();
+        b_button.set_button_index(JoyButton::B);
+
+        let mut r_bumper = InputEventJoypadButton::new_gd();
+        r_bumper.set_button_index(JoyButton::RIGHT_SHOULDER);
+
+        let mut l_bumper = InputEventJoypadButton::new_gd();
+        l_bumper.set_button_index(JoyButton::LEFT_SHOULDER);
+
+        // Keyboard
+        drive_forward.push(&w_key.upcast());
+        drive_forward.push(&up_key.upcast());
+        drive_backward.push(&s_key.upcast());
+        drive_backward.push(&down_key.upcast());
+        tilt_forward.push(&d_key.upcast());
+        tilt_forward.push(&right_key.upcast());
+        tilt_backward.push(&a_key.upcast());
+        tilt_backward.push(&left_key.upcast());
+
+        // Controller
+        drive_forward.push(&a_button.upcast());
+        drive_backward.push(&b_button.upcast());
+        tilt_forward.push(&r_bumper.upcast());
+        tilt_backward.push(&l_bumper.upcast());
 
         if !InputMap::singleton().has_action(CustomPlayerInput::DriveForward.as_str()) {
             InputMap::singleton().add_action(CustomPlayerInput::DriveForward.as_str());
@@ -124,68 +145,28 @@ impl INode for PlayerInput {
         }
     }
     fn unhandled_input(&mut self, event: Gd<InputEvent>) {
-        if Os::singleton().has_feature("mobile") {
-            // get touch input
-            if let Ok(touch) = event.try_cast::<InputEventScreenTouch>() {
-                if touch.get_position().x
-                    >= self
-                        .base()
-                        .get_viewport()
-                        .unwrap()
-                        .get_window()
-                        .unwrap()
-                        .get_size()
-                        .x as f32
-                {
-                    // right side of the screen
-                    if touch.is_pressed() {
-                        self.base_mut().emit_signal("drive_forward_pressed", &[]);
-                    } else {
-                        self.base_mut().emit_signal("drive_forward_released", &[]);
-                    }
-                } else if touch.get_position().x
-                    < self
-                        .base()
-                        .get_viewport()
-                        .unwrap()
-                        .get_window()
-                        .unwrap()
-                        .get_size()
-                        .x as f32
-                {
-                    // left side of the screen
-                    if touch.is_pressed() {
-                        self.base_mut().emit_signal("drive_backward_pressed", &[]);
-                    } else {
-                        self.base_mut().emit_signal("drive_backward_released", &[]);
-                    }
-                }
-            }
-        } else {
-            // its on PC or Web
-            if event.is_action_pressed("drive_forward") {
-                self.base_mut().emit_signal("drive_forward_pressed", &[]);
-            } else if event.is_action_released("drive_forward") {
-                self.base_mut().emit_signal("drive_forward_released", &[]);
-            }
+        if event.is_action_pressed("drive_forward") {
+            self.base_mut().emit_signal("drive_forward_pressed", &[]);
+        } else if event.is_action_released("drive_forward") {
+            self.base_mut().emit_signal("drive_forward_released", &[]);
+        }
 
-            if event.is_action_pressed("drive_backward") {
-                self.base_mut().emit_signal("drive_backward_pressed", &[]);
-            } else if event.is_action_released("drive_backward") {
-                self.base_mut().emit_signal("drive_backward_released", &[]);
-            }
+        if event.is_action_pressed("drive_backward") {
+            self.base_mut().emit_signal("drive_backward_pressed", &[]);
+        } else if event.is_action_released("drive_backward") {
+            self.base_mut().emit_signal("drive_backward_released", &[]);
+        }
 
-            if event.is_action_pressed("tilt_forward") {
-                self.base_mut().emit_signal("tilt_forward_pressed", &[]);
-            } else if event.is_action_released("tilt_forward") {
-                self.base_mut().emit_signal("tilt_forward_released", &[]);
-            }
+        if event.is_action_pressed("tilt_forward") {
+            self.base_mut().emit_signal("tilt_forward_pressed", &[]);
+        } else if event.is_action_released("tilt_forward") {
+            self.base_mut().emit_signal("tilt_forward_released", &[]);
+        }
 
-            if event.is_action_pressed("tilt_backward") {
-                self.base_mut().emit_signal("tilt_backward_pressed", &[]);
-            } else if event.is_action_released("tilt_backward") {
-                self.base_mut().emit_signal("tilt_backward_released", &[]);
-            }
+        if event.is_action_pressed("tilt_backward") {
+            self.base_mut().emit_signal("tilt_backward_pressed", &[]);
+        } else if event.is_action_released("tilt_backward") {
+            self.base_mut().emit_signal("tilt_backward_released", &[]);
         }
     }
 }

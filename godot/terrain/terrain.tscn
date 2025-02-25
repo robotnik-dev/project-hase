@@ -2,14 +2,20 @@
 
 [ext_resource type="Script" path="res://terrain/terrain.gd" id="1_eq2fa"]
 
-[sub_resource type="Curve3D" id="Curve3D_lwu8w"]
+[sub_resource type="Curve3D" id="Curve3D_e7of6"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, 0, 5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [node name="Terrain" type="Path3D"]
-curve = SubResource("Curve3D_lwu8w")
+curve = SubResource("Curve3D_e7of6")
 script = ExtResource("1_eq2fa")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(-2, -2, -2, 2, 2, 2, 2, -2)
+polygon = PackedVector2Array(-2, -10, -2, 2, 2, 2, 2, -10)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
