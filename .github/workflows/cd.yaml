@@ -151,8 +151,8 @@ jobs:
             release/*
 
 
-  deploy:
-    name: Deploy Games
+  deploy-itchio:
+    name: Deploy Games To Itch.io
     needs: export
     if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
@@ -184,3 +184,17 @@ jobs:
           ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
           PACKAGE: build/${{ matrix.platform.channel }}
           VERSION: ${{ github.ref_name }}
+
+  discord-notify-itchio:
+    name: Notify Discord Itch.io
+    needs: deploy-itchio
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        uses: stegzilla/discord-notify@v4
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          title: Neue Version veröffentlicht
+          message: "Spiel: **${{ vars.ITCHIO_GAMENAME }}**\nLink zur aktuellen Version: ${{ secrets.ITCHIO_SECRET_URL }}"
+          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          username: New Deployment Notifier
