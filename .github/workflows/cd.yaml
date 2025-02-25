@@ -185,8 +185,8 @@ jobs:
           PACKAGE: build/${{ matrix.platform.channel }}
           VERSION: ${{ github.ref_name }}
 
-  discord-notify:
-    name: Notify Discord
+  discord-notify-itchio:
+    name: Notify Discord Itch.io
     needs: deploy-itchio
     runs-on: ubuntu-latest
     steps:
