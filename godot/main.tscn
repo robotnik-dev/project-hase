@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dif07paq3g40e"]
+[gd_scene load_steps=2 format=3 uid="uid://dif07paq3g40e"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_10p37"]
-[ext_resource type="PackedScene" uid="uid://b8b7qv1wr05ym" path="res://maps/level_1.tscn" id="2_nha74"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_10p37")
-level_scenes = Array[PackedScene]([ExtResource("2_nha74")])
