@@ -5,10 +5,10 @@
 [sub_resource type="Curve3D" id="Curve3D_7j111"]
 resource_local_to_scene = true
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0, 0, -1.46316, 0, 0, 0, 0, 0, 0, 0, 0, 10),
-"tilts": PackedFloat32Array(0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0, 0, -3.36694, 0, 0, 0, 0, 0, 0, 0, 0, 3.46901, 0, 0, 0, 0, 0, 0, 0, 0, 10),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
 }
-point_count = 3
+point_count = 4
 
 [node name="Node3D" type="Node3D"]
 
