@@ -1,11 +1,15 @@
 extends Node
 
+## In seconds
+@export var wait_until_next_level: float = 2.0
+## when on: replays the level as soon as the car hits the finish line.
+## when off: plays the next level or prints "no more levels" in case its only
+## one level left
+@export var replay_first_level: bool = false
+
 @export_subgroup("Level")
 ## In Order: First item is level 1 and so on.
 @export var level_scenes: Array[PackedScene]
-
-## In seconds
-@export var wait_until_next_level: float = 2.0
 
 var current_level: Level = null
 var current_level_idx = 0
@@ -66,4 +70,7 @@ func _on_car_crashed():
 	reload_level()
 
 func _on_car_finish():
-	get_tree().create_timer(wait_until_next_level).timeout.connect(next_level)
+	if replay_first_level:
+		reload_level()
+	else:
+		get_tree().create_timer(wait_until_next_level).timeout.connect(next_level)

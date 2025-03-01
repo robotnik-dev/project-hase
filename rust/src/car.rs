@@ -1,4 +1,5 @@
 use godot::{
+    builtin::math::ApproxEq,
     classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D},
     global::sign,
     prelude::*,
@@ -22,6 +23,9 @@ struct Car {
     #[export]
     #[init(val = 800.)]
     tilt_speed: f32,
+
+    #[init(val = Vector3 { x: 0.0, y: 0.0, z: 999.0 })]
+    end_position: Vector3,
 
     base: Base<RigidBody3D>,
 }
@@ -60,12 +64,29 @@ impl IRigidBody3D for Car {
             wheel.rotate_object_local(Vector3::DOWN, move_direction * (delta as f32) * speed);
         });
     }
+
+    fn process(&mut self, _delta: f64) {
+        let car_pos = self.base().get_global_position();
+        let end_pos = self.end_position;
+        if end_pos.z - car_pos.z <= 0.1 {
+            self.base_mut().emit_signal("finish", &[]);
+            self.base_mut().set_process(false);
+        }
+    }
 }
 
 #[godot_api]
 impl Car {
+    #[func]
+    fn set_end_position(&mut self, end_pos: Vector3) {
+        self.end_position = end_pos;
+    }
+
     #[signal]
     fn crashed();
+
+    #[signal]
+    fn finish();
 
     /// should return a digits between -1.0 (tilt backward) and +1.0 (tilt forward)
     #[func(virtual)]

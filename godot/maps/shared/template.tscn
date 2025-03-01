@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfd2b42oka31p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_guk5d"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_p53i6"]
+sky_material = SubResource("ProceduralSkyMaterial_guk5d")
+
+[sub_resource type="Environment" id="Environment_sjlnm"]
+background_mode = 2
+sky = SubResource("Sky_p53i6")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2rli2"]
+albedo_color = Color(0.140794, 0.309945, 0.557043, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k65at"]
+material = SubResource("StandardMaterial3D_2rli2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lvii"]
+albedo_color = Color(0.203761, 0.428345, 0.237731, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_nvil5"]
+material = SubResource("StandardMaterial3D_4lvii")
+
+[node name="Template" type="Level" node_paths=PackedStringArray("start", "end")]
+start = NodePath("Start")
+end = NodePath("End")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sjlnm")
+
+[node name="Start" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+layers = 524288
+mesh = SubResource("SphereMesh_k65at")
+
+[node name="Label3D" type="Label3D" parent="Start"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+layers = 524288
+pixel_size = 0.05
+billboard = 1
+text = "Start"
+
+[node name="End" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
+layers = 524288
+mesh = SubResource("SphereMesh_nvil5")
+
+[node name="Label3D" type="Label3D" parent="End"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+layers = 524288
+pixel_size = 0.05
+billboard = 1
+text = "End"

@@ -99,6 +99,8 @@ jobs:
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_export_templates.tpz
           relative_project_path: godot
           relative_export_path: build
+          # TODO: for android and web later. You can just name the presets you want to export
+          # presets_to_export: "win, linux, mac"
           verbose: true
           wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
 

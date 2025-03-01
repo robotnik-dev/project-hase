@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://thv07qg6jtlt"
-path="res://.godot/imported/TestLevel.gltf-f8ee2a92b4fef1b1cad1b74da69c6ebc.scn"
+uid="uid://007rdvl1nrk1"
+path="res://.godot/imported/simple_straight.gltf-379f26e35d3b053a9af45392a34c911c.scn"
 
 [deps]
 
-source_file="res://assets/level/TestLevel.gltf"
-dest_files=["res://.godot/imported/TestLevel.gltf-f8ee2a92b4fef1b1cad1b74da69c6ebc.scn"]
+source_file="res://assets/terrain/simple_straight.gltf"
+dest_files=["res://.godot/imported/simple_straight.gltf-379f26e35d3b053a9af45392a34c911c.scn"]
 
 [params]
 
@@ -25,7 +25,7 @@ meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
 skins/use_named_skins=true
-animation/import=false
+animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
