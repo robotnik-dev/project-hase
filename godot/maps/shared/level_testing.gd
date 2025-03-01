@@ -33,6 +33,8 @@ func start_level():
 		current_car.finish.connect(_on_car_finish)
 	if !current_car.crashed.is_connected(_on_car_crashed):
 		current_car.crashed.connect(_on_car_crashed)
+	if !current_car.flipped.is_connected(_on_car_flipped):
+		current_car.flipped.connect(_on_car_flipped)
 	add_child(current_car)
 	
 	# setup level
@@ -74,3 +76,10 @@ func _on_car_finish():
 		reload_level()
 	else:
 		get_tree().create_timer(wait_until_next_level).timeout.connect(next_level)
+
+func _on_car_flipped(direction: StringName, count: int):
+	match direction:
+		"front":
+			print("front flip number " + str(count))
+		"back":
+			print("back flip number " + str(count))

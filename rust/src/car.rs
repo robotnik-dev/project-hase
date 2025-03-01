@@ -1,5 +1,4 @@
 use godot::{
-    builtin::math::ApproxEq,
     classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D},
     global::sign,
     prelude::*,
@@ -87,6 +86,9 @@ impl Car {
 
     #[signal]
     fn finish();
+
+    #[signal]
+    fn flipped(direction: StringName, count: i64);
 
     /// should return a digits between -1.0 (tilt backward) and +1.0 (tilt forward)
     #[func(virtual)]

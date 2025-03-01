@@ -77,6 +77,8 @@ size = 20.0
 
 [node name="PlayerInput" type="PlayerInput" parent="."]
 
+[node name="FlipDetection" type="FlipDetection" parent="."]
+
 [connection signal="drive_backward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_backward_pressed"]
 [connection signal="drive_backward_released" from="PlayerInput" to="." method="_on_player_input_drive_backward_released"]
 [connection signal="drive_forward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_forward_pressed"]
@@ -85,3 +87,4 @@ size = 20.0
 [connection signal="tilt_backward_released" from="PlayerInput" to="." method="_on_player_input_tilt_backward_released"]
 [connection signal="tilt_forward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_forward_pressed"]
 [connection signal="tilt_forward_released" from="PlayerInput" to="." method="_on_player_input_tilt_forward_released"]
+[connection signal="flipped" from="FlipDetection" to="." method="_on_flip_detection_flipped"]
