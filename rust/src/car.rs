@@ -57,7 +57,8 @@ impl IRigidBody3D for Car {
         }
 
         // rotate wheels manually
-        let speed = self.base().get_linear_velocity().length();
+        let velocity = self.base().get_linear_velocity();
+        let speed = Vector3::new(velocity.x, 0., velocity.z).length();
         let move_direction = sign(&self.base().get_linear_velocity().z.to_variant()).to::<f32>();
         self.get_wheels().iter_shared().for_each(|mut wheel| {
             wheel.rotate_object_local(Vector3::DOWN, move_direction * (delta as f32) * speed);
