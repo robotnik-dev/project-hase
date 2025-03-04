@@ -1,20 +1,20 @@
 use godot::{
-    classes::{
-        InputEvent, InputEventJoypadButton, InputEventKey, InputMap,
-    },
+    classes::{InputEvent, InputEventJoypadButton, InputEventKey, InputMap},
     global::{JoyButton, Key},
     obj::WithBaseField,
     prelude::*,
 };
 
-pub enum CustomPlayerInput {
+#[derive(GodotConvert, Export, Var)]
+#[godot(via = GString)]
+enum PlayerInputKey {
     DriveForward,
     DriveBackward,
     TiltForward,
     TiltBackward,
 }
 
-impl CustomPlayerInput {
+impl PlayerInputKey {
     fn as_str(&self) -> &'static str {
         match self {
             Self::DriveForward => "drive_forward",
@@ -26,17 +26,25 @@ impl CustomPlayerInput {
 }
 
 #[derive(GodotClass)]
-#[class(base=Node)]
+#[class(tool, base=Node)]
+/// Custom Input Class made for quick access and change the keybindings for a specific set of events in the Editor.
+/// It is designed to be used with the associated signals only.
+///
+/// To change the keybindings for a specific event. just press `Configure` for any `InputEventKey` in the Inspector
 struct PlayerInput {
+    /// List of keybindings that trigger the `drive_forward` signal
     #[export]
     drive_forward: Array<Gd<InputEvent>>,
 
+    /// List of keybindings that trigger the `drive_backward` signal
     #[export]
     drive_backward: Array<Gd<InputEvent>>,
 
+    /// List of keybindings that trigger the `tilt_forward` signal
     #[export]
     tilt_forward: Array<Gd<InputEvent>>,
 
+    /// List of keybindings that trigger the `tilt_backward` signal
     #[export]
     tilt_backward: Array<Gd<InputEvent>>,
 
@@ -104,38 +112,6 @@ impl INode for PlayerInput {
         tilt_forward.push(&r_bumper.upcast());
         tilt_backward.push(&l_bumper.upcast());
 
-        if !InputMap::singleton().has_action(CustomPlayerInput::DriveForward.as_str()) {
-            InputMap::singleton().add_action(CustomPlayerInput::DriveForward.as_str());
-            for key in drive_forward.iter_shared() {
-                InputMap::singleton()
-                    .action_add_event(CustomPlayerInput::DriveForward.as_str(), &key);
-            }
-        }
-
-        if !InputMap::singleton().has_action(CustomPlayerInput::DriveBackward.as_str()) {
-            InputMap::singleton().add_action(CustomPlayerInput::DriveBackward.as_str());
-            for key in drive_backward.iter_shared() {
-                InputMap::singleton()
-                    .action_add_event(CustomPlayerInput::DriveBackward.as_str(), &key);
-            }
-        }
-
-        if !InputMap::singleton().has_action(CustomPlayerInput::TiltForward.as_str()) {
-            InputMap::singleton().add_action(CustomPlayerInput::TiltForward.as_str());
-            for key in tilt_forward.iter_shared() {
-                InputMap::singleton()
-                    .action_add_event(CustomPlayerInput::TiltForward.as_str(), &key);
-            }
-        }
-
-        if !InputMap::singleton().has_action(CustomPlayerInput::TiltBackward.as_str()) {
-            InputMap::singleton().add_action(CustomPlayerInput::TiltBackward.as_str());
-            for key in tilt_backward.iter_shared() {
-                InputMap::singleton()
-                    .action_add_event(CustomPlayerInput::TiltBackward.as_str(), &key);
-            }
-        }
-
         Self {
             drive_forward,
             drive_backward,
@@ -144,6 +120,38 @@ impl INode for PlayerInput {
             base,
         }
     }
+
+    fn ready(&mut self) {
+        if !InputMap::singleton().has_action(PlayerInputKey::DriveForward.as_str()) {
+            InputMap::singleton().add_action(PlayerInputKey::DriveForward.as_str());
+            for key in self.get_drive_forward().iter_shared() {
+                InputMap::singleton().action_add_event(PlayerInputKey::DriveForward.as_str(), &key);
+            }
+        }
+
+        if !InputMap::singleton().has_action(PlayerInputKey::DriveBackward.as_str()) {
+            InputMap::singleton().add_action(PlayerInputKey::DriveBackward.as_str());
+            for key in self.get_drive_backward().iter_shared() {
+                InputMap::singleton()
+                    .action_add_event(PlayerInputKey::DriveBackward.as_str(), &key);
+            }
+        }
+
+        if !InputMap::singleton().has_action(PlayerInputKey::TiltForward.as_str()) {
+            InputMap::singleton().add_action(PlayerInputKey::TiltForward.as_str());
+            for key in self.get_tilt_forward().iter_shared() {
+                InputMap::singleton().action_add_event(PlayerInputKey::TiltForward.as_str(), &key);
+            }
+        }
+
+        if !InputMap::singleton().has_action(PlayerInputKey::TiltBackward.as_str()) {
+            InputMap::singleton().add_action(PlayerInputKey::TiltBackward.as_str());
+            for key in self.get_tilt_backward().iter_shared() {
+                InputMap::singleton().action_add_event(PlayerInputKey::TiltBackward.as_str(), &key);
+            }
+        }
+    }
+
     fn unhandled_input(&mut self, event: Gd<InputEvent>) {
         if event.is_action_pressed("drive_forward") {
             self.base_mut().emit_signal("drive_forward_pressed", &[]);
@@ -173,27 +181,35 @@ impl INode for PlayerInput {
 
 #[godot_api]
 impl PlayerInput {
+    /// Emitted on `unhandled_input` event for `is_action_pressed` and the event `drive_forward`
     #[signal]
     fn drive_forward_pressed();
 
+    /// Emitted on `unhandled_input` event for `is_action_released` and the event `drive_forward`
     #[signal]
     fn drive_forward_released();
 
+    /// Emitted on `unhandled_input` event for `is_action_pressed` and the event `drive_backward`
     #[signal]
     fn drive_backward_pressed();
 
+    /// Emitted on `unhandled_input` event for `is_action_released` and the event `drive_backward`
     #[signal]
     fn drive_backward_released();
 
+    /// Emitted on `unhandled_input` event for `is_action_pressed` and the event `tilt_forward`
     #[signal]
     fn tilt_forward_pressed();
 
+    /// Emitted on `unhandled_input` event for `is_action_released` and the event `tilt_forward`
     #[signal]
     fn tilt_forward_released();
 
+    /// Emitted on `unhandled_input` event for `is_action_pressed` and the event `tilt_backward`
     #[signal]
     fn tilt_backward_pressed();
 
+    /// Emitted on `unhandled_input` event for `is_action_released` and the event `tilt_backward`
     #[signal]
     fn tilt_backward_released();
 }
