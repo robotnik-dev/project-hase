@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://dcon0gtqgcumo"]
+
+[ext_resource type="Texture2D" uid="uid://bdkbqemfyu3xu" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_basecolor.png" id="1_i7pkh"]
+[ext_resource type="Texture2D" uid="uid://jji6xakpotpe" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_emissive.png" id="2_ufh08"]
+[ext_resource type="Texture2D" uid="uid://c0frr821ua18l" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_metallic.png" id="3_1qxdg"]
+[ext_resource type="Texture2D" uid="uid://ct8c3pk6kld36" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_normal.png" id="4_tj2kc"]
+[ext_resource type="Texture2D" uid="uid://cn01yo3w42dh8" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_roughness.png" id="5_jp8fl"]
+
+[resource]
+albedo_texture = ExtResource("1_i7pkh")
+metallic = 1.0
+metallic_texture = ExtResource("3_1qxdg")
+roughness_texture = ExtResource("5_jp8fl")
+emission_enabled = true
+emission_texture = ExtResource("2_ufh08")
+normal_enabled = true
+normal_texture = ExtResource("4_tj2kc")
+rim = 0.22
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+uv1_world_triplanar = true
