@@ -31,6 +31,11 @@ struct Car {
 
 #[godot_api]
 impl IRigidBody3D for Car {
+    fn enter_tree(&mut self) {
+        self.base_mut().set_process(false);
+        self.base_mut().set_physics_process(false);
+    }
+
     fn physics_process(&mut self, delta: f64) {
         let tilt_input = if !self.is_on_floor() {
             self.get_tilt_input()
@@ -78,8 +83,11 @@ impl IRigidBody3D for Car {
 #[godot_api]
 impl Car {
     #[func]
-    fn set_end_position(&mut self, end_pos: Vector3) {
-        self.end_position = end_pos;
+    fn setup(&mut self, start: Vector3, end: Vector3) {
+        self.base_mut().set_global_position(start);
+        self.end_position = end;
+        self.base_mut().set_physics_process(true);
+        self.base_mut().set_process(true);
     }
 
     fn crashed(&mut self) {

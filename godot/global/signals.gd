@@ -29,3 +29,11 @@ func connect_car_finished(callable: Callable) -> Array:
 func emit_car_finished() -> Array:
 	_car_finished.emit()
 	return _car_finished.get_connections()
+
+signal _replay_level_button_pressed
+func connect_replay_level_button_pressed(callable: Callable) -> Array:
+	_replay_level_button_pressed.connect(callable)
+	return _replay_level_button_pressed.get_connections()
+func emit_replay_level_button_pressed() -> Array:
+	_replay_level_button_pressed.emit()
+	return _replay_level_button_pressed.get_connections()

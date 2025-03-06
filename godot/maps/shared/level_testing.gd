@@ -39,9 +39,7 @@ func start_level():
 	current_level = scene.instantiate()
 	add_child(current_level)
 	
-	# set initial values
-	current_car.global_position = current_level.start_position
-	current_car.set_end_position(current_level.end_position)
+	current_car.setup(current_level.start_position, current_level.end_position)
 
 func reload_level():
 	start_level()
@@ -57,6 +55,10 @@ func _connect_signals():
 	Signals.connect_car_flipped(_on_car_flipped)
 	Signals.connect_car_crashed(_on_car_crashed)
 	Signals.connect_car_finished(_on_car_finished)
+	Signals.connect_replay_level_button_pressed(_on_reload_level_pressed)
+
+func _on_reload_level_pressed():
+	reload_level.call_deferred()
 
 func _on_car_selected(path_to_scene: String):
 	path_to_car_scene = path_to_scene

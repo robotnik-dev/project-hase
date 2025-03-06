@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://fpsbtf2ehc32"]
+
+[ext_resource type="Script" path="res://ui/developer_ui.gd" id="1_tws1o"]
+[ext_resource type="PackedScene" uid="uid://jjyu2unlqg73" path="res://ui/replay_level_button.tscn" id="2_5kkar"]
+
+[node name="DeveloperUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tws1o")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Top" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ReplayLevelButton" parent="MarginContainer/VBoxContainer/Top" instance=ExtResource("2_5kkar")]
+layout_mode = 2
+
+[node name="Middle" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Bottom" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Top/ReplayLevelButton" to="." method="_on_replay_level_button_pressed"]
