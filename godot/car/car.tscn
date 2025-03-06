@@ -72,14 +72,20 @@ mesh = SubResource("CylinderMesh_q78af")
 [node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, -0.54, 0)
+collision_mask = 9
+collide_with_areas = true
 
 [node name="RayCast3D2" type="RayCast3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.352987, 0)
 target_position = Vector3(0, -0.54, 0)
+collision_mask = 9
+collide_with_areas = true
 
 [node name="RayCast3D3" type="RayCast3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.320897, 0)
 target_position = Vector3(0, -0.54, 0)
+collision_mask = 9
+collide_with_areas = true
 
 [node name="Wheels" type="Node3D" parent="."]
 
