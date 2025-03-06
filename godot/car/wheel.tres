@@ -3,4 +3,5 @@
 [ext_resource type="Material" uid="uid://c5us1e3pelomy" path="res://car/wheel_mat.tres" id="1_75wnr"]
 
 [resource]
+lightmap_size_hint = Vector2i(17, 19)
 material = ExtResource("1_75wnr")

@@ -91,6 +91,11 @@ jobs:
           pattern: rust-debug-*
           merge-multiple: true
 
+      - name: Rename Executables
+        env:
+          GAME_NAME: ${{ vars.ITCHIO_GAMENAME }}
+        run: sed -i '/^export_path/s/mac.zip/'"$GAME_NAME"'.zip/; /^export_path/s/linux.x86_64/'"$GAME_NAME"'.x86_64/; /^export_path/s/windows.exe/'"$GAME_NAME"'.exe/' $GITHUB_WORKSPACE/godot/export_presets.cfg
+
       - name: Export Games
         id: export
         uses: firebelley/godot-export@v6.0.0
@@ -99,6 +104,7 @@ jobs:
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ vars.GODOT_VERSION }}-stable/Godot_v${{ vars.GODOT_VERSION }}-stable_export_templates.tpz
           relative_project_path: godot
           relative_export_path: build
+          cache: true
           # TODO: for android and web later. You can just name the presets you want to export
           # presets_to_export: "win, linux, mac"
           verbose: true

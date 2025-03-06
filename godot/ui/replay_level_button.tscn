@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://jjyu2unlqg73"]
+
+[node name="ReplayLevelButton" type="Button"]
+size_flags_horizontal = 8
+text = "Replay"

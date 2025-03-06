@@ -1,5 +1,4 @@
 use godot::{
-    builtin::math::ApproxEq,
     classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D},
     global::sign,
     prelude::*,
@@ -32,6 +31,11 @@ struct Car {
 
 #[godot_api]
 impl IRigidBody3D for Car {
+    fn enter_tree(&mut self) {
+        self.base_mut().set_process(false);
+        self.base_mut().set_physics_process(false);
+    }
+
     fn physics_process(&mut self, delta: f64) {
         let tilt_input = if !self.is_on_floor() {
             self.get_tilt_input()
@@ -54,11 +58,12 @@ impl IRigidBody3D for Car {
 
         // crash detection
         if self.is_crashed() {
-            self.base_mut().emit_signal("crashed", &[]);
+            self.crashed();
         }
 
         // rotate wheels manually
-        let speed = self.base().get_linear_velocity().length();
+        let velocity = self.base().get_linear_velocity();
+        let speed = Vector3::new(velocity.x, 0., velocity.z).length();
         let move_direction = sign(&self.base().get_linear_velocity().z.to_variant()).to::<f32>();
         self.get_wheels().iter_shared().for_each(|mut wheel| {
             wheel.rotate_object_local(Vector3::DOWN, move_direction * (delta as f32) * speed);
@@ -69,7 +74,7 @@ impl IRigidBody3D for Car {
         let car_pos = self.base().get_global_position();
         let end_pos = self.end_position;
         if end_pos.z - car_pos.z <= 0.1 {
-            self.base_mut().emit_signal("finish", &[]);
+            self.finished();
             self.base_mut().set_process(false);
         }
     }
@@ -78,15 +83,24 @@ impl IRigidBody3D for Car {
 #[godot_api]
 impl Car {
     #[func]
-    fn set_end_position(&mut self, end_pos: Vector3) {
-        self.end_position = end_pos;
+    fn setup(&mut self, start: Vector3, end: Vector3) {
+        self.base_mut().set_global_position(start);
+        self.end_position = end;
+        self.base_mut().set_physics_process(true);
+        self.base_mut().set_process(true);
     }
 
-    #[signal]
-    fn crashed();
+    fn crashed(&mut self) {
+        if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+            signals.call("emit_car_crashed", &[]);
+        }
+    }
 
-    #[signal]
-    fn finish();
+    fn finished(&mut self) {
+        if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+            signals.call("emit_car_finished", &[]);
+        }
+    }
 
     /// should return a digits between -1.0 (tilt backward) and +1.0 (tilt forward)
     #[func(virtual)]

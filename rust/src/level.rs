@@ -9,6 +9,12 @@ struct Level {
     #[export]
     end: Option<Gd<Node3D>>,
 
+    #[var]
+    start_position: Vector3,
+
+    #[var]
+    end_position: Vector3,
+
     base: Base<Node3D>,
 }
 
@@ -23,21 +29,7 @@ impl INode3D for Level {
             godot_error!("No scene to a end point specified ");
             return;
         };
-        let start_pos = start.get_global_position();
-        let end_pos = end.get_global_position();
-
-        self.base_mut()
-            .emit_signal("start_position_selected", &[start_pos.to_variant()]);
-        self.base_mut()
-            .emit_signal("end_position_selected", &[end_pos.to_variant()]);
+        self.set_start_position(start.get_global_position());
+        self.set_end_position(end.get_global_position());
     }
-}
-
-#[godot_api]
-impl Level {
-    #[signal]
-    fn start_position_selected(position: Vector3);
-
-    #[signal]
-    fn end_position_selected(position: Vector3);
 }
