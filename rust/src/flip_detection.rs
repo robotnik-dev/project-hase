@@ -11,6 +11,11 @@ use godot::{
 #[class(init, base=Node3D)]
 struct FlipDetection {
     #[export]
+    #[init(val = true)]
+    #[var(get, set = set_enabled)]
+    enabled: bool,
+
+    #[export]
     #[init(val = 0.18)]
     flip_detection_accuracy: f64,
 
@@ -39,6 +44,7 @@ impl INode3D for FlipDetection {
     fn ready(&mut self) {
         let car = self.base().get_parent_node_3d().unwrap();
         self.parent = Some(car.cast());
+        self.set_enabled(self.get_enabled());
     }
 
     fn physics_process(&mut self, _delta: f64) {
@@ -53,14 +59,12 @@ impl INode3D for FlipDetection {
                     if self.front_flip_progress > 1. - self.flip_detection_accuracy {
                         // front flip detected
                         let count = self.increase_front_flip_count();
-                        self.base_mut()
-                            .emit_signal("flipped", &["front".to_variant(), count.to_variant()]);
+                        self.flipped("front".into(), count);
                         self.reset_front_flip_progress();
                     } else if self.back_flip_progress > 1. - self.flip_detection_accuracy {
                         // back flip detected
                         let count = self.increase_back_flip_count();
-                        self.base_mut()
-                            .emit_signal("flipped", &["back".to_variant(), count.to_variant()]);
+                        self.flipped("back".into(), count);
                         self.reset_back_flip_progress();
                     }
                 } else {
@@ -93,8 +97,20 @@ impl INode3D for FlipDetection {
 
 #[godot_api]
 impl FlipDetection {
-    #[signal]
-    fn flipped(direction: StringName, count: i64);
+    fn flipped(&mut self, direction: StringName, count: i64) {
+        if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+            signals.callv(
+                "emit_car_flipped",
+                &Array::from_iter([direction.to_variant(), count.to_variant()]),
+            );
+        }
+    }
+
+    #[func]
+    fn set_enabled(&mut self, value: bool) {
+        self.enabled = value;
+        self.base_mut().set_physics_process(value);
+    }
 
     fn is_level_with_ground(&mut self) -> bool {
         absf(self.base().get_global_rotation().x as f64) < self.ground_level_accuracy
