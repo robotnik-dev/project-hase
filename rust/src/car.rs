@@ -53,7 +53,7 @@ impl IRigidBody3D for Car {
 
         // crash detection
         if self.is_crashed() {
-            self.base_mut().emit_signal("crashed", &[]);
+            self.crashed();
         }
 
         // rotate wheels manually
@@ -69,7 +69,7 @@ impl IRigidBody3D for Car {
         let car_pos = self.base().get_global_position();
         let end_pos = self.end_position;
         if end_pos.z - car_pos.z <= 0.1 {
-            self.base_mut().emit_signal("finish", &[]);
+            self.finished();
             self.base_mut().set_process(false);
         }
     }
@@ -82,14 +82,17 @@ impl Car {
         self.end_position = end_pos;
     }
 
-    #[signal]
-    fn crashed();
+    fn crashed(&mut self) {
+        if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+            signals.call("emit_car_crashed", &[]);
+        }
+    }
 
-    #[signal]
-    fn finish();
-
-    #[signal]
-    fn flipped(direction: StringName, count: i64);
+    fn finished(&mut self) {
+        if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+            signals.call("emit_car_finished", &[]);
+        }
+    }
 
     /// should return a digits between -1.0 (tilt backward) and +1.0 (tilt forward)
     #[func(virtual)]

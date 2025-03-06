@@ -20,7 +20,7 @@ var path_to_car_scene: String = "res://car/car.tscn"
 func _ready() -> void:
 	# TODO: inject car scene through UI or different method later
 	_on_car_selected("res://car/car.tscn")
-	
+	_connect_signals()
 	start_level()
 
 func start_level():
@@ -29,12 +29,6 @@ func start_level():
 		current_car.queue_free()
 	var car_scene = load(path_to_car_scene) as PackedScene
 	current_car = car_scene.instantiate()
-	if !current_car.finish.is_connected(_on_car_finish):
-		current_car.finish.connect(_on_car_finish)
-	if !current_car.crashed.is_connected(_on_car_crashed):
-		current_car.crashed.connect(_on_car_crashed)
-	if !current_car.flipped.is_connected(_on_car_flipped):
-		current_car.flipped.connect(_on_car_flipped)
 	add_child(current_car)
 	
 	# setup level
@@ -43,11 +37,11 @@ func start_level():
 	
 	var scene = level_scenes[current_level_idx]
 	current_level = scene.instantiate()
-	if !current_level.start_position_selected.is_connected(_on_level_start_pos_set):
-		current_level.start_position_selected.connect(_on_level_start_pos_set)
-	if !current_level.end_position_selected.is_connected(_on_level_end_pos_set):
-		current_level.end_position_selected.connect(_on_level_end_pos_set)
 	add_child(current_level)
+	
+	# set initial values
+	current_car.global_position = current_level.start_position
+	current_car.set_end_position(current_level.end_position)
 
 func reload_level():
 	start_level()
@@ -59,11 +53,10 @@ func next_level():
 	current_level_idx += 1
 	start_level()
 
-func _on_level_start_pos_set(pos: Vector3):
-	current_car.global_position = pos
-
-func _on_level_end_pos_set(pos: Vector3):
-	current_car.set_end_position(pos)
+func _connect_signals():
+	Signals.connect_car_flipped(_on_car_flipped)
+	Signals.connect_car_crashed(_on_car_crashed)
+	Signals.connect_car_finished(_on_car_finished)
 
 func _on_car_selected(path_to_scene: String):
 	path_to_car_scene = path_to_scene
@@ -71,7 +64,7 @@ func _on_car_selected(path_to_scene: String):
 func _on_car_crashed():
 	reload_level()
 
-func _on_car_finish():
+func _on_car_finished():
 	if replay_first_level:
 		reload_level()
 	else:

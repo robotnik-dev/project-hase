@@ -41,7 +41,3 @@ func _on_player_input_tilt_forward_pressed() -> void:
 
 func _on_player_input_tilt_forward_released() -> void:
 	tilt_direction = 0.0
-
-## This function bubbles the signal of the flip detection node up
-func _on_flip_detection_flipped(direction: StringName, count: int):
-	flipped.emit(direction, count)

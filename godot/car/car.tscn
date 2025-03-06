@@ -126,4 +126,3 @@ tilt_backward = Array[InputEvent]([SubResource("InputEventKey_svn7l"), SubResour
 [connection signal="tilt_backward_released" from="PlayerInput" to="." method="_on_player_input_tilt_backward_released"]
 [connection signal="tilt_forward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_forward_pressed"]
 [connection signal="tilt_forward_released" from="PlayerInput" to="." method="_on_player_input_tilt_forward_released"]
-[connection signal="flipped" from="FlipDetection" to="." method="_on_flip_detection_flipped"]
