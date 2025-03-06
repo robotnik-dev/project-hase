@@ -90,7 +90,7 @@ jobs:
       - name: Rename Executables
         env:
           GAME_NAME: ${{ vars.ITCHIO_GAMENAME }}
-        run: sed -i '/^export_path/s/mac.zip/$GAME_NAME.zip/; /^export_path/s/linux.x86_64/$GAME_NAME.x86_64/; /^export_path/s/windows.exe/$GAME_NAME.exe/' $GITHUB_WORKSPACE/godot/export_presets.cfg
+        run: sed -i '/^export_path/s/mac.zip/'"$GAME_NAME"'.zip/; /^export_path/s/linux.x86_64/'"$GAME_NAME"'.x86_64/; /^export_path/s/windows.exe/'"$GAME_NAME"'.exe/' $GITHUB_WORKSPACE/godot/export_presets.cfg
 
       - name: Export Games
         id: export
