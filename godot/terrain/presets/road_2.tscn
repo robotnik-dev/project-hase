@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://fgbybplinmix"]
+
+[ext_resource type="PackedScene" uid="uid://cr4sbtjtwextc" path="res://terrain/terrain.tscn" id="1_avtis"]
+
+[sub_resource type="Curve3D" id="Curve3D_eghd2"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -5, 0, 0.498824, -6.72581, 0, -0.498824, 6.72581, 0, 2.3506, 25.2107, 0, -0.245955, -6.20129, 0, 0.245955, 6.20129, 0, -1.22711, 62.2485, 0, -0.0526234, -5.21404, 0, 0.0526234, 5.21404, 0, 1.28621, 92.9498, 0, -1.51461, -11.5035, 0, 1.51461, 11.5035, 0, 0.809885, 122.544, 0, 0, 0, 0, 0, 0, 0, 14.0415, 153.886),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Terrain" parent="." instance=ExtResource("1_avtis")]
+curve = SubResource("Curve3D_eghd2")
