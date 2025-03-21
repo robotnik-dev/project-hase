@@ -1,0 +1,26 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://b73ijg5mce5ga"]
+
+[ext_resource type="FontFile" uid="uid://cm2c1fmlssaei" path="res://assets/fonts/Boldonse-Regular.ttf" id="1_2wjw7"]
+[ext_resource type="FontFile" uid="uid://be6r01yks134j" path="res://assets/fonts/Roboto-VariableFont_wdth,wght.ttf" id="1_rpdqp"]
+[ext_resource type="StyleBox" uid="uid://c3hneqwr68qbx" path="res://ui/styleboxes/big_menu_button_hover.tres" id="2_5fx8y"]
+[ext_resource type="StyleBox" uid="uid://d1oasxvv2eafk" path="res://ui/styleboxes/big_menu_button_normal.tres" id="2_ebtik"]
+[ext_resource type="StyleBox" uid="uid://d2eirkh2ixwh1" path="res://ui/styleboxes/big_menu_button_focus.tres" id="2_t23jo"]
+[ext_resource type="StyleBox" uid="uid://cbx48goj3e0g6" path="res://ui/styleboxes/big_menu_button_disabled.tres" id="2_uuueh"]
+[ext_resource type="StyleBox" uid="uid://clpkbfkgjohh5" path="res://ui/styleboxes/big_menu_button_pressed.tres" id="6_fhiqi"]
+
+[resource]
+default_font = ExtResource("1_rpdqp")
+default_font_size = 16
+BigMenuButton/base_type = &"Button"
+BigMenuButton/font_sizes/font_size = 56
+BigMenuButton/fonts/font = ExtResource("1_2wjw7")
+BigMenuButton/styles/disabled = ExtResource("2_uuueh")
+BigMenuButton/styles/focus = ExtResource("2_t23jo")
+BigMenuButton/styles/hover = ExtResource("2_5fx8y")
+BigMenuButton/styles/normal = ExtResource("2_ebtik")
+BigMenuButton/styles/pressed = ExtResource("6_fhiqi")
+BoxContainer/constants/separation = 4
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10

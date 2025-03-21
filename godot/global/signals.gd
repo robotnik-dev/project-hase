@@ -6,6 +6,9 @@ extends Node
 ## helper functions. Every function returns all connections currently connected
 ## to the given signal.
 
+func _ready() -> void:
+	process_mode = PROCESS_MODE_ALWAYS
+
 signal _car_flipped(direction: StringName, count: int)
 func connect_car_flipped(callable: Callable) -> Array:
 	_car_flipped.connect(callable)
@@ -30,6 +33,22 @@ func emit_car_finished() -> Array:
 	_car_finished.emit()
 	return _car_finished.get_connections()
 
+signal _start_button_pressed
+func connect_start_button_pressed(callable: Callable) -> Array:
+	_start_button_pressed.connect(callable)
+	return _start_button_pressed.get_connections()
+func emit_start_button_pressed() -> Array:
+	_start_button_pressed.emit()
+	return _start_button_pressed.get_connections()
+
+signal _select_car_button_pressed
+func connect_select_car_button_pressed(callable: Callable) -> Array:
+	_select_car_button_pressed.connect(callable)
+	return _select_car_button_pressed.get_connections()
+func emit_select_car_button_pressed() -> Array:
+	_select_car_button_pressed.emit()
+	return _select_car_button_pressed.get_connections()
+
 signal _replay_level_button_pressed
 func connect_replay_level_button_pressed(callable: Callable) -> Array:
 	_replay_level_button_pressed.connect(callable)
@@ -37,3 +56,27 @@ func connect_replay_level_button_pressed(callable: Callable) -> Array:
 func emit_replay_level_button_pressed() -> Array:
 	_replay_level_button_pressed.emit()
 	return _replay_level_button_pressed.get_connections()
+
+signal _continue_level_button_pressed
+func connect_continue_level_button_pressed(callable: Callable) -> Array:
+	_continue_level_button_pressed.connect(callable)
+	return _continue_level_button_pressed.get_connections()
+func emit_continue_level_button_pressed() -> Array:
+	_continue_level_button_pressed.emit()
+	return _continue_level_button_pressed.get_connections()
+
+signal _toggle_fullscreen_button_pressed
+func connect_toggle_fullscreen_button_pressed(callable: Callable) -> Array:
+	_toggle_fullscreen_button_pressed.connect(callable)
+	return _toggle_fullscreen_button_pressed.get_connections()
+func emit_toggle_fullscreen_button_pressed() -> Array:
+	_toggle_fullscreen_button_pressed.emit()
+	return _toggle_fullscreen_button_pressed.get_connections()
+
+signal _toggle_music_button_pressed
+func connect_toggle_music_button_pressed(callable: Callable) -> Array:
+	_toggle_music_button_pressed.connect(callable)
+	return _toggle_music_button_pressed.get_connections()
+func emit_toggle_music_button_pressed() -> Array:
+	_toggle_music_button_pressed.emit()
+	return _toggle_music_button_pressed.get_connections()

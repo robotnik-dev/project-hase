@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi4ykef7jkxfp"]
+
+[ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_2ich8"]
+[ext_resource type="Script" path="res://ui/select_car_button.gd" id="2_qb56i"]
+
+[node name="SelectCarButton" type="Button"]
+custom_minimum_size = Vector2(500, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2ich8")
+theme_type_variation = &"BigMenuButton"
+text = "Select Car"
+script = ExtResource("2_qb56i")

@@ -1,5 +1,7 @@
 extends Node
 
+@export var ui: Control
+
 ## In seconds
 @export var wait_until_next_level: float = 2.0
 ## when on: replays the level as soon as the car hits the finish line.
@@ -17,13 +19,43 @@ var current_car: Car = null
 ## Default car scene at "res://car/car.tscn"
 var path_to_car_scene: String = "res://car/car.tscn"
 
+var main_menu_scene: PackedScene = preload("res://ui/main_menu.tscn")
+var main_menu: UIMainMenu
+var pause_menu_scene: PackedScene = preload("res://ui/pause_menu.tscn")
+var pause_menu: UIPauseMenu
+
 func _ready() -> void:
-	# TODO: inject car scene through UI or different method later
-	_on_car_selected("res://car/car.tscn")
 	_connect_signals()
-	start_level()
+	start_main_menu()
+
+func start_main_menu():
+	main_menu = main_menu_scene.instantiate()
+	ui.add_child(main_menu)
+	
+	# removing pause because it should only be inside a level
+	if pause_menu:
+		pause_menu.queue_free()
+		pause_menu = null
 
 func start_level():
+	# TODO: inject car scene through UI or different method later
+	_on_car_selected("res://car/car.tscn")
+	
+	# removing main menu
+	if main_menu:
+		ui.remove_child(main_menu)
+		main_menu.queue_free()
+		main_menu = null
+	
+	# removing pause first
+	if pause_menu:
+		ui.remove_child(pause_menu)
+		pause_menu.queue_free()
+		pause_menu = null
+	# adding pause menu
+	pause_menu = pause_menu_scene.instantiate()
+	ui.add_child(pause_menu)
+	
 	# setup car
 	if current_car:
 		current_car.queue_free()
@@ -52,6 +84,7 @@ func next_level():
 	start_level()
 
 func _connect_signals():
+	Signals.connect_start_button_pressed(start_level)
 	Signals.connect_car_flipped(_on_car_flipped)
 	Signals.connect_car_crashed(_on_car_crashed)
 	Signals.connect_car_finished(_on_car_finished)

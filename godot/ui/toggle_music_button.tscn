@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://crlfbnyp1i804"]
+
+[ext_resource type="Texture2D" uid="uid://beykw31pm4who" path="res://assets/ui/icons/sound.png" id="1_4tbkr"]
+[ext_resource type="Texture2D" uid="uid://d2ln7lv757a8c" path="res://assets/ui/icons/mute.png" id="1_6efsn"]
+[ext_resource type="Script" path="res://ui/toggle_music_button.gd" id="3_buj0f"]
+
+[node name="ToggleMusicButton" type="CheckButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -36.0
+offset_right = 38.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_icons/checked = ExtResource("1_6efsn")
+theme_override_icons/unchecked = ExtResource("1_4tbkr")
+icon_alignment = 1
+script = ExtResource("3_buj0f")

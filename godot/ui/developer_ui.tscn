@@ -32,6 +32,8 @@ theme_override_constants/margin_bottom = 10
 
 [node name="ReplayLevelButton" parent="MarginContainer/VBoxContainer/Top" instance=ExtResource("2_5kkar")]
 layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 1
 
 [node name="Middle" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
