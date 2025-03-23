@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dksp6wruo2w1j"]
+
+[ext_resource type="PackedScene" uid="uid://cr4sbtjtwextc" path="res://terrain/terrain.tscn" id="1_c406g"]
+
+[sub_resource type="Curve3D" id="Curve3D_4j7lg"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, -0.314192, -2.1924, 0, 0.314192, 2.1924, 0, -1.36191, 15.194, 0, -0.500279, -4.67034, 0, 0.500279, 4.67034, 0, 0.399376, 23.452, 0, 0, 0, 0, 0, 0, 0, 5.69183, 33.1809),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Terrain" parent="." instance=ExtResource("1_c406g")]
+curve = SubResource("Curve3D_4j7lg")
