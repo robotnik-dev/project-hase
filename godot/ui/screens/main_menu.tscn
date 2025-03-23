@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://cr31reuuuoq00"]
 
-[ext_resource type="Script" path="res://ui/main_menu.gd" id="1_3fmwv"]
+[ext_resource type="Script" path="res://ui/screens/main_menu.gd" id="1_3fmwv"]
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_502pm"]
-[ext_resource type="PackedScene" uid="uid://qemyf63hw3n" path="res://ui/toggle_fullscreen_button.tscn" id="2_nqx3e"]
-[ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/toggle_music_button.tscn" id="4_xjybn"]
-[ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/start_button.tscn" id="5_jtdqd"]
-[ext_resource type="PackedScene" uid="uid://bi4ykef7jkxfp" path="res://ui/select_car_button.tscn" id="6_mwqv7"]
+[ext_resource type="PackedScene" uid="uid://qemyf63hw3n" path="res://ui/buttons/toggle_fullscreen_button.tscn" id="2_nqx3e"]
+[ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_xjybn"]
+[ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_jtdqd"]
+[ext_resource type="PackedScene" uid="uid://bi4ykef7jkxfp" path="res://ui/buttons/select_car_button.tscn" id="6_mwqv7"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("select_car", "start")]
 layout_mode = 3
@@ -31,8 +31,8 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="TopLeft" type="MarginContainer" parent="MarginContainer/VBoxContainer/TopRow"]
 layout_mode = 2
@@ -59,6 +59,7 @@ size_flags_vertical = 0
 [node name="MidRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MidRow"]
 layout_mode = 2
@@ -79,5 +80,5 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="BotRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+size_flags_vertical = 3

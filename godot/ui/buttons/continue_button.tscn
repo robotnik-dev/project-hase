@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7uovkkq6ub3u"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_ywrva"]
-[ext_resource type="Script" path="res://ui/continue_button.gd" id="2_5ssv6"]
+[ext_resource type="Script" path="res://ui/buttons/continue_button.gd" id="2_5ssv6"]
 
 [node name="ContinueButton" type="Button"]
 custom_minimum_size = Vector2(400, 0)

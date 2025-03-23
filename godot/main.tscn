@@ -1,12 +1,17 @@
 [gd_scene load_steps=7 format=3 uid="uid://dif07paq3g40e"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_10p37"]
-[ext_resource type="PackedScene" uid="uid://cxpqv846s0ivr" path="res://maps/shared/level_1.tscn" id="2_f0d04"]
+[ext_resource type="PackedScene" uid="uid://cxpqv846s0ivr" path="res://maps/level_1.tscn" id="2_mkbhf"]
+[ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="2_sqd80"]
+[ext_resource type="PackedScene" uid="uid://fpsbtf2ehc32" path="res://ui/screens/developer_ui.tscn" id="3_272mh"]
+[ext_resource type="Script" path="res://audio/conductor.gd" id="4_wvrni"]
+[ext_resource type="AudioStream" uid="uid://dqvta5q8ey212" path="res://assets/audio/music/for-elise.mp3" id="5_k4u17"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("ui")]
 script = ExtResource("1_10p37")
 ui = NodePath("UI")
-level_scenes = Array[PackedScene]([ExtResource("2_phnak")])
+wait_until_next_level = 0.3
+level_scenes = Array[PackedScene]([ExtResource("2_mkbhf")])
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -15,18 +20,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_jxfpb")
+theme = ExtResource("2_sqd80")
 
-[node name="DeveloperUI" parent="UI" instance=ExtResource("4_fwcix")]
+[node name="DeveloperUI" parent="UI" instance=ExtResource("3_272mh")]
 layout_mode = 1
 
-[node name="Audio" type="Node" parent="." node_paths=PackedStringArray("music_player")]
+[node name="Conductor" type="Node" parent="." node_paths=PackedStringArray("music_player")]
 process_mode = 3
-script = ExtResource("5_dwjxh")
+script = ExtResource("4_wvrni")
 music_player = NodePath("AudioStreamPlayer")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("6_nlb5d")
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Conductor"]
+stream = ExtResource("5_k4u17")
 volume_db = -12.0
 autoplay = true
 parameters/looping = true

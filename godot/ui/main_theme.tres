@@ -12,7 +12,7 @@
 default_font = ExtResource("1_rpdqp")
 default_font_size = 16
 BigMenuButton/base_type = &"Button"
-BigMenuButton/font_sizes/font_size = 56
+BigMenuButton/font_sizes/font_size = 36
 BigMenuButton/fonts/font = ExtResource("1_2wjw7")
 BigMenuButton/styles/disabled = ExtResource("2_uuueh")
 BigMenuButton/styles/focus = ExtResource("2_t23jo")
@@ -24,3 +24,4 @@ MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
+VBoxContainer/constants/separation = 4
