@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://bypww2yy5q54f"]
+[gd_scene load_steps=13 format=3 uid="uid://bypww2yy5q54f"]
 
 [ext_resource type="PackedScene" uid="uid://dfd2b42oka31p" path="res://maps/shared/template.tscn" id="1_fjrtc"]
 [ext_resource type="PackedScene" uid="uid://c2vjx27g23m7b" path="res://assets/terrain/simple_hill.gltf" id="2_3qp6t"]
 [ext_resource type="PackedScene" uid="uid://007rdvl1nrk1" path="res://assets/terrain/simple_straight.gltf" id="3_3mmn7"]
 [ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="3_gnh4w"]
 [ext_resource type="PackedScene" uid="uid://drk0idftg3w0o" path="res://maps/shared/crash_zone.tscn" id="5_a6okn"]
-[ext_resource type="PackedScene" uid="uid://fpsbtf2ehc32" path="res://ui/developer_ui.tscn" id="6_ftpnj"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_o7qnn"]
 material = ExtResource("3_gnh4w")
@@ -230,8 +229,6 @@ shape = SubResource("ConcavePolygonShape3D_yk5kr")
 [node name="CollisionShape3D" parent="OutOfBounds/CrashZone" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = SubResource("BoxShape3D_conll")
-
-[node name="DeveloperUI" parent="." index="8" instance=ExtResource("6_ftpnj")]
 
 [editable path="InvisibleWalls/InvisibleWall"]
 [editable path="InvisibleWalls/InvisibleWall2"]
