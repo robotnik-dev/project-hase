@@ -1,5 +1,5 @@
 use godot::{
-    classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D},
+    classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D, Texture2D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
@@ -13,6 +13,10 @@ struct Car {
     #[export]
     #[init(val = None)]
     player_input: Option<Gd<PlayerInput>>,
+
+    #[export]
+    #[init(val = None)]
+    ui_preview: Option<Gd<Texture2D>>,
 
     #[export]
     #[init(val = array![])]
