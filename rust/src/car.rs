@@ -1,5 +1,5 @@
 use godot::{
-    classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D, Texture2D},
+    classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
@@ -16,7 +16,10 @@ struct Car {
 
     #[export]
     #[init(val = None)]
-    ui_preview: Option<Gd<Texture2D>>,
+    ui_preview: Option<Gd<PackedScene>>,
+
+    #[export]
+    ui_display_name: StringName,
 
     #[export]
     #[init(val = array![])]
