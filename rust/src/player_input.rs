@@ -31,7 +31,7 @@ impl PlayerInputKey {
 /// It is designed to be used with the associated signals only.
 ///
 /// To change the keybindings for a specific event. just press `Configure` for any `InputEventKey` in the Inspector
-struct PlayerInput {
+pub struct PlayerInput {
     /// List of keybindings that trigger the `drive_forward` signal
     #[export]
     drive_forward: Array<Gd<InputEvent>>,

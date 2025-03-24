@@ -16,8 +16,8 @@ extends Node
 var current_level: Level = null
 var current_level_idx = 0
 var current_car: Car = null
-## Default car scene at "res://car/car.tscn"
-var path_to_car_scene: String = "res://car/car.tscn"
+## Default car scene at "res://car/default_car.tscn"
+var path_to_car_scene: String = "res://car/default_car.tscn"
 
 var main_menu_scene: PackedScene = preload("res://ui/screens/main_menu.tscn")
 var main_menu: UIMainMenu
@@ -50,7 +50,7 @@ func start_main_menu():
 
 func start_level():
 	# TODO: inject car scene through UI or different method later
-	_on_car_selected("res://car/car.tscn")
+	_on_car_selected("res://car/default_car.tscn")
 	
 	# removing main menu
 	if main_menu:

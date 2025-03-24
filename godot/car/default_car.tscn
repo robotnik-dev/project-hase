@@ -1,7 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=17 format=3 uid="uid://1b78wtvecq6o"]
 
-[ext_resource type="Script" path="res://car/car.gd" id="1_ichij"]
-[ext_resource type="CylinderMesh" uid="uid://bddk8qjdgss7v" path="res://car/wheel.tres" id="2_xim3n"]
+[ext_resource type="CylinderMesh" uid="uid://bddk8qjdgss7v" path="res://car/resources/wheel.tres" id="1_c7f4q"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -49,7 +48,8 @@ keycode = 4194319
 [sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_jpuyk"]
 button_index = 9
 
-[node name="Car" type="Car" node_paths=PackedStringArray("crash_detects", "wheels")]
+[node name="Car" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
+player_input = NodePath("PlayerInput")
 crash_detects = [NodePath("MeshInstance3D/RayCast3D"), NodePath("MeshInstance3D/RayCast3D2"), NodePath("MeshInstance3D/RayCast3D3")]
 wheels = [NodePath("Wheels/WheelFront"), NodePath("Wheels/wheelBack")]
 tilt_speed = 400.0
@@ -65,7 +65,6 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 0.6
 angular_damp = 1.5
-script = ExtResource("1_ichij")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.542564, 0)
@@ -93,12 +92,12 @@ collide_with_areas = true
 
 [node name="wheelBack" type="MeshInstance3D" parent="Wheels"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, -1)
-mesh = ExtResource("2_xim3n")
+mesh = ExtResource("1_c7f4q")
 skeleton = NodePath("../..")
 
 [node name="WheelFront" type="MeshInstance3D" parent="Wheels"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, 1)
-mesh = ExtResource("2_xim3n")
+mesh = ExtResource("1_c7f4q")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -125,12 +124,3 @@ tilt_forward = Array[InputEvent]([SubResource("InputEventKey_dfukr"), SubResourc
 tilt_backward = Array[InputEvent]([SubResource("InputEventKey_svn7l"), SubResource("InputEventKey_3rq0c"), SubResource("InputEventJoypadButton_jpuyk")])
 
 [node name="FlipDetection" type="FlipDetection" parent="."]
-
-[connection signal="drive_backward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_backward_pressed"]
-[connection signal="drive_backward_released" from="PlayerInput" to="." method="_on_player_input_drive_backward_released"]
-[connection signal="drive_forward_pressed" from="PlayerInput" to="." method="_on_player_input_drive_forward_pressed"]
-[connection signal="drive_forward_released" from="PlayerInput" to="." method="_on_player_input_drive_forward_released"]
-[connection signal="tilt_backward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_backward_pressed"]
-[connection signal="tilt_backward_released" from="PlayerInput" to="." method="_on_player_input_tilt_backward_released"]
-[connection signal="tilt_forward_pressed" from="PlayerInput" to="." method="_on_player_input_tilt_forward_pressed"]
-[connection signal="tilt_forward_released" from="PlayerInput" to="." method="_on_player_input_tilt_forward_released"]
