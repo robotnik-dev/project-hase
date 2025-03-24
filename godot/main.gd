@@ -50,7 +50,7 @@ func start_main_menu():
 
 func start_level():
 	# TODO: inject car scene through UI or different method later
-	_on_car_selected("res://car/default_car.tscn")
+	_on_car_selected(path_to_car_scene)
 	
 	# removing main menu
 	if main_menu:
