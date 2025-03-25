@@ -6,6 +6,6 @@ class_name UIMainMenu
 
 func _ready() -> void:
 	# TODO: after selecting car is a thing, 
-	select_car.disabled = true
-	select_car.focus_mode = Control.FOCUS_NONE
+	#select_car.disabled = true
+	#select_car.focus_mode = Control.FOCUS_NONE
 	start.grab_focus()
