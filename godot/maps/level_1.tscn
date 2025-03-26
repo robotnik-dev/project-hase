@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cxpqv846s0ivr"]
+[gd_scene load_steps=37 format=3 uid="uid://cxpqv846s0ivr"]
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
 [ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
@@ -6,6 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://ddcs8l8ogns4y" path="res://assets/terrain/road_3.gltf" id="4_g3ttt"]
 [ext_resource type="PackedScene" uid="uid://bwtw1ldk1n6ee" path="res://assets/terrain/road_4.gltf" id="5_4tqg5"]
 [ext_resource type="PackedScene" uid="uid://drk0idftg3w0o" path="res://maps/shared/crash_zone.tscn" id="6_xit5k"]
+[ext_resource type="PackedScene" uid="uid://bwqs1g45dsk5a" path="res://maps/shared/parallax_layer.tscn" id="7_ehoub"]
+[ext_resource type="Texture2D" uid="uid://bild5aylure4w" path="res://assets/backgrounds/desert/1_Sky.png" id="8_gd3fd"]
+[ext_resource type="Texture2D" uid="uid://dg8iery0p0kd2" path="res://assets/backgrounds/desert/2_BirdsBG.png" id="9_5ohc2"]
+[ext_resource type="Texture2D" uid="uid://d0qgtw46c3dbp" path="res://assets/backgrounds/desert/3_MountainsBG.png" id="10_y46h7"]
+[ext_resource type="Texture2D" uid="uid://7f0rxmm0rajj" path="res://assets/backgrounds/desert/4_BirdsMG.png" id="11_lx3oc"]
+[ext_resource type="Texture2D" uid="uid://dbwf2m7m8cpta" path="res://assets/backgrounds/desert/5_CloudsBG.png" id="12_jcknf"]
+[ext_resource type="Texture2D" uid="uid://bytn8jeq8cndp" path="res://assets/backgrounds/desert/6_MountainsFG.png" id="13_o75ra"]
+[ext_resource type="Texture2D" uid="uid://cirnfdl16fl6w" path="res://assets/backgrounds/desert/7_CloudsFG.png" id="14_4v1id"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_guk5d"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,7 +26,6 @@ sky_material = SubResource("ProceduralSkyMaterial_guk5d")
 background_mode = 2
 sky = SubResource("Sky_p53i6")
 tonemap_mode = 2
-glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2rli2"]
 albedo_color = Color(0.140794, 0.309945, 0.557043, 1)
@@ -59,12 +66,47 @@ size = Vector3(5, 20, 20)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t55dv"]
 points = PackedVector3Array(2.5, 10, 10, -2.5, 10, 10, 2.5, -10, 10, 2.5, 10, -10, -2.5, 10, -10, -2.5, -10, 10, 2.5, -10, -10, -2.5, -10, -10)
 
-[node name="Template" type="Level" node_paths=PackedStringArray("start", "end")]
+[sub_resource type="PlaneMesh" id="PlaneMesh_xl1sn"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_re7ly"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_do87p"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tcuel"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ywcw1"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a6lta"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tnksx"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[node name="Level1" type="Level" node_paths=PackedStringArray("start", "end")]
 start = NodePath("Start")
 end = NodePath("End")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(0.965926, 1.13133e-08, -0.258819, 0.258819, -4.2222e-08, 0.965926, 0, -1, -4.37114e-08, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -175,6 +217,54 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BackWall2/Wall1/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_t55dv")
+
+[node name="ParallaxLayers" type="Node" parent="."]
+
+[node name="ParallaxLayer" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+mesh = SubResource("PlaneMesh_xl1sn")
+texture = ExtResource("8_gd3fd")
+constant_speed = true
+far_away = true
+
+[node name="ParallaxLayer2" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+mesh = SubResource("PlaneMesh_re7ly")
+texture = ExtResource("9_5ohc2")
+layer = 2
+constant_speed = true
+speed = 3.6
+
+[node name="ParallaxLayer3" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+mesh = SubResource("PlaneMesh_do87p")
+texture = ExtResource("10_y46h7")
+layer = 3
+speed = 6.1
+
+[node name="ParallaxLayer4" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+mesh = SubResource("PlaneMesh_tcuel")
+texture = ExtResource("11_lx3oc")
+layer = 4
+constant_speed = true
+speed = 2.2
+
+[node name="ParallaxLayer5" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+mesh = SubResource("PlaneMesh_ywcw1")
+texture = ExtResource("12_jcknf")
+layer = 5
+constant_speed = true
+speed = 4.4
+
+[node name="ParallaxLayer6" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+mesh = SubResource("PlaneMesh_a6lta")
+texture = ExtResource("13_o75ra")
+layer = 6
+speed = 14.2
+
+[node name="ParallaxLayer7" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+mesh = SubResource("PlaneMesh_tnksx")
+texture = ExtResource("14_4v1id")
+layer = 7
+constant_speed = true
+speed = 1.3
 
 [editable path="MainRoad1"]
 [editable path="MainRoad2"]

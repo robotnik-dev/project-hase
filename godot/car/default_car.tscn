@@ -97,6 +97,7 @@ angular_damp = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.542564, 0)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_ildch")
 
 [node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D"]
@@ -121,11 +122,13 @@ collide_with_areas = true
 
 [node name="wheelBack" type="MeshInstance3D" parent="Wheels"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, -1)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_23fp4")
 skeleton = NodePath("../..")
 
 [node name="WheelFront" type="MeshInstance3D" parent="Wheels"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, 1)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_usex8")
 skeleton = NodePath("../..")
 
@@ -139,9 +142,11 @@ shape = SubResource("ConvexPolygonShape3D_0s2c7")
 
 [node name="PlayerCamera" type="PlayerCamera" parent="." node_paths=PackedStringArray("follow")]
 follow = NodePath("..")
+height = 5.0
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20, 0, 0)
 top_level = true
 cull_mask = 524287
+v_offset = 5.0
 projection = 1
 current = true
 size = 20.0

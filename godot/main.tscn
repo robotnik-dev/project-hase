@@ -14,6 +14,7 @@ wait_until_next_level = 0.3
 level_scenes = Array[PackedScene]([ExtResource("2_mkbhf")])
 
 [node name="UI" type="Control" parent="."]
+z_index = 100
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
