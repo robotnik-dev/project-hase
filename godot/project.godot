@@ -82,6 +82,7 @@ ui_down={
 3d_physics/layer_2="Car"
 3d_physics/layer_3="Wheel"
 3d_physics/layer_4="OutOfBounds"
+3d_physics/layer_5="Collectible"
 
 [physics]
 

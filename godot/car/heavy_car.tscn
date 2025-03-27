@@ -82,6 +82,7 @@ button_index = 9
 
 [node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
+collectables_needed_to_unlock = 1
 ui_preview = ExtResource("1_4ooac")
 ui_display_name = &"Heavy Car"
 crash_detects = [NodePath("MeshInstance3D/RayCast3D"), NodePath("MeshInstance3D/RayCast3D2"), NodePath("MeshInstance3D/RayCast3D3")]

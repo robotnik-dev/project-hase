@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://coxl0dthgu5s0"]
+
+[ext_resource type="Script" path="res://developer/collectible.gd" id="1_evlhv"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f8uii"]
+load_path = "res://.godot/imported/fullscreen.png-957a4bb32b202611bbe636f3332bee3d.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e2y3q"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("CompressedTexture2D_f8uii")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bueog"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_e2y3q")
+flip_faces = true
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g41jo"]
+size = Vector3(1, 2, 2)
+
+[node name="Collectible" type="MeshInstance3D"]
+mesh = SubResource("PlaneMesh_bueog")
+script = ExtResource("1_evlhv")
+despawn_delay = null
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_g41jo")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

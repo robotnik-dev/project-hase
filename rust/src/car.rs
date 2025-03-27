@@ -15,6 +15,9 @@ struct Car {
     player_input: Option<Gd<PlayerInput>>,
 
     #[export]
+    collectables_needed_to_unlock: i32,
+
+    #[export]
     #[init(val = None)]
     ui_preview: Option<Gd<PackedScene>>,
 

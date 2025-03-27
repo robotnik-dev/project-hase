@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cxpqv846s0ivr"]
+[gd_scene load_steps=49 format=3 uid="uid://cxpqv846s0ivr"]
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
 [ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
@@ -14,6 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://dbwf2m7m8cpta" path="res://assets/backgrounds/desert/5_CloudsBG.png" id="12_jcknf"]
 [ext_resource type="Texture2D" uid="uid://bytn8jeq8cndp" path="res://assets/backgrounds/desert/6_MountainsFG.png" id="13_o75ra"]
 [ext_resource type="Texture2D" uid="uid://cirnfdl16fl6w" path="res://assets/backgrounds/desert/7_CloudsFG.png" id="14_4v1id"]
+[ext_resource type="PackedScene" uid="uid://lj24pc10v5og" path="res://developer/collectible_manager.tscn" id="15_50087"]
+[ext_resource type="PackedScene" uid="uid://coxl0dthgu5s0" path="res://developer/collectible.tscn" id="15_jpnkk"]
+[ext_resource type="Texture2D" uid="uid://cl5jq4rjgm5x0" path="res://icon.svg" id="16_5jkam"]
+[ext_resource type="Texture2D" uid="uid://dwwml4utgdsf6" path="res://assets/ui/icons/fullscreen.png" id="16_riyet"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_guk5d"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -98,6 +102,50 @@ orientation = 0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tnksx"]
 resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpyn5"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = ExtResource("16_5jkam")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fr6jw"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_qpyn5")
+flip_faces = true
+orientation = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wimdd"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = ExtResource("16_5jkam")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_35dj6"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_wimdd")
+flip_faces = true
+orientation = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3bcso"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = ExtResource("16_riyet")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hff2s"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_3bcso")
+flip_faces = true
+orientation = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfpg2"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = ExtResource("16_riyet")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m747a"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_mfpg2")
 flip_faces = true
 orientation = 0
 
@@ -265,6 +313,24 @@ texture = ExtResource("14_4v1id")
 layer = 7
 constant_speed = true
 speed = 1.3
+
+[node name="CollectibleManager" parent="." instance=ExtResource("15_50087")]
+
+[node name="Collectible" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.22662, 14.3703)
+mesh = SubResource("PlaneMesh_fr6jw")
+
+[node name="Collectible2" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.17554, 25.8296)
+mesh = SubResource("PlaneMesh_35dj6")
+
+[node name="Collectible3" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.2658, 38.855)
+mesh = SubResource("PlaneMesh_hff2s")
+
+[node name="Collectible4" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.2658, 43.5276)
+mesh = SubResource("PlaneMesh_m747a")
 
 [editable path="MainRoad1"]
 [editable path="MainRoad2"]

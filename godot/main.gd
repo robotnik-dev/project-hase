@@ -30,6 +30,16 @@ func _ready() -> void:
 	_connect_signals()
 	start_main_menu()
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		save_game()
+
+func save_game():
+	var nodes = get_tree().get_nodes_in_group("Persist")
+	for node in nodes:
+		if node.has_method("save"):
+			node.save()
+
 func start_main_menu():
 	main_menu = main_menu_scene.instantiate()
 	ui.add_child(main_menu)
@@ -145,4 +155,5 @@ func _on_car_flipped(direction: StringName, count: int):
 			print("back flip number " + str(count))
 
 func _on_quit_game():
+	save_game()
 	get_tree().quit()

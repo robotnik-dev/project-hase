@@ -22,6 +22,14 @@ func emit_car_flipped(direction: StringName, count: int) -> Array:
 	_car_flipped.emit(direction, count)
 	return _car_flipped.get_connections()
 
+signal _collected()
+func connect_collected(callable: Callable) -> Array:
+	_collected.connect(callable)
+	return _collected.get_connections()
+func emit_collected(id: int) -> Array:
+	_collected.emit(id)
+	return _collected.get_connections()
+
 signal _car_crashed
 func connect_car_crashed(callable: Callable) -> Array:
 	_car_crashed.connect(callable)
