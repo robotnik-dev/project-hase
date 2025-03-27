@@ -61,10 +61,10 @@ size = Vector3(10, 7.007, 361.648)
 
 [sub_resource type="BoxMesh" id="BoxMesh_2ul2e"]
 material = ExtResource("3_pytas")
-size = Vector3(5, 20, 20)
+size = Vector3(5, 50, 50)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t55dv"]
-points = PackedVector3Array(2.5, 10, 10, -2.5, 10, 10, 2.5, -10, 10, 2.5, 10, -10, -2.5, 10, -10, -2.5, -10, 10, 2.5, -10, -10, -2.5, -10, -10)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x68cd"]
+points = PackedVector3Array(2.5, 25, 25, -2.5, 25, 25, 2.5, -25, 25, 2.5, 25, -25, -2.5, 25, -25, -2.5, -25, 25, 2.5, -25, -25, -2.5, -25, -25)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xl1sn"]
 resource_local_to_scene = true
@@ -208,7 +208,7 @@ shape = SubResource("BoxShape3D_1yedr")
 [node name="BackWall2" type="Node" parent="."]
 
 [node name="Wall1" type="MeshInstance3D" parent="BackWall2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.4551, -24.94)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_2ul2e")
 skeleton = NodePath("")
@@ -216,7 +216,7 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="BackWall2/Wall1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BackWall2/Wall1/StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_t55dv")
+shape = SubResource("ConvexPolygonShape3D_x68cd")
 
 [node name="ParallaxLayers" type="Node" parent="."]
 
