@@ -37,6 +37,12 @@ impl ICamera3D for PlayerCamera {
         self.base_mut().set_projection(ProjectionType::ORTHOGONAL);
         self.set_distance(self.get_distance());
         self.set_height(self.get_height());
+
+        if self.base().is_current() {
+            if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+                signals.call("emit_camera_loaded", &[]);
+            }
+        }
     }
 
     fn process(&mut self, _delta: f64) {
