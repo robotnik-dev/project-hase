@@ -174,7 +174,10 @@ impl Car {
 
     fn crashed(&mut self) {
         if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
-            signals.call("emit_car_crashed", &[]);
+            signals.call(
+                "emit_car_crashed",
+                &[self.base().get_global_position().to_variant()],
+            );
         }
     }
 
