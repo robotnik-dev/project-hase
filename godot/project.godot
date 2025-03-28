@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Signals="*res://global/signals.gd"
 GlobalWindow="*res://global/window.gd"
+GraveDigger="*res://global/grave_digger.gd"
 
 [display]
 
