@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://coxl0dthgu5s0"]
 
-[ext_resource type="Script" path="res://developer/collectible.gd" id="1_evlhv"]
+[ext_resource type="Script" path="res://collectibles/collectible.gd" id="1_evlhv"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f8uii"]
 load_path = "res://.godot/imported/fullscreen.png-957a4bb32b202611bbe636f3332bee3d.s3tc.ctex"
