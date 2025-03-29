@@ -82,7 +82,7 @@ button_index = 9
 
 [node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
-collectables_needed_to_unlock = 1
+collectables_needed_to_unlock = 3
 ui_preview = ExtResource("1_4ooac")
 ui_display_name = &"Heavy Car"
 crash_detects = [NodePath("MeshInstance3D/RayCast3D"), NodePath("MeshInstance3D/RayCast3D2"), NodePath("MeshInstance3D/RayCast3D3")]
@@ -97,6 +97,7 @@ mass = 200.0
 physics_material_override = SubResource("PhysicsMaterial_3ov87")
 gravity_scale = 10.0
 can_sleep = false
+continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 0.6
@@ -104,6 +105,7 @@ angular_damp = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.24181, 0)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_ildch")
 
 [node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D"]
@@ -136,11 +138,13 @@ shape = SubResource("ConvexPolygonShape3D_mc3er")
 
 [node name="wheelBack" type="MeshInstance3D" parent="Wheels"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, -1.5)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_23fp4")
 skeleton = NodePath("../..")
 
 [node name="WheelFront" type="MeshInstance3D" parent="Wheels"]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, 1.5)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_usex8")
 skeleton = NodePath("../..")
 

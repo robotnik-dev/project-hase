@@ -36,7 +36,7 @@ sky = SubResource("Sky_bbhkt")
 [sub_resource type="World3D" id="World3D_tb76f"]
 environment = SubResource("Environment_g0i35")
 
-[node name="CarSelection" type="Control" node_paths=PackedStringArray("preview_viewport", "car_label", "navigate_left", "navigate_right")]
+[node name="CarSelection" type="Control" node_paths=PackedStringArray("preview_viewport", "car_label", "start_button", "navigate_left", "navigate_right")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,6 +48,7 @@ script = ExtResource("2_nkdtm")
 cars = Array[PackedScene]([ExtResource("3_gnbjh"), ExtResource("4_ee0tt")])
 preview_viewport = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/PanelContainer/CarPreview/SubViewport")
 car_label = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/PreviewName")
+start_button = NodePath("MarginContainer/VBoxContainer/BotRow/StartButton")
 navigate_left = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateLeft")
 navigate_right = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateRight")
 

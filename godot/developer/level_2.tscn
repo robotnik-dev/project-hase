@@ -1,21 +1,21 @@
-[gd_scene load_steps=42 format=3 uid="uid://cxpqv846s0ivr"]
+[gd_scene load_steps=42 format=3 uid="uid://c7778fgubaib4"]
 
-[ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
-[ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
-[ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="3_pytas"]
-[ext_resource type="PackedScene" uid="uid://ddcs8l8ogns4y" path="res://assets/terrain/road_3.gltf" id="4_g3ttt"]
-[ext_resource type="PackedScene" uid="uid://bwtw1ldk1n6ee" path="res://assets/terrain/road_4.gltf" id="5_4tqg5"]
-[ext_resource type="PackedScene" uid="uid://drk0idftg3w0o" path="res://maps/shared/crash_zone.tscn" id="6_xit5k"]
-[ext_resource type="PackedScene" uid="uid://bwqs1g45dsk5a" path="res://maps/shared/parallax_layer.tscn" id="7_ehoub"]
-[ext_resource type="Texture2D" uid="uid://bild5aylure4w" path="res://assets/backgrounds/desert/1_Sky.png" id="8_gd3fd"]
-[ext_resource type="Texture2D" uid="uid://dg8iery0p0kd2" path="res://assets/backgrounds/desert/2_BirdsBG.png" id="9_5ohc2"]
-[ext_resource type="Texture2D" uid="uid://d0qgtw46c3dbp" path="res://assets/backgrounds/desert/3_MountainsBG.png" id="10_y46h7"]
-[ext_resource type="Texture2D" uid="uid://7f0rxmm0rajj" path="res://assets/backgrounds/desert/4_BirdsMG.png" id="11_lx3oc"]
-[ext_resource type="Texture2D" uid="uid://dbwf2m7m8cpta" path="res://assets/backgrounds/desert/5_CloudsBG.png" id="12_jcknf"]
-[ext_resource type="Texture2D" uid="uid://bytn8jeq8cndp" path="res://assets/backgrounds/desert/6_MountainsFG.png" id="13_o75ra"]
-[ext_resource type="Texture2D" uid="uid://cirnfdl16fl6w" path="res://assets/backgrounds/desert/7_CloudsFG.png" id="14_4v1id"]
-[ext_resource type="PackedScene" uid="uid://lj24pc10v5og" path="res://collectibles/collectible_manager.tscn" id="15_50087"]
-[ext_resource type="PackedScene" uid="uid://coxl0dthgu5s0" path="res://collectibles/collectible.tscn" id="15_jpnkk"]
+[ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_uauog"]
+[ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="2_nj868"]
+[ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_iaxqn"]
+[ext_resource type="PackedScene" uid="uid://ddcs8l8ogns4y" path="res://assets/terrain/road_3.gltf" id="4_mlx14"]
+[ext_resource type="PackedScene" uid="uid://bwtw1ldk1n6ee" path="res://assets/terrain/road_4.gltf" id="5_715mt"]
+[ext_resource type="PackedScene" uid="uid://drk0idftg3w0o" path="res://maps/shared/crash_zone.tscn" id="6_h3goa"]
+[ext_resource type="PackedScene" uid="uid://bwqs1g45dsk5a" path="res://maps/shared/parallax_layer.tscn" id="7_vw65o"]
+[ext_resource type="Texture2D" uid="uid://bild5aylure4w" path="res://assets/backgrounds/desert/1_Sky.png" id="8_sypp1"]
+[ext_resource type="Texture2D" uid="uid://dg8iery0p0kd2" path="res://assets/backgrounds/desert/2_BirdsBG.png" id="9_alepg"]
+[ext_resource type="Texture2D" uid="uid://d0qgtw46c3dbp" path="res://assets/backgrounds/desert/3_MountainsBG.png" id="10_bjfiu"]
+[ext_resource type="Texture2D" uid="uid://7f0rxmm0rajj" path="res://assets/backgrounds/desert/4_BirdsMG.png" id="11_xwnka"]
+[ext_resource type="Texture2D" uid="uid://dbwf2m7m8cpta" path="res://assets/backgrounds/desert/5_CloudsBG.png" id="12_lnjic"]
+[ext_resource type="Texture2D" uid="uid://bytn8jeq8cndp" path="res://assets/backgrounds/desert/6_MountainsFG.png" id="13_f8pgc"]
+[ext_resource type="Texture2D" uid="uid://cirnfdl16fl6w" path="res://assets/backgrounds/desert/7_CloudsFG.png" id="14_6ydh0"]
+[ext_resource type="PackedScene" uid="uid://lj24pc10v5og" path="res://collectibles/collectible_manager.tscn" id="15_abfj6"]
+[ext_resource type="PackedScene" uid="uid://coxl0dthgu5s0" path="res://collectibles/collectible.tscn" id="16_y5263"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_guk5d"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -62,7 +62,7 @@ orientation = 0
 size = Vector3(10, 7.007, 361.648)
 
 [sub_resource type="BoxMesh" id="BoxMesh_2ul2e"]
-material = ExtResource("3_pytas")
+material = ExtResource("2_nj868")
 size = Vector3(5, 50, 50)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x68cd"]
@@ -106,18 +106,18 @@ orientation = 0
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f8uii"]
 load_path = "res://.godot/imported/fullscreen.png-957a4bb32b202611bbe636f3332bee3d.s3tc.ctex"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ivwb"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s245b"]
 resource_local_to_scene = true
 transparency = 1
 albedo_texture = SubResource("CompressedTexture2D_f8uii")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_scfu7"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_u2vsj"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_7ivwb")
+material = SubResource("StandardMaterial3D_s245b")
 flip_faces = true
 orientation = 0
 
-[node name="Level1" type="Level" node_paths=PackedStringArray("start", "end")]
+[node name="Level2" type="Level" node_paths=PackedStringArray("start", "end")]
 start = NodePath("Start")
 end = NodePath("End")
 
@@ -141,7 +141,7 @@ billboard = 1
 text = "Start"
 
 [node name="End" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5014, 972.182)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5437, 167.962)
 layers = 524288
 mesh = SubResource("SphereMesh_nvil5")
 
@@ -152,11 +152,11 @@ pixel_size = 0.05
 billboard = 1
 text = "End"
 
-[node name="MainRoad1" parent="." instance=ExtResource("1_dlqdw")]
+[node name="MainRoad1" parent="." instance=ExtResource("1_uauog")]
 metadata/_edit_group_ = true
 
 [node name="CSGPolygon3D2" parent="MainRoad1/Terrain" index="0"]
-material_override = ExtResource("3_pytas")
+material_override = ExtResource("2_nj868")
 cast_shadow = 0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad1/Terrain/CSGPolygon3D2" index="0"]
@@ -164,13 +164,13 @@ cast_shadow = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MainRoad1/Terrain/CSGPolygon3D2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_6ojwb")
 
-[node name="MainRoad2" parent="." instance=ExtResource("3_p03wx")]
+[node name="MainRoad2" parent="." instance=ExtResource("3_iaxqn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.5387, 717)
 metadata/_edit_group_ = true
 
 [node name="CSGPolygon3D2" parent="MainRoad2/Terrain" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -48.9694)
-material_override = ExtResource("3_pytas")
+material_override = ExtResource("2_nj868")
 cast_shadow = 0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad2/Terrain/CSGPolygon3D2" index="0"]
@@ -178,25 +178,25 @@ cast_shadow = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MainRoad2/Terrain/CSGPolygon3D2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_yr4uq")
 
-[node name="MainRoad3" parent="." instance=ExtResource("4_g3ttt")]
+[node name="MainRoad3" parent="." instance=ExtResource("4_mlx14")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 47.8439, 839.32)
 metadata/_edit_group_ = true
 
 [node name="CSGPolygon3D2" parent="MainRoad3/Terrain" index="0"]
-material_override = ExtResource("3_pytas")
+material_override = ExtResource("2_nj868")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad3/Terrain/CSGPolygon3D2" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MainRoad3/Terrain/CSGPolygon3D2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_to1pd")
 
-[node name="MainRoad4" parent="." instance=ExtResource("5_4tqg5")]
+[node name="MainRoad4" parent="." instance=ExtResource("5_715mt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50.0444, 891.257)
 metadata/_edit_group_ = true
 
 [node name="CSGPolygon3D2" parent="MainRoad4/Terrain" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.225281, 0.308357, -0.0187378)
-material_override = ExtResource("3_pytas")
+material_override = ExtResource("2_nj868")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad4/Terrain/CSGPolygon3D2" index="0"]
 
@@ -207,13 +207,13 @@ shape = SubResource("ConcavePolygonShape3D_flcdc")
 
 [node name="Beginning" type="MeshInstance3D" parent="BackgroundFloor"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -4, -54.593)
-material_override = ExtResource("3_pytas")
+material_override = ExtResource("2_nj868")
 mesh = SubResource("PlaneMesh_mgj3v")
 skeleton = NodePath("../..")
 
 [node name="CrashZones" type="Node" parent="."]
 
-[node name="CrashZone" parent="CrashZones" instance=ExtResource("6_xit5k")]
+[node name="CrashZone" parent="CrashZones" instance=ExtResource("6_h3goa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.1693, 646.054)
 metadata/_edit_group_ = true
 
@@ -236,61 +236,61 @@ shape = SubResource("ConvexPolygonShape3D_x68cd")
 
 [node name="ParallaxLayers" type="Node" parent="."]
 
-[node name="ParallaxLayer" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+[node name="ParallaxLayer" parent="ParallaxLayers" instance=ExtResource("7_vw65o")]
 mesh = SubResource("PlaneMesh_xl1sn")
-texture = ExtResource("8_gd3fd")
+texture = ExtResource("8_sypp1")
 constant_speed = true
 far_away = true
 
-[node name="ParallaxLayer2" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+[node name="ParallaxLayer2" parent="ParallaxLayers" instance=ExtResource("7_vw65o")]
 mesh = SubResource("PlaneMesh_re7ly")
-texture = ExtResource("9_5ohc2")
+texture = ExtResource("9_alepg")
 layer = 2
 constant_speed = true
 speed = 3.6
 
-[node name="ParallaxLayer3" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+[node name="ParallaxLayer3" parent="ParallaxLayers" instance=ExtResource("7_vw65o")]
 mesh = SubResource("PlaneMesh_do87p")
-texture = ExtResource("10_y46h7")
+texture = ExtResource("10_bjfiu")
 layer = 3
 speed = 6.1
 
-[node name="ParallaxLayer4" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+[node name="ParallaxLayer4" parent="ParallaxLayers" instance=ExtResource("7_vw65o")]
 mesh = SubResource("PlaneMesh_tcuel")
-texture = ExtResource("11_lx3oc")
+texture = ExtResource("11_xwnka")
 layer = 4
 constant_speed = true
 speed = 2.2
 
-[node name="ParallaxLayer5" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+[node name="ParallaxLayer5" parent="ParallaxLayers" instance=ExtResource("7_vw65o")]
 mesh = SubResource("PlaneMesh_ywcw1")
-texture = ExtResource("12_jcknf")
+texture = ExtResource("12_lnjic")
 layer = 5
 constant_speed = true
 speed = 4.4
 
-[node name="ParallaxLayer6" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+[node name="ParallaxLayer6" parent="ParallaxLayers" instance=ExtResource("7_vw65o")]
 mesh = SubResource("PlaneMesh_a6lta")
-texture = ExtResource("13_o75ra")
+texture = ExtResource("13_f8pgc")
 layer = 6
 speed = 14.2
 
-[node name="ParallaxLayer7" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+[node name="ParallaxLayer7" parent="ParallaxLayers" instance=ExtResource("7_vw65o")]
 mesh = SubResource("PlaneMesh_tnksx")
-texture = ExtResource("14_4v1id")
+texture = ExtResource("14_6ydh0")
 layer = 7
 constant_speed = true
 speed = 1.3
 
-[node name="CollectibleManager" parent="." instance=ExtResource("15_50087")]
+[node name="CollectibleManager" parent="." instance=ExtResource("15_abfj6")]
 
-[node name="Collectible" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1445, 22.5504)
-mesh = SubResource("PlaneMesh_scfu7")
+[node name="Collectible" parent="CollectibleManager" instance=ExtResource("16_y5263")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.4141, 44.0952)
+mesh = SubResource("PlaneMesh_u2vsj")
 
-[node name="Collectible2" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1445, 57.2759)
-mesh = SubResource("PlaneMesh_scfu7")
+[node name="Collectible2" parent="CollectibleManager" instance=ExtResource("16_y5263")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.49399, 59.87)
+mesh = SubResource("PlaneMesh_u2vsj")
 
 [editable path="MainRoad1"]
 [editable path="MainRoad2"]

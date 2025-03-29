@@ -22,7 +22,6 @@ size = Vector3(1, 2, 2)
 [node name="Collectible" type="MeshInstance3D"]
 mesh = SubResource("PlaneMesh_bueog")
 script = ExtResource("1_evlhv")
-despawn_delay = null
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 16

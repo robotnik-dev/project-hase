@@ -18,8 +18,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 Signals="*res://global/signals.gd"
-GlobalWindow="*res://global/window.gd"
 GraveDigger="*res://global/grave_digger.gd"
+Savegame="*res://global/savegame.gd"
+GlobalWindow="*res://global/window.gd"
 
 [display]
 
@@ -88,6 +89,7 @@ ui_down={
 [physics]
 
 3d/physics_engine="Rapier3D"
+rapier/solver/max_ccd_substeps=32
 
 [rendering]
 
