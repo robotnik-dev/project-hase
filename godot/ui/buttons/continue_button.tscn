@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7uovkkq6ub3u"]
+
+[ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_ywrva"]
+[ext_resource type="Script" path="res://ui/buttons/continue_button.gd" id="2_5ssv6"]
+
+[node name="ContinueButton" type="Button"]
+custom_minimum_size = Vector2(400, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ywrva")
+theme_type_variation = &"BigMenuButton"
+text = "Continue"
+script = ExtResource("2_5ssv6")

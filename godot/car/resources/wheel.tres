@@ -1,0 +1,4 @@
+[gd_resource type="CylinderMesh" format=3 uid="uid://bddk8qjdgss7v"]
+
+[resource]
+lightmap_size_hint = Vector2i(17, 19)

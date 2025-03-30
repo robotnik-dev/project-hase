@@ -1,0 +1,167 @@
+[gd_scene load_steps=17 format=3 uid="uid://d0b7rgobhusxq"]
+
+[ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_20grt"]
+[ext_resource type="Script" path="res://ui/screens/car_selection.gd" id="2_nkdtm"]
+[ext_resource type="PackedScene" uid="uid://1b78wtvecq6o" path="res://car/default_car.tscn" id="3_gnbjh"]
+[ext_resource type="PackedScene" uid="uid://qemyf63hw3n" path="res://ui/buttons/toggle_fullscreen_button.tscn" id="3_ljfg4"]
+[ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_3dsoq"]
+[ext_resource type="PackedScene" uid="uid://hmobwq0jmbq0" path="res://car/heavy_car.tscn" id="4_ee0tt"]
+[ext_resource type="LabelSettings" uid="uid://djovojv4or3gm" path="res://ui/resources/labels/car_preview_name.tres" id="4_nrts2"]
+[ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="5_5bjhn"]
+[ext_resource type="Texture2D" uid="uid://cv83v0hblk2km" path="res://assets/ui/icons/keyboard-left-arrow.png" id="5_7hc31"]
+[ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_pceyv"]
+[ext_resource type="Texture2D" uid="uid://dqfr21jboq52l" path="res://assets/ui/icons/keyboard-right-arrow.png" id="7_g5yiy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0mtq"]
+bg_color = Color(0.213625, 0.644759, 0.867549, 0.25098)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_blend = true
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tb4vw"]
+
+[sub_resource type="Sky" id="Sky_bbhkt"]
+sky_material = SubResource("ProceduralSkyMaterial_tb4vw")
+
+[sub_resource type="Environment" id="Environment_g0i35"]
+background_mode = 2
+sky = SubResource("Sky_bbhkt")
+
+[sub_resource type="World3D" id="World3D_tb76f"]
+environment = SubResource("Environment_g0i35")
+
+[node name="CarSelection" type="Control" node_paths=PackedStringArray("preview_viewport", "car_label", "navigate_left", "navigate_right")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_20grt")
+script = ExtResource("2_nkdtm")
+cars = Array[PackedScene]([ExtResource("3_gnbjh"), ExtResource("4_ee0tt")])
+preview_viewport = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/PanelContainer/CarPreview/SubViewport")
+car_label = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/PreviewName")
+navigate_left = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateLeft")
+navigate_right = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateRight")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TopLeft" type="MarginContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToggleFullscreenButton" parent="MarginContainer/VBoxContainer/TopRow/TopLeft" instance=ExtResource("3_ljfg4")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopRight" type="MarginContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToggleMusicButton" parent="MarginContainer/VBoxContainer/TopRow/TopRight" instance=ExtResource("4_3dsoq")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="MidRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MidRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PreviewName" type="Label" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Autoname"
+label_settings = ExtResource("4_nrts2")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NavigateLeft" type="TextureButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture_normal = ExtResource("5_7hc31")
+texture_pressed = ExtResource("5_7hc31")
+texture_hover = ExtResource("5_7hc31")
+texture_focused = ExtResource("5_7hc31")
+stretch_mode = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_x0mtq")
+
+[node name="CarPreview" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/PanelContainer/CarPreview"]
+own_world_3d = true
+world_3d = SubResource("World3D_tb76f")
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(311, 300)
+render_target_update_mode = 4
+
+[node name="NavigateRight" type="TextureButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture_normal = ExtResource("7_g5yiy")
+stretch_mode = 3
+
+[node name="BotRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackToMenuButton" parent="MarginContainer/VBoxContainer/BotRow" instance=ExtResource("5_5bjhn")]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Main menu"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BotRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="StartButton" parent="MarginContainer/VBoxContainer/BotRow" instance=ExtResource("5_pceyv")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 8
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateLeft" to="." method="_on_navigate_left_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateRight" to="." method="_on_navigate_right_pressed"]

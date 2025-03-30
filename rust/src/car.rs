@@ -1,12 +1,26 @@
 use godot::{
     classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D},
     global::sign,
+    obj::WithBaseField,
     prelude::*,
 };
+
+use crate::player_input::PlayerInput;
 
 #[derive(GodotClass)]
 #[class(init, base=RigidBody3D)]
 struct Car {
+    #[export]
+    #[init(val = None)]
+    player_input: Option<Gd<PlayerInput>>,
+
+    #[export]
+    #[init(val = None)]
+    ui_preview: Option<Gd<PackedScene>>,
+
+    #[export]
+    ui_display_name: StringName,
+
     #[export]
     #[init(val = array![])]
     crash_detects: Array<Gd<RayCast3D>>,
@@ -25,6 +39,10 @@ struct Car {
 
     #[init(val = Vector3 { x: 0.0, y: 0.0, z: 999.0 })]
     end_position: Vector3,
+
+    tilt_direction: f32,
+
+    drive_direction: f32,
 
     base: Base<RigidBody3D>,
 }
@@ -86,8 +104,69 @@ impl Car {
     fn setup(&mut self, start: Vector3, end: Vector3) {
         self.base_mut().set_global_position(start);
         self.end_position = end;
+
+        // connecting signals
+        let _on_drive_forward_pressed = &self.to_gd().callable("_on_drive_forward_pressed");
+        let _on_drive_forward_released = &self.to_gd().callable("_on_drive_forward_released");
+        let _on_drive_backward_pressed = &self.to_gd().callable("_on_drive_backward_pressed");
+        let _on_drive_backward_released = &self.to_gd().callable("_on_drive_backward_released");
+        let _on_tilt_forward_pressed = &self.to_gd().callable("_on_tilt_forward_pressed");
+        let _on_tilt_forward_released = &self.to_gd().callable("_on_tilt_forward_released");
+        let _on_tilt_backward_pressed = &self.to_gd().callable("_on_tilt_backward_pressed");
+        let _on_tilt_backward_released = &self.to_gd().callable("_on_tilt_backward_released");
+        if let Some(input) = self.player_input.as_mut() {
+            input.connect("drive_forward_pressed", _on_drive_forward_pressed);
+            input.connect("drive_forward_released", _on_drive_forward_released);
+            input.connect("drive_backward_pressed", _on_drive_backward_pressed);
+            input.connect("drive_backward_released", _on_drive_backward_released);
+            input.connect("tilt_forward_pressed", _on_tilt_forward_pressed);
+            input.connect("tilt_forward_released", _on_tilt_forward_released);
+            input.connect("tilt_backward_pressed", _on_tilt_backward_pressed);
+            input.connect("tilt_backward_released", _on_tilt_backward_released);
+        }
+
         self.base_mut().set_physics_process(true);
         self.base_mut().set_process(true);
+    }
+
+    #[func]
+    fn _on_drive_forward_pressed(&mut self) {
+        self.drive_direction = 1.0;
+    }
+
+    #[func]
+    fn _on_drive_forward_released(&mut self) {
+        self.drive_direction = 0.0;
+    }
+
+    #[func]
+    fn _on_drive_backward_pressed(&mut self) {
+        self.drive_direction = -1.0;
+    }
+
+    #[func]
+    fn _on_drive_backward_released(&mut self) {
+        self.drive_direction = 0.0;
+    }
+
+    #[func]
+    fn _on_tilt_forward_pressed(&mut self) {
+        self.tilt_direction = 1.0;
+    }
+
+    #[func]
+    fn _on_tilt_forward_released(&mut self) {
+        self.tilt_direction = 0.0;
+    }
+
+    #[func]
+    fn _on_tilt_backward_pressed(&mut self) {
+        self.tilt_direction = -1.0;
+    }
+
+    #[func]
+    fn _on_tilt_backward_released(&mut self) {
+        self.tilt_direction = 0.0;
     }
 
     fn crashed(&mut self) {
@@ -103,15 +182,15 @@ impl Car {
     }
 
     /// should return a digits between -1.0 (tilt backward) and +1.0 (tilt forward)
-    #[func(virtual)]
+    #[func]
     fn get_tilt_input(&self) -> f32 {
-        0.
+        self.tilt_direction
     }
 
     /// should return a digits between -1.0 (backwards) and +1.0 (forward)
-    #[func(virtual)]
+    #[func]
     fn get_forward_input(&self) -> f32 {
-        0.
+        self.drive_direction
     }
 
     fn is_on_floor(&self) -> bool {

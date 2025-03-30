@@ -38,3 +38,5 @@ godot/.godot/*
 
 # rapier plugin
 ~*rapier**.dll
+
+.idea

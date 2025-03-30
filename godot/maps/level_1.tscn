@@ -1,7 +1,6 @@
-[gd_scene load_steps=28 format=3 uid="uid://cxpqv846s0ivr"]
+[gd_scene load_steps=22 format=3 uid="uid://cxpqv846s0ivr"]
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
-[ext_resource type="PackedScene" uid="uid://b1f7fkx15wyeh" path="res://assets/terrain/wall.gltf" id="2_eaa04"]
 [ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
 [ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="3_pytas"]
 [ext_resource type="PackedScene" uid="uid://ddcs8l8ogns4y" path="res://assets/terrain/road_3.gltf" id="4_g3ttt"]
@@ -65,8 +64,18 @@ data = PackedVector3Array(2, 6.76, -7.5479, 2, -5.24, -7.5479, -2, -5.24, -7.547
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mgj3v"]
 flip_faces = true
-size = Vector2(50, 95.645)
+size = Vector2(12, 100)
 orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1yedr"]
+size = Vector3(10, 7.007, 361.648)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2ul2e"]
+material = ExtResource("3_pytas")
+size = Vector3(5, 20, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t55dv"]
+points = PackedVector3Array(2.5, 10, 10, -2.5, 10, 10, 2.5, -10, 10, 2.5, 10, -10, -2.5, 10, -10, -2.5, -10, 10, 2.5, -10, -10, -2.5, -10, -10)
 
 [node name="Template" type="Level" node_paths=PackedStringArray("start", "end")]
 start = NodePath("Start")
@@ -103,15 +112,6 @@ pixel_size = 0.05
 billboard = 1
 text = "End"
 
-[node name="Backwall" parent="." instance=ExtResource("2_eaa04")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
-metadata/_edit_group_ = true
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Backwall/Terrain/CSGPolygon3D2" index="0"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Backwall/Terrain/CSGPolygon3D2/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_0c8mc")
-
 [node name="MainRoad1" parent="." instance=ExtResource("1_dlqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208435, 3.8147e-06, -0.116943)
 
@@ -130,6 +130,8 @@ metadata/_edit_group_ = true
 
 [node name="CSGPolygon3D2" parent="MainRoad2/Terrain" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -48.9694)
+material_override = ExtResource("3_pytas")
+cast_shadow = 0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad2/Terrain/CSGPolygon3D2" index="0"]
 
@@ -140,6 +142,9 @@ shape = SubResource("ConcavePolygonShape3D_yr4uq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 47.8439, 839.32)
 metadata/_edit_group_ = true
 
+[node name="CSGPolygon3D2" parent="MainRoad3/Terrain" index="0"]
+material_override = ExtResource("3_pytas")
+
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad3/Terrain/CSGPolygon3D2" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MainRoad3/Terrain/CSGPolygon3D2/StaticBody3D"]
@@ -147,6 +152,10 @@ shape = SubResource("ConcavePolygonShape3D_to1pd")
 
 [node name="MainRoad4" parent="." instance=ExtResource("5_4tqg5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50.0444, 891.257)
+
+[node name="CSGPolygon3D2" parent="MainRoad4/Terrain" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.225281, 0.308357, -0.0187378)
+material_override = ExtResource("3_pytas")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad4/Terrain/CSGPolygon3D2" index="0"]
 
@@ -197,9 +206,11 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 31.
 material_override = ExtResource("3_pytas")
 mesh = SubResource("PlaneMesh_mgj3v")
 
-[node name="DeveloperUI" parent="." instance=ExtResource("8_mkx8k")]
+[node name="StaticBody3D" type="StaticBody3D" parent="BackWall2/Wall1"]
 
-[editable path="Backwall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BackWall2/Wall1/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_t55dv")
+
 [editable path="MainRoad1"]
 [editable path="MainRoad2"]
 [editable path="MainRoad3"]
