@@ -16,4 +16,4 @@ func toggle_pause():
 	visible = get_tree().paused
 	if visible:
 		continue_button.grab_focus()
-		Savegame.save_game()
+		#SaveGame.save_game()

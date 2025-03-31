@@ -81,4 +81,7 @@ func _free_aleady_collected():
 			#id += 1
 
 func _on_collected(id: int):
-	collected.append(id)
+	# bubble up the collected signal with level information
+	#collected.append(id)
+	#Signals.emit_collected_for_level(id, get_parent().name)
+	SaveGame.collected_for_level(id, get_parent().name)

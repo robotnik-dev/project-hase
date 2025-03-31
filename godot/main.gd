@@ -32,7 +32,8 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		Savegame.save_game()
+		pass
+		#Savegame.save_game()
 
 func start_main_menu():
 	main_menu = main_menu_scene.instantiate()
@@ -149,5 +150,5 @@ func _on_car_flipped(direction: StringName, count: int):
 			print("back flip number " + str(count))
 
 func _on_quit_game():
-	Savegame.save_game()
+	#Savegame.save_game()
 	get_tree().quit()
