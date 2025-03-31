@@ -30,14 +30,6 @@ func emit_collected(id: int) -> Array:
 	_collected.emit(id)
 	return _collected.get_connections()
 
-signal _collected_for_level(id: int, level: String)
-func connect_collected_for_level(callable: Callable) -> Array:
-	_collected_for_level.connect(callable)
-	return _collected_for_level.get_connections()
-func emit_collected_for_level(id: int, level: String) -> Array:
-	_collected_for_level.emit(id, level)
-	return _collected_for_level.get_connections()
-
 signal _car_crashed(position: Vector3)
 func connect_car_crashed(callable: Callable) -> Array:
 	_car_crashed.connect(callable)

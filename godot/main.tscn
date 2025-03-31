@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dif07paq3g40e"]
+[gd_scene load_steps=8 format=3 uid="uid://dif07paq3g40e"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_10p37"]
-[ext_resource type="PackedScene" uid="uid://cxpqv846s0ivr" path="res://maps/level_1.tscn" id="2_mkbhf"]
+[ext_resource type="PackedScene" uid="uid://c7778fgubaib4" path="res://developer/level_2.tscn" id="2_ocenl"]
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="2_sqd80"]
 [ext_resource type="PackedScene" uid="uid://fpsbtf2ehc32" path="res://ui/screens/developer_ui.tscn" id="3_272mh"]
+[ext_resource type="PackedScene" uid="uid://daukiy4dstbsp" path="res://developer/level_3.tscn" id="3_ha60a"]
 [ext_resource type="Script" path="res://audio/conductor.gd" id="4_wvrni"]
 [ext_resource type="AudioStream" uid="uid://dqvta5q8ey212" path="res://assets/audio/music/for-elise.mp3" id="5_k4u17"]
 
@@ -11,7 +12,7 @@
 script = ExtResource("1_10p37")
 ui = NodePath("UI")
 wait_until_next_level = 0.3
-level_scenes = Array[PackedScene]([ExtResource("2_mkbhf")])
+level_scenes = Array[PackedScene]([ExtResource("2_ocenl"), ExtResource("3_ha60a")])
 
 [node name="UI" type="Control" parent="."]
 z_index = 100
