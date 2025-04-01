@@ -51,4 +51,5 @@ func _free_aleady_collected():
 
 func _on_collected(id: int):
 	SaveGame.collected_in_level(id, level_id)
-	SaveGame.save()
+	if !debug_mode:
+		SaveGame.save()

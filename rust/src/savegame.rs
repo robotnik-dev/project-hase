@@ -109,8 +109,8 @@ impl SaveGame {
                         godot_print!("Loaded file: {path} with content: {save:?}");
                         self.save = save;
                     }
-                    Err(err) => {
-                        godot_error!("Could not generate Save from this file: {path} due to {err}")
+                    Err(_) => {
+                        // godot_error!("Could not generate Save from this file: {path} due to {err}")
                     }
                 }
             }
@@ -133,6 +133,26 @@ impl SaveGame {
             .levels
             .iter()
             .fold(0, |acc, l| acc + l.collected_ids.len() as i32)
+    }
+
+    #[func]
+    fn delete_save(&mut self) {
+        let mut path = Engine::singleton()
+            .get_singleton("OS")
+            .unwrap()
+            .call("get_user_data_dir", &[])
+            .to_string();
+        path.push_str(format!("/{}", FILENAME).as_str());
+        if OpenOptions::new()
+            .write(true)
+            .truncate(true)
+            .open(path.clone())
+            .is_ok()
+        {
+            godot_print!("Cleared savegame at path: {path}");
+        } else {
+            godot_print!("No savegame exists at path: {path}");
+        }
     }
 
     #[func]
