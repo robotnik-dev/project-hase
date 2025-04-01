@@ -39,29 +39,7 @@ func _render_preview():
 		car_label.text = "No Preview set"
 
 func _load_collected() -> int:
-	# TODO
-	return 0
-	
-	#var _collected: int = 0
-	#if not FileAccess.file_exists("user://savegame.save"):
-		#return _collected # We don't have a save to load. assume 0
-	#
-	#var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
-	#while save_file.get_position() < save_file.get_length():
-		#var json_string = save_file.get_line()
-		#
-		## Creates the helper class to interact with JSON.
-		#var json = JSON.new()
-		#var parse_result = json.parse(json_string)
-		#if not parse_result == OK:
-			#print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
-			#continue
-		#
-		## Get the data from the JSON object.
-		#var data = json.data
-		#_collected += data["collected"].size()
-		#
-	#return _collected
+	return SaveGame.get_sum_of_collected()
 
 
 func _on_navigate_left_pressed() -> void:

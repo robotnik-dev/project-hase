@@ -1,30 +1,37 @@
-use std::{fs::OpenOptions, io::Write};
+use std::{
+    fs::OpenOptions,
+    io::{Read, Write},
+};
 
 use godot::{
+    builtin::Array,
     classes::{Engine, IObject, Object},
-    global::godot_error,
+    global::{godot_error, godot_print},
+    meta::ToGodot,
     obj::Base,
     prelude::{godot_api, GodotClass},
 };
 use ron::ser::PrettyConfig;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
+const FILENAME: &str = "savegame.ron";
+
+#[derive(Debug, Deserialize, Serialize, PartialEq, Default, Clone)]
 struct Level {
-    name: String,
+    id: i32,
     collected_ids: Vec<i32>,
 }
 
 impl Level {
-    fn new(name: String, id: i32) -> Self {
+    fn new(id: i32, collected_id: i32) -> Self {
         Self {
-            name,
-            collected_ids: vec![id],
+            id,
+            collected_ids: vec![collected_id],
         }
     }
 }
 
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default)]
+#[derive(Debug, Deserialize, Serialize, PartialEq, Default, Clone)]
 struct Save {
     levels: Vec<Level>,
 }
@@ -64,7 +71,7 @@ impl SaveGame {
                     .unwrap()
                     .call("get_user_data_dir", &[])
                     .to_string();
-                path.push_str("/savegame.ron");
+                path.push_str(format!("/{}", FILENAME).as_str());
                 if let Ok(mut file) = OpenOptions::new()
                     .create(true)
                     .write(true)
@@ -84,16 +91,61 @@ impl SaveGame {
     }
 
     #[func]
-    fn collected_in_level(&mut self, id: i32, level_name: String) {
+    fn load(&mut self) {
+        let mut path = Engine::singleton()
+            .get_singleton("OS")
+            .unwrap()
+            .call("get_user_data_dir", &[])
+            .to_string();
+        path.push_str(format!("/{}", FILENAME).as_str());
+
+        if let Ok(mut file) = OpenOptions::new().read(true).open(path.clone()) {
+            let mut buf = String::new();
+            if let Err(err) = file.read_to_string(&mut buf) {
+                godot_error!("Could not read file: {path} due to {err}")
+            } else {
+                match ron::from_str::<Save>(buf.as_str()) {
+                    Ok(save) => {
+                        godot_print!("Loaded file: {path} with content: {save:?}");
+                        self.save = save;
+                    }
+                    Err(err) => {
+                        godot_error!("Could not generate Save from this file: {path} due to {err}")
+                    }
+                }
+            }
+        } else {
+            godot_print!("No savegame exists at path: {path}");
+        }
+    }
+
+    #[func]
+    fn get_collected_for_level(&self, level_id: i32) -> Array<i32> {
+        match self.save.levels.iter().find(|l| l.id == level_id) {
+            Some(level) => level.collected_ids.to_godot(),
+            None => Array::new(),
+        }
+    }
+
+    #[func]
+    fn get_sum_of_collected(&self) -> i32 {
+        self.save
+            .levels
+            .iter()
+            .fold(0, |acc, l| acc + l.collected_ids.len() as i32)
+    }
+
+    #[func]
+    fn collected_in_level(&mut self, id: i32, level_id: i32) {
         let (idx, new_level) = match self
             .save
             .levels
             .iter()
             .enumerate()
-            .find(|(_, level)| level.name == level_name)
+            .find(|(_, level)| level.id == level_id)
         {
             Some((i, level)) => {
-                let mut new_l = Level::new(level.name.clone(), id);
+                let mut new_l = Level::new(level.id, id);
                 if !level.collected_ids.contains(&id) {
                     // update the collected values
                     let mut new_collected = level.collected_ids.clone();
@@ -105,7 +157,7 @@ impl SaveGame {
                 }
                 (i as i32, new_l)
             }
-            None => (-1i32, Level::new(level_name, id)),
+            None => (-1i32, Level::new(level_id, id)),
         };
 
         if idx == -1 {
@@ -122,18 +174,18 @@ mod tests {
     use super::*;
 
     fn get_save_str() -> &'static str {
-        r#"Save(levels:[Level(name:"Level1",collected_ids:[0]),Level(name:"Level2",collected_ids:[])])"#
+        r#"Save(levels:[Level(id:1,collected_ids:[0]),Level(id:2,collected_ids:[])])"#
     }
 
     fn get_save() -> Save {
         Save {
             levels: vec![
                 Level {
-                    name: String::from("Level1"),
+                    id: 1,
                     collected_ids: vec![0i32],
                 },
                 Level {
-                    name: String::from("Level2"),
+                    id: 2,
                     collected_ids: vec![],
                 },
             ],

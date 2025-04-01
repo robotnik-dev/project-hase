@@ -29,6 +29,8 @@ var select_car_menu: UICarSelection
 func _ready() -> void:
 	_connect_signals()
 	start_main_menu()
+	# loading savegame
+	SaveGame.load()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
