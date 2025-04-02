@@ -51,7 +51,7 @@ button_index = 9
 
 [node name="Cabrio" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
-collectables_needed_to_unlock = 5
+collectables_needed_to_unlock = 3
 ui_preview = ExtResource("1_0n2f3")
 ui_display_name = &"Cabrio"
 crash_detects = [NodePath("RayCast3D"), NodePath("RayCast3D2"), NodePath("RayCast3D3")]

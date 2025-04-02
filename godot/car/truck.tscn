@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://da4ttchiynti7" path="res://car/previews/heavy_car_preview.tscn" id="1_4ooac"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_b3leg"]
-[ext_resource type="PackedScene" uid="uid://cg3uqeduw55h8" path="res://assets/carosserie/CarosserieTruck.glb" id="3_8d2o0"]
+[ext_resource type="PackedScene" uid="uid://b3o5d4xe2pxob" path="res://car/carosserie/carosserie_truck.tscn" id="3_86cr5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -51,7 +51,7 @@ button_index = 9
 
 [node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
-collectables_needed_to_unlock = 3
+collectables_needed_to_unlock = 2
 ui_preview = ExtResource("1_4ooac")
 ui_display_name = &"Truck"
 crash_detects = [NodePath("RayCast3D"), NodePath("RayCast3D2"), NodePath("RayCast3D3")]
@@ -125,5 +125,5 @@ tilt_backward = Array[InputEvent]([SubResource("InputEventKey_svn7l"), SubResour
 
 [node name="FlipDetection" type="FlipDetection" parent="."]
 
-[node name="CarosserieTruck" parent="." instance=ExtResource("3_8d2o0")]
+[node name="CarosserieTruck" parent="." instance=ExtResource("3_86cr5")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)

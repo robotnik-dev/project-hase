@@ -2,10 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_20grt"]
 [ext_resource type="Script" path="res://ui/screens/car_selection.gd" id="2_nkdtm"]
-[ext_resource type="PackedScene" uid="uid://1b78wtvecq6o" path="res://car/default_car.tscn" id="3_gnbjh"]
+[ext_resource type="PackedScene" uid="uid://1b78wtvecq6o" path="res://car/car.tscn" id="3_gnbjh"]
 [ext_resource type="PackedScene" uid="uid://qemyf63hw3n" path="res://ui/buttons/toggle_fullscreen_button.tscn" id="3_ljfg4"]
 [ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_3dsoq"]
-[ext_resource type="PackedScene" uid="uid://hmobwq0jmbq0" path="res://car/heavy_car.tscn" id="4_ee0tt"]
+[ext_resource type="PackedScene" uid="uid://hmobwq0jmbq0" path="res://car/truck.tscn" id="4_ee0tt"]
 [ext_resource type="LabelSettings" uid="uid://djovojv4or3gm" path="res://ui/resources/labels/car_preview_name.tres" id="4_nrts2"]
 [ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="5_5bjhn"]
 [ext_resource type="Texture2D" uid="uid://cv83v0hblk2km" path="res://assets/ui/icons/keyboard-left-arrow.png" id="5_7hc31"]

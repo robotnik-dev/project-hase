@@ -17,8 +17,8 @@ class_name Main
 var current_level: Level = null
 var current_level_idx = 0
 var current_car: Car = null
-## Default car scene at "res://car/default_car.tscn"
-var car_scene: PackedScene = preload("res://car/default_car.tscn")
+## Default car scene at "res://car/car.tscn"
+var car_scene: PackedScene = preload("res://car/car.tscn")
 
 var main_menu_scene: PackedScene = preload("res://ui/screens/main_menu.tscn")
 var main_menu: UIMainMenu
