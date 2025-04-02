@@ -1,5 +1,5 @@
 use godot::{
-    classes::{IRigidBody3D, MeshInstance3D, RayCast3D, RigidBody3D},
+    classes::{IRigidBody3D, RayCast3D, RigidBody3D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
@@ -30,7 +30,7 @@ struct Car {
 
     #[export]
     #[init(val = array![])]
-    wheels: Array<Gd<MeshInstance3D>>,
+    wheels: Array<Gd<Node3D>>,
 
     #[export]
     #[init(val = 1800.)]
@@ -87,7 +87,7 @@ impl IRigidBody3D for Car {
         let speed = Vector3::new(velocity.x, 0., velocity.z).length();
         let move_direction = sign(&self.base().get_linear_velocity().z.to_variant()).to::<f32>();
         self.get_wheels().iter_shared().for_each(|mut wheel| {
-            wheel.rotate_object_local(Vector3::DOWN, move_direction * (delta as f32) * speed);
+            wheel.rotate_object_local(Vector3::LEFT, move_direction * (delta as f32) * speed);
         });
     }
 

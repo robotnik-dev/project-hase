@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Signals="*res://global/signals.gd"
-GraveDigger="*res://global/grave_digger.gd"
 GlobalWindow="*res://global/window.gd"
 
 [display]

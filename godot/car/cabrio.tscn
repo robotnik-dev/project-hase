@@ -1,8 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=19 format=3 uid="uid://cfm3ui1m7bqcn"]
 
-[ext_resource type="PackedScene" uid="uid://dmr0ls0h3fhm2" path="res://car/previews/default_car_preview.tscn" id="1_tu35q"]
-[ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_2fhm1"]
-[ext_resource type="PackedScene" uid="uid://b5c5jjndrhfi5" path="res://assets/carosserie/CarosserieDefault.glb" id="3_r47nu"]
+[ext_resource type="PackedScene" uid="uid://lcydl2mrj708" path="res://car/previews/cabrio_preview.tscn" id="1_0n2f3"]
+[ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_8krvb"]
+[ext_resource type="PackedScene" uid="uid://clfi6ka6mhdnr" path="res://car/carosserie/carosserie_cabrio.tscn" id="3_kctjg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -49,20 +49,22 @@ keycode = 4194319
 [sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_jpuyk"]
 button_index = 9
 
-[node name="DefaultCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
+[node name="Cabrio" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
-ui_preview = ExtResource("1_tu35q")
-ui_display_name = &"Car"
+collectables_needed_to_unlock = 5
+ui_preview = ExtResource("1_0n2f3")
+ui_display_name = &"Cabrio"
 crash_detects = [NodePath("RayCast3D"), NodePath("RayCast3D2"), NodePath("RayCast3D3")]
 wheels = [NodePath("Wheels/WheelBack"), NodePath("Wheels/WheelFront")]
+engine_power = 8000.0
 tilt_speed = 400.0
 collision_layer = 2
 axis_lock_linear_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 20.0
+mass = 30.0
 physics_material_override = SubResource("PhysicsMaterial_3ov87")
-gravity_scale = 5.0
+gravity_scale = 8.0
 can_sleep = false
 continuous_cd = true
 contact_monitor = true
@@ -71,37 +73,37 @@ linear_damp = 0.6
 angular_damp = 1.5
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 1.4191, -0.151849)
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.942481, -0.151849)
 target_position = Vector3(0, -0.54, 0)
 collision_mask = 9
 collide_with_areas = true
 
 [node name="RayCast3D2" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 1.4191, -1.35299)
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.975928, -1.35299)
 target_position = Vector3(0, -0.54, 0)
 collision_mask = 9
 collide_with_areas = true
 
 [node name="RayCast3D3" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.977679, 0.746605)
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.864796, 1.16469)
 target_position = Vector3(0, -0.54, 0)
 collision_mask = 9
 collide_with_areas = true
 
 [node name="Wheels" type="Node3D" parent="."]
 
-[node name="WheelBack" parent="Wheels" instance=ExtResource("2_2fhm1")]
-transform = Transform3D(-0.5, 0, 4.37114e-08, 0, 0.5, 0, -4.37114e-08, 0, -0.5, -1, 0, -1)
+[node name="WheelBack" parent="Wheels" instance=ExtResource("2_8krvb")]
+transform = Transform3D(-0.3, 0, 4.52987e-08, 0, 0.3, 0, -4.52987e-08, 0, -0.3, -1, 0.15, -1.25586)
 
-[node name="WheelFront" parent="Wheels" instance=ExtResource("2_2fhm1")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -1, 0, 1)
+[node name="WheelFront" parent="Wheels" instance=ExtResource("2_8krvb")]
+transform = Transform3D(-0.3, 0, -4.52987e-08, 0, 0.3, 0, 4.52987e-08, 0, -0.3, -1, 0.15, 1.05)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.98023e-08, -1, 0, 1, 2.98023e-08, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(4.52987e-08, -0.6, 0, 0.6, 4.52987e-08, 0, 0, 0, 0.6, -1, 0.15, -1.25586)
 shape = SubResource("ConvexPolygonShape3D_tfl63")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.98023e-08, -1, 0, 1, 2.98023e-08, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(4.52987e-08, -0.6, 0, 0.6, 4.52987e-08, 0, 0, 0, 0.6, -1, 0.15, 1.05)
 shape = SubResource("ConvexPolygonShape3D_0s2c7")
 
 [node name="PlayerCamera" type="PlayerCamera" parent="." node_paths=PackedStringArray("follow")]
@@ -123,5 +125,5 @@ tilt_backward = Array[InputEvent]([SubResource("InputEventKey_svn7l"), SubResour
 
 [node name="FlipDetection" type="FlipDetection" parent="."]
 
-[node name="CarosserieDefault" parent="." instance=ExtResource("3_r47nu")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+[node name="CarosserieCabrio" parent="." instance=ExtResource("3_kctjg")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

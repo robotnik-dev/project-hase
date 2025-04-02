@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://c7778fgubaib4"]
+[gd_scene load_steps=45 format=3 uid="uid://c7778fgubaib4"]
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_uauog"]
 [ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="2_nj868"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cirnfdl16fl6w" path="res://assets/backgrounds/desert/7_CloudsFG.png" id="14_6ydh0"]
 [ext_resource type="PackedScene" uid="uid://lj24pc10v5og" path="res://collectibles/collectible_manager.tscn" id="15_abfj6"]
 [ext_resource type="PackedScene" uid="uid://coxl0dthgu5s0" path="res://collectibles/collectible.tscn" id="16_y5263"]
+[ext_resource type="PackedScene" uid="uid://bxvfhd56l3yrp" path="res://graves/grave_digger.tscn" id="17_twya1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_guk5d"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -129,6 +130,7 @@ flip_faces = true
 orientation = 0
 
 [node name="Level2" type="Level" node_paths=PackedStringArray("start", "end")]
+level_id = 2
 start = NodePath("Start")
 end = NodePath("End")
 
@@ -140,7 +142,7 @@ shadow_enabled = true
 environment = SubResource("Environment_sjlnm")
 
 [node name="Start" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.51326, 3.19633)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 99.8015, 469.979)
 layers = 524288
 mesh = SubResource("SphereMesh_k65at")
 
@@ -152,7 +154,7 @@ billboard = 1
 text = "Start"
 
 [node name="End" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5437, 167.962)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 57.1133, 961.91)
 layers = 524288
 mesh = SubResource("SphereMesh_nvil5")
 
@@ -294,7 +296,6 @@ constant_speed = true
 speed = 1.3
 
 [node name="CollectibleManager" parent="." instance=ExtResource("15_abfj6")]
-level_id = 2
 
 [node name="Collectible" parent="CollectibleManager" instance=ExtResource("16_y5263")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2533, 44.0952)
@@ -303,6 +304,8 @@ mesh = SubResource("PlaneMesh_u2vsj")
 [node name="Collectible2" parent="CollectibleManager" instance=ExtResource("16_y5263")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.80296, 59.87)
 mesh = SubResource("PlaneMesh_0pp6q")
+
+[node name="GraveDigger" parent="." instance=ExtResource("17_twya1")]
 
 [editable path="MainRoad1"]
 [editable path="MainRoad2"]

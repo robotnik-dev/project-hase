@@ -1,4 +1,5 @@
 extends Node
+class_name Main
 
 @export var ui: Control
 
@@ -31,11 +32,6 @@ func _ready() -> void:
 	start_main_menu()
 	# loading savegame
 	SaveGame.load()
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		pass
-		#Savegame.save_game()
 
 func start_main_menu():
 	main_menu = main_menu_scene.instantiate()
@@ -111,6 +107,9 @@ func next_level():
 		current_level_idx += 1
 	start_level()
 
+func get_current_level_id() -> int:
+	return current_level_idx
+
 func _connect_signals():
 	Signals.connect_start_button_pressed(start_level)
 	Signals.connect_back_to_menu_button_pressed(start_main_menu)
@@ -152,5 +151,4 @@ func _on_car_flipped(direction: StringName, count: int):
 			print("back flip number " + str(count))
 
 func _on_quit_game():
-	#Savegame.save_game()
 	get_tree().quit()

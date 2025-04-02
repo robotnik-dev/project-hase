@@ -4,6 +4,12 @@ use godot::prelude::*;
 #[class(init, base=Node3D)]
 struct Level {
     #[export]
+    #[init(val = 1)]
+    /// The ID for the level this Node is in. It has to be unique!
+    /// This will be saved on the disk
+    level_id: i32,
+
+    #[export]
     start: Option<Gd<Node3D>>,
 
     #[export]

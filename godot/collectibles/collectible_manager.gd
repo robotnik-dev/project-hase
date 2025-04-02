@@ -1,10 +1,6 @@
 extends Node
 class_name CollectibleManager
 
-## The ID for the level this Node is in. It has to be unique!
-## This will be saved on the disk
-@export var level_id: int = 1
-
 ## If activated, it wont save the collectibles to a file.
 ## Good for building levels without manually deleting the savefile all the time.
 ## 
@@ -22,7 +18,7 @@ func _ready() -> void:
 	Signals.connect_collected(_on_collected)
 
 func _load_collected() -> Array:
-	return SaveGame.get_collected_for_level(level_id)
+	return SaveGame.get_collected_for_level(get_parent().level_id)
 
 func _assign_ids():
 	var id = 0
@@ -50,6 +46,6 @@ func _free_aleady_collected():
 			id += 1
 
 func _on_collected(id: int):
-	SaveGame.collected_in_level(id, level_id)
+	SaveGame.collected_in_level(id, get_parent().level_id)
 	if !debug_mode:
 		SaveGame.save()

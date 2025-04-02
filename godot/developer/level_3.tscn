@@ -129,6 +129,7 @@ flip_faces = true
 orientation = 0
 
 [node name="Level3" type="Level" node_paths=PackedStringArray("start", "end")]
+level_id = 3
 start = NodePath("Start")
 end = NodePath("End")
 
@@ -294,7 +295,6 @@ constant_speed = true
 speed = 1.3
 
 [node name="CollectibleManager" parent="." instance=ExtResource("15_xmp7u")]
-level_id = 3
 
 [node name="Collectible" parent="CollectibleManager" instance=ExtResource("16_eyask")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.26244, 11.4368)
