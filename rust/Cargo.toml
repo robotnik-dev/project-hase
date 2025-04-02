@@ -8,3 +8,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 godot = {version = "0.2.4", features = ["register-docs"]}
+ron = "0.9"
+serde ={ version = "1", features = ["derive"]}

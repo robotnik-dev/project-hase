@@ -1,4 +1,5 @@
 extends Node
+class_name Main
 
 @export var ui: Control
 
@@ -16,8 +17,8 @@ extends Node
 var current_level: Level = null
 var current_level_idx = 0
 var current_car: Car = null
-## Default car scene at "res://car/default_car.tscn"
-var car_scene: PackedScene = preload("res://car/default_car.tscn")
+## Default car scene at "res://car/car.tscn"
+var car_scene: PackedScene = preload("res://car/car.tscn")
 
 var main_menu_scene: PackedScene = preload("res://ui/screens/main_menu.tscn")
 var main_menu: UIMainMenu
@@ -29,6 +30,8 @@ var select_car_menu: UICarSelection
 func _ready() -> void:
 	_connect_signals()
 	start_main_menu()
+	# loading savegame
+	SaveGame.load()
 
 func start_main_menu():
 	main_menu = main_menu_scene.instantiate()
@@ -89,7 +92,7 @@ func start_level():
 	
 	var scene = level_scenes[current_level_idx]
 	current_level = scene.instantiate()
-	add_child(current_level)
+	add_child(current_level, true)
 	
 	current_car.setup(current_level.start_position, current_level.end_position)
 
@@ -103,6 +106,9 @@ func next_level():
 	else:
 		current_level_idx += 1
 	start_level()
+
+func get_current_level_id() -> int:
+	return current_level_idx
 
 func _connect_signals():
 	Signals.connect_start_button_pressed(start_level)
@@ -128,7 +134,7 @@ func _on_select_car_button():
 func _on_reload_level_pressed():
 	reload_level.call_deferred()
 
-func _on_car_crashed():
+func _on_car_crashed(_position: Vector3):
 	reload_level()
 
 func _on_car_finished():

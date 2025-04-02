@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dn2uhmk6eiaka"]
+
+[node name="PreviewCamera" type="Camera3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.053, 0.88, 0)
+projection = 1
+size = 7.0

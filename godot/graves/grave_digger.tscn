@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxvfhd56l3yrp"]
+
+[ext_resource type="Script" path="res://graves/grave_digger.gd" id="1_bnncj"]
+
+[node name="GraveDigger" type="Node"]
+script = ExtResource("1_bnncj")
