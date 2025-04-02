@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://fpsbtf2ehc32"]
+[gd_scene load_steps=4 format=3 uid="uid://fpsbtf2ehc32"]
 
 [ext_resource type="Script" path="res://ui/screens/developer_ui.gd" id="1_tws1o"]
 [ext_resource type="PackedScene" uid="uid://jjyu2unlqg73" path="res://ui/buttons/replay_level_button.tscn" id="2_5kkar"]
+[ext_resource type="Script" path="res://developer/delete_save_game.gd" id="3_n1mr8"]
 
 [node name="DeveloperUI" type="Control"]
 layout_mode = 3
@@ -23,17 +24,18 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Top" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Top" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
 
 [node name="ReplayLevelButton" parent="MarginContainer/VBoxContainer/Top" instance=ExtResource("2_5kkar")]
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 1
+
+[node name="DeleteSaveGame" type="Button" parent="MarginContainer/VBoxContainer/Top"]
+layout_mode = 2
+text = "Delete Savegame"
+script = ExtResource("3_n1mr8")
 
 [node name="Middle" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -51,3 +53,4 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Top/ReplayLevelButton" to="." method="_on_replay_level_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Top/DeleteSaveGame" to="MarginContainer/VBoxContainer/Top/DeleteSaveGame" method="_on_pressed"]

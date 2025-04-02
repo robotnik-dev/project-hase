@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh5gtta3tyrtg"]
+
+[ext_resource type="PackedScene" uid="uid://b5c5jjndrhfi5" path="res://assets/carosserie/CarosserieDefault.glb" id="1_2pmk0"]
+
+[node name="CarosserieDefault" instance=ExtResource("1_2pmk0")]
+
+[node name="Car" parent="." index="0"]
+cast_shadow = 0

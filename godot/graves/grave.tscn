@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dajey7a1anwm4"]
+
+[ext_resource type="Texture2D" uid="uid://cl5jq4rjgm5x0" path="res://icon.svg" id="1_8rdp1"]
+[ext_resource type="Script" path="res://graves/grave.gd" id="2_0kj06"]
+[ext_resource type="FontFile" uid="uid://cm2c1fmlssaei" path="res://assets/fonts/Boldonse-Regular.ttf" id="2_da4xu"]
+
+[node name="Grave" type="Sprite3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+offset = Vector2(0, 32)
+modulate = Color(1, 1, 1, 0.447059)
+billboard = 2
+texture = ExtResource("1_8rdp1")
+script = ExtResource("2_0kj06")
+
+[node name="Label3D" type="Label3D" parent="."]
+sorting_offset = 10.0
+offset = Vector2(0, 64)
+billboard = 2
+modulate = Color(0, 0, 0, 1)
+text = "You're not dead for me, you're just dead"
+font = ExtResource("2_da4xu")
+uppercase = true
+autowrap_mode = 3
+width = 256.0

@@ -1,14 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0b7rgobhusxq"]
+[gd_scene load_steps=18 format=3 uid="uid://d0b7rgobhusxq"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_20grt"]
 [ext_resource type="Script" path="res://ui/screens/car_selection.gd" id="2_nkdtm"]
-[ext_resource type="PackedScene" uid="uid://1b78wtvecq6o" path="res://car/default_car.tscn" id="3_gnbjh"]
+[ext_resource type="PackedScene" uid="uid://1b78wtvecq6o" path="res://car/car.tscn" id="3_gnbjh"]
 [ext_resource type="PackedScene" uid="uid://qemyf63hw3n" path="res://ui/buttons/toggle_fullscreen_button.tscn" id="3_ljfg4"]
 [ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_3dsoq"]
-[ext_resource type="PackedScene" uid="uid://hmobwq0jmbq0" path="res://car/heavy_car.tscn" id="4_ee0tt"]
+[ext_resource type="PackedScene" uid="uid://hmobwq0jmbq0" path="res://car/truck.tscn" id="4_ee0tt"]
 [ext_resource type="LabelSettings" uid="uid://djovojv4or3gm" path="res://ui/resources/labels/car_preview_name.tres" id="4_nrts2"]
 [ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="5_5bjhn"]
 [ext_resource type="Texture2D" uid="uid://cv83v0hblk2km" path="res://assets/ui/icons/keyboard-left-arrow.png" id="5_7hc31"]
+[ext_resource type="PackedScene" uid="uid://cfm3ui1m7bqcn" path="res://car/cabrio.tscn" id="5_eukob"]
 [ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_pceyv"]
 [ext_resource type="Texture2D" uid="uid://dqfr21jboq52l" path="res://assets/ui/icons/keyboard-right-arrow.png" id="7_g5yiy"]
 
@@ -36,7 +37,7 @@ sky = SubResource("Sky_bbhkt")
 [sub_resource type="World3D" id="World3D_tb76f"]
 environment = SubResource("Environment_g0i35")
 
-[node name="CarSelection" type="Control" node_paths=PackedStringArray("preview_viewport", "car_label", "navigate_left", "navigate_right")]
+[node name="CarSelection" type="Control" node_paths=PackedStringArray("preview_viewport", "car_label", "start_button", "navigate_left", "navigate_right")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,9 +46,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_20grt")
 script = ExtResource("2_nkdtm")
-cars = Array[PackedScene]([ExtResource("3_gnbjh"), ExtResource("4_ee0tt")])
+cars = Array[PackedScene]([ExtResource("3_gnbjh"), ExtResource("4_ee0tt"), ExtResource("5_eukob")])
 preview_viewport = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/PanelContainer/CarPreview/SubViewport")
 car_label = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/PreviewName")
+start_button = NodePath("MarginContainer/VBoxContainer/BotRow/StartButton")
 navigate_left = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateLeft")
 navigate_right = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateRight")
 

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cspp6l7d3n610"]
+
+[ext_resource type="PackedScene" uid="uid://dn2uhmk6eiaka" path="res://car/previews/preview_camera.tscn" id="1_caprm"]
+
+[node name="Basepreview" type="Node3D"]
+
+[node name="PreviewCamera" parent="." instance=ExtResource("1_caprm")]
+current = true
