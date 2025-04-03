@@ -9,6 +9,11 @@ YY.YY.YYYY
 SigmaMale
 TallBoi
 
+## Chefi/Moderation
+https://wheelofnames.com/
+
+(config als .wheel file)
+
 ## Themen
 
 | Thema  | eingebracht von  | Was tun?  | Wer tut's?   | Bis wann?  |
