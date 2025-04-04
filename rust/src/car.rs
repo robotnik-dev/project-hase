@@ -1,5 +1,5 @@
 use godot::{
-    classes::{IRigidBody3D, RayCast3D, RigidBody3D},
+    classes::{Area3D, IRigidBody3D, RigidBody3D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
@@ -26,7 +26,7 @@ struct Car {
 
     #[export]
     #[init(val = array![])]
-    crash_detects: Array<Gd<RayCast3D>>,
+    crash_detects: Array<Gd<Area3D>>,
 
     #[export]
     #[init(val = array![])]
@@ -57,6 +57,14 @@ impl IRigidBody3D for Car {
         self.base_mut().set_physics_process(false);
     }
 
+    fn ready(&mut self) {
+        let _crashed = self.to_gd().callable("crashed");
+        for mut area in self.crash_detects.iter_shared() {
+            area.connect("area_entered", &_crashed);
+            area.connect("body_entered", &_crashed);
+        }
+    }
+
     fn physics_process(&mut self, delta: f64) {
         let tilt_input = if !self.is_on_floor() {
             self.get_tilt_input()
@@ -76,11 +84,6 @@ impl IRigidBody3D for Car {
 
         let torque = Vector3::RIGHT * self.tilt_speed * tilt_input;
         self.base_mut().apply_torque(torque);
-
-        // crash detection
-        if self.is_crashed() {
-            self.crashed();
-        }
 
         // rotate wheels manually
         let velocity = self.base().get_linear_velocity();
@@ -172,7 +175,8 @@ impl Car {
         self.tilt_direction = 0.0;
     }
 
-    fn crashed(&mut self) {
+    #[func]
+    fn crashed(&mut self, _area_or_body: Variant) {
         if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
             signals.call(
                 "emit_car_crashed",
@@ -201,11 +205,5 @@ impl Car {
 
     fn is_on_floor(&self) -> bool {
         return self.base().get_colliding_bodies().iter_shared().count() > 0;
-    }
-
-    fn is_crashed(&self) -> bool {
-        self.crash_detects
-            .iter_shared()
-            .any(|ray| ray.is_colliding())
     }
 }
