@@ -28,7 +28,11 @@ struct FlipDetection {
     current_front_flip_count: i64,
 
     percentage_flipped: f64,
+
+    #[var]
     front_flip_progress: f64,
+
+    #[var]
     back_flip_progress: f64,
 
     front_start_rot_set: bool,
@@ -45,6 +49,7 @@ impl INode3D for FlipDetection {
         let car = self.base().get_parent_node_3d().unwrap();
         self.parent = Some(car.cast());
         self.set_enabled(self.get_enabled());
+        self.base_mut().add_to_group("FlipDetection");
     }
 
     fn physics_process(&mut self, _delta: f64) {
@@ -52,7 +57,6 @@ impl INode3D for FlipDetection {
             if !car.get_colliding_bodies().is_empty() {
                 // on the ground
                 self.reset_flip_count();
-                self.reset_flip_progress();
             } else {
                 // in the air
                 if self.is_level_with_ground() {
@@ -137,12 +141,6 @@ impl FlipDetection {
         } else if direction == "front" {
             self.front_flip_progress = value - self.front_start_rot;
         }
-    }
-
-    fn reset_flip_progress(&mut self) {
-        self.percentage_flipped = 0.;
-        self.reset_back_flip_progress();
-        self.reset_front_flip_progress();
     }
 
     fn reset_back_flip_progress(&mut self) {
