@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bauufh0v6ugxd"]
+
+[node name="HitBox" type="Area3D"]
+collision_layer = 2
+collision_mask = 9
+monitorable = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://hmobwq0jmbq0"]
+[gd_scene load_steps=21 format=3 uid="uid://hmobwq0jmbq0"]
 
 [ext_resource type="PackedScene" uid="uid://da4ttchiynti7" path="res://car/previews/heavy_car_preview.tscn" id="1_4ooac"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_b3leg"]
 [ext_resource type="PackedScene" uid="uid://b3o5d4xe2pxob" path="res://car/carosserie/carosserie_truck.tscn" id="3_86cr5"]
+[ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_evr0b"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -49,12 +50,15 @@ keycode = 4194319
 [sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_jpuyk"]
 button_index = 9
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_016sn"]
+size = Vector3(1, 1.32996, 4.19238)
+
 [node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
 collectables_needed_to_unlock = 2
 ui_preview = ExtResource("1_4ooac")
 ui_display_name = &"Truck"
-crash_detects = [NodePath("RayCast3D"), NodePath("RayCast3D2"), NodePath("RayCast3D3")]
+crash_detects = [NodePath("HitBox")]
 wheels = [NodePath("Wheels/Wheel"), NodePath("Wheels/Wheel2")]
 engine_power = 14000.0
 tilt_speed = 2000.0
@@ -71,24 +75,6 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 0.6
 angular_damp = 1.5
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.0298, 0)
-target_position = Vector3(0, -0.54, 0)
-collision_mask = 9
-collide_with_areas = true
-
-[node name="RayCast3D2" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.0298, -3.03556)
-target_position = Vector3(0, -0.54, 0)
-collision_mask = 9
-collide_with_areas = true
-
-[node name="RayCast3D3" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 2.74311, 2.42111)
-target_position = Vector3(0, -0.54, 0)
-collision_mask = 9
-collide_with_areas = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, -2.08225)
@@ -127,3 +113,12 @@ tilt_backward = Array[InputEvent]([SubResource("InputEventKey_svn7l"), SubResour
 
 [node name="CarosserieTruck" parent="." instance=ExtResource("3_86cr5")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="HitBox" parent="." instance=ExtResource("4_evr0b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.70545, 0)
+
+[node name="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.164978, 0)
+shape = SubResource("BoxShape3D_016sn")
+
+[editable path="HitBox"]

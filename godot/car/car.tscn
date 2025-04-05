@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=21 format=3 uid="uid://1b78wtvecq6o"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0ls0h3fhm2" path="res://car/previews/default_car_preview.tscn" id="1_tu35q"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_2fhm1"]
 [ext_resource type="PackedScene" uid="uid://b5c5jjndrhfi5" path="res://assets/carosserie/CarosserieDefault.glb" id="3_r47nu"]
+[ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_5hced"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -57,11 +58,14 @@ keycode = 4194319
 [sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_jpuyk"]
 button_index = 9
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ya22"]
+size = Vector3(1, 2.05811, 0.347015)
+
 [node name="DefaultCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
 ui_preview = ExtResource("1_tu35q")
 ui_display_name = &"Car"
-crash_detects = [NodePath("RayCast3D"), NodePath("RayCast3D2"), NodePath("RayCast3D3")]
+crash_detects = [NodePath("HitBox")]
 wheels = [NodePath("Wheels/WheelBack"), NodePath("Wheels/WheelFront")]
 tilt_speed = 400.0
 collision_layer = 2
@@ -77,24 +81,6 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 0.6
 angular_damp = 1.5
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 1.4191, -0.151849)
-target_position = Vector3(0, -0.54, 0)
-collision_mask = 9
-collide_with_areas = true
-
-[node name="RayCast3D2" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 1.4191, -1.35299)
-target_position = Vector3(0, -0.54, 0)
-collision_mask = 9
-collide_with_areas = true
-
-[node name="RayCast3D3" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.977679, 0.746605)
-target_position = Vector3(0, -0.54, 0)
-collision_mask = 9
-collide_with_areas = true
 
 [node name="Wheels" type="Node3D" parent="."]
 
@@ -133,3 +119,12 @@ tilt_backward = Array[InputEvent]([SubResource("InputEventKey_svn7l"), SubResour
 
 [node name="CarosserieDefault" parent="." instance=ExtResource("3_r47nu")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="HitBox" parent="." instance=ExtResource("4_5hced")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.522397, 0)
+
+[node name="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0323486, 0.171402)
+shape = SubResource("BoxShape3D_7ya22")
+
+[editable path="HitBox"]
