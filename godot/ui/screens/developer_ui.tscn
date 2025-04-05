@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://jjyu2unlqg73" path="res://ui/buttons/replay_level_button.tscn" id="2_5kkar"]
 [ext_resource type="Script" path="res://developer/delete_save_game.gd" id="3_n1mr8"]
 
-[node name="DeveloperUI" type="Control"]
+[node name="DeveloperUI" type="Control" node_paths=PackedStringArray("front_progress", "back_progress")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tws1o")
+front_progress = NodePath("MarginContainer/VBoxContainer/Mid/FrontFlipProgress")
+back_progress = NodePath("MarginContainer/VBoxContainer/Mid/BackFlipProgress")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -26,31 +28,45 @@ layout_mode = 2
 
 [node name="Top" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="ReplayLevelButton" parent="MarginContainer/VBoxContainer/Top" instance=ExtResource("2_5kkar")]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
 focus_mode = 1
 
 [node name="DeleteSaveGame" type="Button" parent="MarginContainer/VBoxContainer/Top"]
 layout_mode = 2
+size_flags_vertical = 4
 text = "Delete Savegame"
 script = ExtResource("3_n1mr8")
 
-[node name="Middle" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Mid" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+size_flags_stretch_ratio = 3.0
 
-[node name="Bottom" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+[node name="BackFlipProgress" type="ProgressBar" parent="MarginContainer/VBoxContainer/Mid"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Mid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="FrontFlipProgress" type="ProgressBar" parent="MarginContainer/VBoxContainer/Mid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+
+[node name="Bot" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Top/ReplayLevelButton" to="." method="_on_replay_level_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Top/DeleteSaveGame" to="MarginContainer/VBoxContainer/Top/DeleteSaveGame" method="_on_pressed"]
