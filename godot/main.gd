@@ -26,6 +26,8 @@ var pause_menu_scene: PackedScene = preload("res://ui/screens/pause_menu.tscn")
 var pause_menu: UIPauseMenu
 var select_car_menu_scene: PackedScene = preload("res://ui/screens/car_selection.tscn")
 var select_car_menu: UICarSelection
+var hud_scene: PackedScene = preload("res://ui/hud/hud.tscn")
+var hud: HUD
 
 func _ready() -> void:
 	_connect_signals()
@@ -44,6 +46,10 @@ func start_main_menu():
 	if pause_menu:
 		pause_menu.queue_free()
 		pause_menu = null
+	
+	if hud:
+		hud.queue_free()
+		hud = null
 	
 	if select_car_menu:
 		select_car_menu.queue_free()
@@ -85,6 +91,16 @@ func start_level():
 		current_car.queue_free()
 	current_car = car_scene.instantiate()
 	add_child(current_car)
+	
+	# removing HUD
+	if hud:
+		hud.queue_free()
+		hud = null
+	
+	# adding HUD
+	hud = hud_scene.instantiate()
+	ui.add_child(hud)
+	hud.setup(current_car)
 	
 	# setup level
 	if current_level:

@@ -7,6 +7,14 @@ use godot::{
 
 use crate::player_input::PlayerInput;
 
+#[derive(GodotConvert, Var, Export, Default)]
+#[godot(via = GString)]
+pub enum Effect {
+    #[default]
+    Boost,
+    Bounce,
+}
+
 #[derive(GodotClass)]
 #[class(init, base=RigidBody3D)]
 struct Car {
@@ -23,6 +31,13 @@ struct Car {
 
     #[export]
     ui_display_name: StringName,
+
+    #[export]
+    effect: Effect,
+
+    #[export]
+    #[init(val = 1000.0)]
+    boost_power: f32,
 
     #[export]
     #[init(val = array![])]
@@ -133,6 +148,17 @@ impl Car {
 
         self.base_mut().set_physics_process(true);
         self.base_mut().set_process(true);
+    }
+
+    #[func]
+    fn effect(&mut self) {
+        match self.effect {
+            Effect::Boost => {
+                let force = self.boost_power;
+                self.base_mut().apply_central_impulse(Vector3::BACK * force);
+            }
+            Effect::Bounce => godot_print!("Bounce"),
+        }
     }
 
     #[func]
