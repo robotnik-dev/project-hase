@@ -5,14 +5,13 @@ class_name DeveloperUI
 @export var back_progress: ProgressBar
 
 var flip_detection: FlipDetection
-var should_process: bool = false
 
 func _ready() -> void:
 	if OS.has_feature("release"):
 		hide()
 	Signals.connect_camera_loaded(_on_camera_loaded)
 
-func _process(delta):
+func _process(_delta):
 	if not flip_detection:
 		return
 	

@@ -7,6 +7,13 @@ use godot::{
 
 use crate::player_input::PlayerInput;
 
+#[derive(GodotConvert, Var, Export, Default)]
+#[godot(via = GString)]
+pub enum Effect {
+    #[default]
+    Boost,
+}
+
 #[derive(GodotClass)]
 #[class(init, base=RigidBody3D)]
 struct Car {
@@ -23,6 +30,17 @@ struct Car {
 
     #[export]
     ui_display_name: StringName,
+
+    #[export]
+    effect: Effect,
+
+    #[export]
+    #[init(val = 1000.0)]
+    boost_power: f32,
+
+    #[export]
+    #[init(val = 1.0)]
+    boost_fill_speed: f32,
 
     #[export]
     #[init(val = array![])]
@@ -136,6 +154,17 @@ impl Car {
     }
 
     #[func]
+    fn effect(&mut self) {
+        match self.effect {
+            Effect::Boost => {
+                let force = self.boost_power;
+                let direction = self.get_facing_direction();
+                self.base_mut().apply_central_impulse(direction * force);
+            }
+        }
+    }
+
+    #[func]
     fn _on_drive_forward_pressed(&mut self) {
         self.drive_direction = 1.0;
     }
@@ -205,5 +234,10 @@ impl Car {
 
     fn is_on_floor(&self) -> bool {
         return self.base().get_colliding_bodies().iter_shared().count() > 0;
+    }
+
+    fn get_facing_direction(&self) -> Vector3 {
+        let rotation = self.base().get_rotation();
+        Vector3::BACK.rotated(Vector3::RIGHT, rotation.x)
     }
 }
