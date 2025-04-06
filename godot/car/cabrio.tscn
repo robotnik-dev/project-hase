@@ -58,7 +58,6 @@ player_input = NodePath("PlayerInput")
 collectables_needed_to_unlock = 3
 ui_preview = ExtResource("1_0n2f3")
 ui_display_name = &"Cabrio"
-effect = "Bounce"
 crash_detects = [NodePath("HitBox")]
 wheels = [NodePath("Wheels/WheelBack"), NodePath("Wheels/WheelFront")]
 engine_power = 8000.0

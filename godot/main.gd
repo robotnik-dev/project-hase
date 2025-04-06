@@ -1,6 +1,8 @@
 extends Node
 class_name Main
 
+@export var dev_ui: DeveloperUI
+
 @export var ui: Control
 
 ## In seconds
@@ -34,6 +36,10 @@ func _ready() -> void:
 	start_main_menu()
 	# loading savegame
 	SaveGame.load()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("developer_ui"):
+		dev_ui.visible = !dev_ui.visible
 
 func start_main_menu():
 	main_menu = main_menu_scene.instantiate()
@@ -131,7 +137,6 @@ func _connect_signals():
 	Signals.connect_back_to_menu_button_pressed(start_main_menu)
 	Signals.connect_select_car_button_pressed(_on_select_car_button)
 	Signals.connect_quit_button_pressed(_on_quit_game)
-	Signals.connect_car_flipped(_on_car_flipped)
 	Signals.connect_car_crashed(_on_car_crashed)
 	Signals.connect_car_finished(_on_car_finished)
 	Signals.connect_replay_level_button_pressed(reload_level)
@@ -158,13 +163,6 @@ func _on_car_finished():
 		reload_level()
 	else:
 		get_tree().create_timer(wait_until_next_level).timeout.connect(next_level)
-
-func _on_car_flipped(direction: StringName, count: int):
-	match direction:
-		"front":
-			print("front flip number " + str(count))
-		"back":
-			print("back flip number " + str(count))
 
 func _on_quit_game():
 	get_tree().quit()

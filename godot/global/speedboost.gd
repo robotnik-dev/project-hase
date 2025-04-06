@@ -11,6 +11,7 @@ var car: Car
 func _ready() -> void:
 	Signals.connect_camera_loaded(_on_camera_loaded)
 	Signals.connect_car_crashed(_on_car_crashed)
+	Signals.connect_car_flipped(_on_car_flipped)
 
 func _process(_delta):
 	if not flip_detection:
@@ -34,6 +35,10 @@ func _increase_through_air_time():
 		boost_progress = 0.0
 		is_boost_ready = true
 		boost_ready.emit()
+
+func _on_car_flipped(_direction: StringName, _count: int):
+	is_boost_ready = true
+	boost_ready.emit()
 
 func _on_camera_loaded():
 	create_tween().tween_callback(_set_flip_detection).set_delay(0.2)

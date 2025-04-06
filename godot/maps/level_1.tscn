@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://cxpqv846s0ivr"]
+[gd_scene load_steps=46 format=3 uid="uid://cxpqv846s0ivr"]
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
 [ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
@@ -114,6 +114,28 @@ albedo_texture = SubResource("CompressedTexture2D_f8uii")
 [sub_resource type="PlaneMesh" id="PlaneMesh_uev7f"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_a6jxg")
+flip_faces = true
+orientation = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_syuso"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("CompressedTexture2D_f8uii")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lk7oj"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_syuso")
+flip_faces = true
+orientation = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_00rsg"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("CompressedTexture2D_f8uii")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qcddt"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_00rsg")
 flip_faces = true
 orientation = 0
 
@@ -290,11 +312,11 @@ mesh = SubResource("PlaneMesh_uev7f")
 
 [node name="Collectible4" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.6515, 181.742)
-mesh = SubResource("PlaneMesh_uev7f")
+mesh = SubResource("PlaneMesh_lk7oj")
 
 [node name="Collectible5" parent="CollectibleManager" instance=ExtResource("15_jpnkk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.7308, 184.732)
-mesh = SubResource("PlaneMesh_uev7f")
+mesh = SubResource("PlaneMesh_qcddt")
 
 [editable path="MainRoad1"]
 [editable path="MainRoad2"]
