@@ -53,47 +53,44 @@ impl INode3D for FlipDetection {
     }
 
     fn physics_process(&mut self, _delta: f64) {
-        if let Some(car) = &self.parent {
-            if !car.get_colliding_bodies().is_empty() {
-                // on the ground
-                self.reset_flip_count();
-            } else {
-                // in the air
-                if self.is_level_with_ground() {
-                    if self.front_flip_progress > 1. - self.flip_detection_accuracy {
-                        // front flip detected
-                        let count = self.increase_front_flip_count();
-                        self.flipped("front".into(), count);
-                        self.reset_front_flip_progress();
-                    } else if self.back_flip_progress > 1. - self.flip_detection_accuracy {
-                        // back flip detected
-                        let count = self.increase_back_flip_count();
-                        self.flipped("back".into(), count);
-                        self.reset_back_flip_progress();
-                    }
-                } else {
-                    let rot_x = self.base().get_global_rotation().x as f64;
-                    let percentage_flipped = fposmod(rot_x, PI * 2.) / (PI * 2.);
-                    let direction = if percentage_flipped - self.percentage_flipped >= 0. {
-                        self.reset_back_flip_progress();
-                        self.back_start_rot_set = false;
-                        if !self.front_start_rot_set {
-                            self.front_start_rot = percentage_flipped;
-                            self.front_start_rot_set = true;
-                        }
-                        "front"
-                    } else {
-                        self.reset_front_flip_progress();
-                        self.front_start_rot_set = false;
-                        if !self.back_start_rot_set {
-                            self.back_start_rot = percentage_flipped;
-                            self.back_start_rot_set = true;
-                        }
-                        "back"
-                    };
-                    self.set_flip_progress(percentage_flipped, direction);
-                    self.percentage_flipped = percentage_flipped;
+        if self.is_on_floor() {
+            self.reset_flip_count();
+        } else {
+            // in the air
+            if self.is_level_with_ground() {
+                if self.front_flip_progress > 1. - self.flip_detection_accuracy {
+                    // front flip detected
+                    let count = self.increase_front_flip_count();
+                    self.flipped("front".into(), count);
+                    self.reset_front_flip_progress();
+                } else if self.back_flip_progress > 1. - self.flip_detection_accuracy {
+                    // back flip detected
+                    let count = self.increase_back_flip_count();
+                    self.flipped("back".into(), count);
+                    self.reset_back_flip_progress();
                 }
+            } else {
+                let rot_x = self.base().get_global_rotation().x as f64;
+                let percentage_flipped = fposmod(rot_x, PI * 2.) / (PI * 2.);
+                let direction = if percentage_flipped - self.percentage_flipped >= 0. {
+                    self.reset_back_flip_progress();
+                    self.back_start_rot_set = false;
+                    if !self.front_start_rot_set {
+                        self.front_start_rot = percentage_flipped;
+                        self.front_start_rot_set = true;
+                    }
+                    "front"
+                } else {
+                    self.reset_front_flip_progress();
+                    self.front_start_rot_set = false;
+                    if !self.back_start_rot_set {
+                        self.back_start_rot = percentage_flipped;
+                        self.back_start_rot_set = true;
+                    }
+                    "back"
+                };
+                self.set_flip_progress(percentage_flipped, direction);
+                self.percentage_flipped = percentage_flipped;
             }
         }
     }
@@ -114,6 +111,15 @@ impl FlipDetection {
     fn set_enabled(&mut self, value: bool) {
         self.enabled = value;
         self.base_mut().set_physics_process(value);
+    }
+
+    #[func]
+    fn is_on_floor(&self) -> bool {
+        if let Some(car) = &self.parent {
+            !car.get_colliding_bodies().is_empty()
+        } else {
+            false
+        }
     }
 
     fn is_level_with_ground(&mut self) -> bool {
