@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://cxpqv846s0ivr"]
+[gd_scene load_steps=50 format=3 uid="uid://cxpqv846s0ivr"]
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
 [ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
@@ -138,6 +138,12 @@ material = SubResource("StandardMaterial3D_mh3fd")
 flip_faces = true
 orientation = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ob4v1"]
+size = Vector3(1, 1, 29.4548)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p5owr"]
+size = Vector3(1, 1, 60.6308)
+
 [node name="Level1" type="Level" node_paths=PackedStringArray("start", "end")]
 start = NodePath("Start")
 end = NodePath("End")
@@ -162,7 +168,7 @@ billboard = 1
 text = "Start"
 
 [node name="End" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5014, 972.182)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5014, 1066.78)
 layers = 524288
 mesh = SubResource("SphereMesh_nvil5")
 
@@ -225,7 +231,6 @@ shape = SubResource("ConcavePolygonShape3D_t5dbu")
 
 [node name="CrashZone" parent="." instance=ExtResource("6_xit5k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.9473, 652.957)
-metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" parent="CrashZone" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.99625, -1.99316)
@@ -243,6 +248,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 82.4912, 1020.16)
 
 [node name="CSGPolygon3D2" parent="MainRoad5_1/Terrain" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86431, 0)
+material_override = ExtResource("3_pytas")
+cast_shadow = 0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad5_1/Terrain/CSGPolygon3D2" index="0"]
 
@@ -251,6 +258,10 @@ shape = SubResource("ConcavePolygonShape3D_32xqu")
 
 [node name="MainRoad5_2" parent="." instance=ExtResource("9_mkwef")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 41.8598, 1010.53)
+
+[node name="CSGPolygon3D2" parent="MainRoad5_2/Terrain" index="0"]
+material_override = ExtResource("3_pytas")
+cast_shadow = 0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MainRoad5_2/Terrain/CSGPolygon3D2" index="0"]
 
@@ -319,6 +330,19 @@ mesh = SubResource("PlaneMesh_fb1ml")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.7308, 328.168)
 mesh = SubResource("PlaneMesh_mgu5g")
 
+[node name="CrashZone3" parent="." instance=ExtResource("6_xit5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.1401, -18.0291)
+
+[node name="CollisionShape3D" parent="CrashZone3" index="0"]
+shape = SubResource("BoxShape3D_ob4v1")
+
+[node name="CrashZone4" parent="." instance=ExtResource("6_xit5k")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 3.82445, -32.0291)
+
+[node name="CollisionShape3D" parent="CrashZone4" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15.588)
+shape = SubResource("BoxShape3D_p5owr")
+
 [editable path="MainRoad1"]
 [editable path="MainRoad2"]
 [editable path="MainRoad3"]
@@ -327,3 +351,5 @@ mesh = SubResource("PlaneMesh_mgu5g")
 [editable path="CrashZone2"]
 [editable path="MainRoad5_1"]
 [editable path="MainRoad5_2"]
+[editable path="CrashZone3"]
+[editable path="CrashZone4"]
