@@ -65,6 +65,8 @@ struct Car {
 
     drive_direction: f32,
 
+    last_point_of_contact: Vector3,
+
     base: Base<RigidBody3D>,
 }
 
@@ -110,6 +112,11 @@ impl IRigidBody3D for Car {
         self.get_wheels().iter_shared().for_each(|mut wheel| {
             wheel.rotate_object_local(Vector3::LEFT, move_direction * (delta as f32) * speed);
         });
+
+        // upate the last point of contact for grave spawning
+        if self.is_on_floor() {
+            self.last_point_of_contact = self.base().get_global_position();
+        }
     }
 
     fn process(&mut self, _delta: f64) {
@@ -209,7 +216,10 @@ impl Car {
         if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
             signals.call(
                 "emit_car_crashed",
-                &[self.base().get_global_position().to_variant()],
+                &[
+                    self.base().get_global_position().to_variant(),
+                    self.last_point_of_contact.to_variant(),
+                ],
             );
         }
     }

@@ -141,7 +141,7 @@ shadow_enabled = true
 environment = SubResource("Environment_sjlnm")
 
 [node name="Start" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.51326, 3.19633)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 101.144, 455.416)
 layers = 524288
 mesh = SubResource("SphereMesh_k65at")
 
@@ -153,7 +153,7 @@ billboard = 1
 text = "Start"
 
 [node name="End" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5437, 73.0911)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 58.0889, 865.151)
 layers = 524288
 mesh = SubResource("SphereMesh_nvil5")
 
