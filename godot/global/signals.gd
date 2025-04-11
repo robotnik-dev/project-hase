@@ -30,12 +30,12 @@ func emit_collected(id: int) -> Array:
 	_collected.emit(id)
 	return _collected.get_connections()
 
-signal _car_crashed(position: Vector3)
+signal _car_crashed(position: Vector3, last_poc: Vector3)
 func connect_car_crashed(callable: Callable) -> Array:
 	_car_crashed.connect(callable)
 	return _car_crashed.get_connections()
-func emit_car_crashed(position: Vector3) -> Array:
-	_car_crashed.emit(position)
+func emit_car_crashed(position: Vector3, last_poc: Vector3) -> Array:
+	_car_crashed.emit(position, last_poc)
 	return _car_crashed.get_connections()
 
 signal _car_finished
@@ -51,6 +51,14 @@ func connect_camera_loaded(callable: Callable) -> Array:
 	return _camera_loaded.get_connections()
 func emit_camera_loaded() -> Array:
 	return emit_deferred(_camera_loaded)
+
+signal _new_level_started(id: int)
+func connect_new_level_started(callable: Callable) -> Array:
+	_new_level_started.connect(callable)
+	return _new_level_started.get_connections()
+func emit_new_level_started(id: int) -> Array:
+	_new_level_started.emit(id)
+	return _new_level_started.get_connections()
 
 signal _start_button_pressed
 func connect_start_button_pressed(callable: Callable) -> Array:

@@ -7,8 +7,7 @@ class_name DeveloperUI
 var flip_detection: FlipDetection
 
 func _ready() -> void:
-	if OS.has_feature("release"):
-		hide()
+	hide()
 	Signals.connect_camera_loaded(_on_camera_loaded)
 
 func _process(_delta):

@@ -127,13 +127,14 @@ func next_level():
 		current_level_idx = 0
 	else:
 		current_level_idx += 1
+	Signals.emit_new_level_started(get_current_level_id() + 1)
 	start_level()
 
 func get_current_level_id() -> int:
 	return current_level_idx
 
 func _connect_signals():
-	Signals.connect_start_button_pressed(start_level)
+	Signals.connect_start_button_pressed(_on_start_pressed)
 	Signals.connect_back_to_menu_button_pressed(start_main_menu)
 	Signals.connect_select_car_button_pressed(_on_select_car_button)
 	Signals.connect_quit_button_pressed(_on_quit_game)
@@ -141,6 +142,10 @@ func _connect_signals():
 	Signals.connect_car_finished(_on_car_finished)
 	Signals.connect_replay_level_button_pressed(reload_level)
 	Signals.connect_replay_level_button_pressed(_on_reload_level_pressed)
+
+func _on_start_pressed():
+	Signals.emit_new_level_started(get_current_level_id() + 1)
+	start_level()
 
 func _on_select_car_button():
 	# removing main menu
@@ -155,7 +160,7 @@ func _on_select_car_button():
 func _on_reload_level_pressed():
 	reload_level.call_deferred()
 
-func _on_car_crashed(_position: Vector3):
+func _on_car_crashed(_position: Vector3, _last_poc: Vector3):
 	reload_level()
 
 func _on_car_finished():
