@@ -32,7 +32,7 @@ func _place_grave(position: Vector3, last_poc: Vector3):
 	var grave = grave_scene.instantiate() as Grave
 	add_child(grave)
 	position.x += _get_random_number(5., 10.)
-	var result = _find_intersection_and_angle(position)
+	var result = _find_intersection_and_angle()
 	if result.x == 0:
 		# no intersection means we fell down a cliff.
 		# use the last point of contact for the position
@@ -47,7 +47,7 @@ func _place_grave(position: Vector3, last_poc: Vector3):
 	grave.setup(position, angle, _get_funny_text())
 	graves.append(grave)
 
-func _find_intersection_and_angle(car_position: Vector3) -> Vector2:
+func _find_intersection_and_angle() -> Vector2:
 	var intersection = 0
 	var angle = 0
 	
