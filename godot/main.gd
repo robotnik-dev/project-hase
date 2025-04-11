@@ -127,6 +127,7 @@ func next_level():
 		current_level_idx = 0
 	else:
 		current_level_idx += 1
+	Signals.emit_new_level_started(get_current_level_id() + 1)
 	start_level()
 
 func get_current_level_id() -> int:

@@ -52,6 +52,14 @@ func connect_camera_loaded(callable: Callable) -> Array:
 func emit_camera_loaded() -> Array:
 	return emit_deferred(_camera_loaded)
 
+signal _new_level_started(id: int)
+func connect_new_level_started(callable: Callable) -> Array:
+	_new_level_started.connect(callable)
+	return _new_level_started.get_connections()
+func emit_new_level_started(id: int) -> Array:
+	_new_level_started.emit(id)
+	return _new_level_started.get_connections()
+
 signal _start_button_pressed
 func connect_start_button_pressed(callable: Callable) -> Array:
 	_start_button_pressed.connect(callable)
