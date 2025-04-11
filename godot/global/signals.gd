@@ -30,12 +30,12 @@ func emit_collected(id: int) -> Array:
 	_collected.emit(id)
 	return _collected.get_connections()
 
-signal _car_crashed(position: Vector3)
+signal _car_crashed(position: Vector3, last_poc: Vector3)
 func connect_car_crashed(callable: Callable) -> Array:
 	_car_crashed.connect(callable)
 	return _car_crashed.get_connections()
-func emit_car_crashed(position: Vector3) -> Array:
-	_car_crashed.emit(position)
+func emit_car_crashed(position: Vector3, last_poc: Vector3) -> Array:
+	_car_crashed.emit(position, last_poc)
 	return _car_crashed.get_connections()
 
 signal _car_finished

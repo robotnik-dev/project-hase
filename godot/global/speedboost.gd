@@ -43,7 +43,7 @@ func _on_car_flipped(_direction: StringName, _count: int):
 func _on_camera_loaded():
 	create_tween().tween_callback(_set_flip_detection).set_delay(0.2)
 
-func _on_car_crashed(_pos):
+func _on_car_crashed(_pos, _last_poc):
 	boost_progress = 0.0
 	is_boost_ready = false
 

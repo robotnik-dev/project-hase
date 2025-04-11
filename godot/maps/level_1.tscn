@@ -151,7 +151,7 @@ shadow_enabled = true
 environment = SubResource("Environment_sjlnm")
 
 [node name="Start" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.51326, 3.19633)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5133, 576.196)
 layers = 524288
 mesh = SubResource("SphereMesh_k65at")
 

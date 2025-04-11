@@ -156,7 +156,7 @@ func _on_select_car_button():
 func _on_reload_level_pressed():
 	reload_level.call_deferred()
 
-func _on_car_crashed(_position: Vector3):
+func _on_car_crashed(_position: Vector3, _last_poc: Vector3):
 	reload_level()
 
 func _on_car_finished():
