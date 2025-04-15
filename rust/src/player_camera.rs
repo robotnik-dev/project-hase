@@ -24,6 +24,11 @@ struct PlayerCamera {
     #[init(val = 0.0)]
     height: f32,
 
+    /// How smoothly the camera follows its target (higher = smoother).
+    #[export(range = (0.1, 20.0, 0.1))]
+    #[init(val = 5.0)]
+    smoothness: f32,
+
     base: Base<Camera3D>,
 }
 
@@ -45,12 +50,19 @@ impl ICamera3D for PlayerCamera {
         }
     }
 
-    fn process(&mut self, _delta: f64) {
+    fn process(&mut self, delta: f64) {
         if let Some(follow) = self.get_follow() {
-            let pos = follow.get_global_position();
-            let self_pos = self.base().get_global_position();
-            self.base_mut()
-                .set_global_position(Vector3::new(self_pos.x, pos.y, pos.z));
+            let target_pos = follow.get_global_position();
+            let current_pos = self.base().get_global_position();
+            let smoothing = (-delta as f32 * 10.0 / self.smoothness).exp();
+
+            let new_pos = Vector3::new(
+                current_pos.x,
+                current_pos.y + (target_pos.y - current_pos.y) * (1.0 - smoothing),
+                current_pos.z + (target_pos.z - current_pos.z) * (1.0 - smoothing),
+            );
+
+            self.base_mut().set_global_position(new_pos);
         }
     }
 }
