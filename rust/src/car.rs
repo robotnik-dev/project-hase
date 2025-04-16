@@ -1,5 +1,5 @@
 use godot::{
-    classes::{Area3D, IRigidBody3D, RigidBody3D},
+    classes::{node::ProcessMode, Area3D, IRigidBody3D, RigidBody3D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
@@ -113,7 +113,7 @@ impl IRigidBody3D for Car {
             wheel.rotate_object_local(Vector3::LEFT, move_direction * (delta as f32) * speed);
         });
 
-        // upate the last point of contact for grave spawning
+        // update the last point of contact for grave spawning
         if self.is_on_floor() {
             self.last_point_of_contact = self.base().get_global_position();
         }
@@ -213,14 +213,25 @@ impl Car {
 
     #[func]
     fn crashed(&mut self, _area_or_body: Variant) {
+        // if the collision shape is an area, it means that the crashzone in the abyss triggered the crash
+        // because there are no other areas, everything else are bodies
+        let abyss = _area_or_body.try_to::<Gd<Area3D>>().is_ok();
+
         if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
             signals.call(
                 "emit_car_crashed",
                 &[
                     self.base().get_global_position().to_variant(),
                     self.last_point_of_contact.to_variant(),
+                    abyss.to_variant(),
                 ],
             );
+            self.base_mut().set_process(false);
+            self.base_mut().set_physics_process(false);
+            // disable areas for crash detection
+            for mut area in self.crash_detects.iter_shared() {
+                area.call_deferred("set_process_mode", &[ProcessMode::DISABLED.to_variant()]);
+            }
         }
     }
 
