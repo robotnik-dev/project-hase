@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://cfm3ui1m7bqcn"]
+[gd_scene load_steps=26 format=3 uid="uid://cfm3ui1m7bqcn"]
 
 [ext_resource type="PackedScene" uid="uid://lcydl2mrj708" path="res://car/previews/cabrio_preview.tscn" id="1_0n2f3"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_8krvb"]
 [ext_resource type="PackedScene" uid="uid://clfi6ka6mhdnr" path="res://car/carosserie/carosserie_cabrio.tscn" id="3_kctjg"]
 [ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_2t6no"]
 [ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_vxw76"]
+[ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_8m57j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -54,13 +55,34 @@ button_index = 9
 [sub_resource type="BoxShape3D" id="BoxShape3D_cneas"]
 size = Vector3(1, 0.400391, 1.88086)
 
-[node name="Cabrio" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0spe"]
+transparency = 1
+albedo_color = Color(0.682132, 0.583949, 0.31109, 1)
+albedo_texture = ExtResource("6_8m57j")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kigoa"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_o0spe")
+flip_faces = true
+size = Vector2(1, 1)
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_amata"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_o0spe")
+flip_faces = true
+size = Vector2(1, 1)
+orientation = 0
+
+[node name="Cabrio" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels", "carosserie")]
 player_input = NodePath("PlayerInput")
 collectables_needed_to_unlock = 3
 ui_preview = ExtResource("1_0n2f3")
 ui_display_name = &"Cabrio"
 crash_detects = [NodePath("HitBox")]
 wheels = [NodePath("Wheels/WheelBack"), NodePath("Wheels/WheelFront")]
+carosserie_tilt_angle = 4.0
+carosserie = NodePath("CarosserieCabrio")
 engine_power = 8000.0
 tilt_speed = 400.0
 collision_layer = 2
@@ -125,9 +147,11 @@ shape = SubResource("BoxShape3D_cneas")
 [node name="Dust" parent="." instance=ExtResource("5_vxw76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00991571, -1.25832)
 emitting = false
+draw_pass_1 = SubResource("PlaneMesh_kigoa")
 
 [node name="Dust2" parent="." instance=ExtResource("5_vxw76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00991571, 1.06194)
 emitting = false
+draw_pass_1 = SubResource("PlaneMesh_amata")
 
 [editable path="HitBox"]

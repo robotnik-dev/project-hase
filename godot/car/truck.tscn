@@ -72,13 +72,14 @@ material = SubResource("StandardMaterial3D_o0spe")
 flip_faces = true
 orientation = 0
 
-[node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
+[node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels", "carosserie")]
 player_input = NodePath("PlayerInput")
 collectables_needed_to_unlock = 2
 ui_preview = ExtResource("1_4ooac")
 ui_display_name = &"Truck"
 crash_detects = [NodePath("HitBox")]
 wheels = [NodePath("Wheels/Wheel"), NodePath("Wheels/Wheel2")]
+carosserie = NodePath("CarosserieTruck")
 engine_power = 14000.0
 tilt_speed = 2000.0
 collision_layer = 2

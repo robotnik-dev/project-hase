@@ -53,6 +53,17 @@ struct Car {
     wheels: Array<Gd<Node3D>>,
 
     #[export]
+    #[init(val = 8.0)]
+    carosserie_tilt_angle: f32,
+
+    #[export]
+    #[init(val = 0.2)]
+    carosserie_tilt_duration: f32,
+
+    #[export]
+    carosserie: Option<Gd<Node3D>>,
+
+    #[export]
     #[init(val = 1800.)]
     engine_power: f32,
 
@@ -201,21 +212,81 @@ impl Car {
     #[func]
     fn _on_drive_forward_pressed(&mut self) {
         self.drive_direction = 1.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(
+                self.carosserie_tilt_angle.to_radians(),
+                current_rot.y,
+                current_rot.z,
+            );
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]
     fn _on_drive_forward_released(&mut self) {
         self.drive_direction = 0.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(0.0, current_rot.y, current_rot.z);
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]
     fn _on_drive_backward_pressed(&mut self) {
         self.drive_direction = -1.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(
+                -self.carosserie_tilt_angle.to_radians(),
+                current_rot.y,
+                current_rot.z,
+            );
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]
     fn _on_drive_backward_released(&mut self) {
         self.drive_direction = 0.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(0.0, current_rot.y, current_rot.z);
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]

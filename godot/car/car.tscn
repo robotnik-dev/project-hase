@@ -74,12 +74,13 @@ flip_faces = true
 size = Vector2(1, 1)
 orientation = 0
 
-[node name="DefaultCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
+[node name="DefaultCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels", "carosserie")]
 player_input = NodePath("PlayerInput")
 ui_preview = ExtResource("1_tu35q")
 ui_display_name = &"Car"
 crash_detects = [NodePath("HitBox")]
 wheels = [NodePath("Wheels/WheelBack"), NodePath("Wheels/WheelFront")]
+carosserie = NodePath("CarosserieDefault")
 tilt_speed = 400.0
 collision_layer = 2
 axis_lock_linear_x = true
@@ -148,6 +149,6 @@ emitting = false
 draw_pass_1 = SubResource("PlaneMesh_cd2i0")
 
 [node name="CarosserieDefault" parent="." instance=ExtResource("6_dfo3r")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [editable path="HitBox"]
