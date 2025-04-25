@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=22 format=3 uid="uid://1b78wtvecq6o"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0ls0h3fhm2" path="res://car/previews/default_car_preview.tscn" id="1_tu35q"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_2fhm1"]
 [ext_resource type="PackedScene" uid="uid://b5c5jjndrhfi5" path="res://assets/carosserie/CarosserieDefault.glb" id="3_r47nu"]
 [ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_5hced"]
+[ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_61syv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -118,5 +119,13 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5
 [node name="CollisionShape3D" parent="HitBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0323486, 0.171402)
 shape = SubResource("BoxShape3D_7ya22")
+
+[node name="Dust" parent="." instance=ExtResource("5_61syv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.336309, -1.00731)
+emitting = false
+
+[node name="Dust2" parent="." instance=ExtResource("5_61syv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.336309, 0.992694)
+emitting = false
 
 [editable path="HitBox"]

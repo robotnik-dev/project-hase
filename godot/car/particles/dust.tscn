@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://ehb5yttghf4x"]
+
+[ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="1_7m26r"]
+[ext_resource type="Script" path="res://car/particles/dust.gd" id="1_sms1u"]
+
+[sub_resource type="Curve" id="Curve_kim8j"]
+_data = [Vector2(0, 0.997797), 0.0, -2.4987, 0, 0, Vector2(1, 0), -0.997797, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uwn1t"]
+curve = SubResource("Curve_kim8j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hm2ug"]
+lifetime_randomness = 0.4
+direction = Vector3(0, 1, -2)
+spread = 10.0
+initial_velocity_min = 3.66
+initial_velocity_max = 5.76
+gravity = Vector3(0, 8.46, 0)
+damping_min = 8.423
+damping_max = 15.853
+scale_curve = SubResource("CurveTexture_uwn1t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0spe"]
+transparency = 1
+albedo_color = Color(0.682132, 0.583949, 0.31109, 1)
+albedo_texture = ExtResource("1_7m26r")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6nnn7"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_o0spe")
+flip_faces = true
+size = Vector2(1, 1)
+orientation = 0
+
+[node name="Dust" type="GPUParticles3D"]
+cast_shadow = 0
+amount = 50
+lifetime = 2.47
+process_material = SubResource("ParticleProcessMaterial_hm2ug")
+draw_pass_1 = SubResource("PlaneMesh_6nnn7")
+script = ExtResource("1_sms1u")
+speed_threshold = 8.0

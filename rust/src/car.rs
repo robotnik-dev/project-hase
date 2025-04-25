@@ -253,6 +253,7 @@ impl Car {
         self.drive_direction
     }
 
+    #[func]
     fn is_on_floor(&self) -> bool {
         return self.base().get_colliding_bodies().iter_shared().count() > 0;
     }

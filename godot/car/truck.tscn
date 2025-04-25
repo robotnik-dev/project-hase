@@ -1,9 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://hmobwq0jmbq0"]
+[gd_scene load_steps=26 format=3 uid="uid://hmobwq0jmbq0"]
 
 [ext_resource type="PackedScene" uid="uid://da4ttchiynti7" path="res://car/previews/heavy_car_preview.tscn" id="1_4ooac"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_b3leg"]
 [ext_resource type="PackedScene" uid="uid://b3o5d4xe2pxob" path="res://car/carosserie/carosserie_truck.tscn" id="3_86cr5"]
 [ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_evr0b"]
+[ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_ohyry"]
+[ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_sxxhw"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -53,6 +55,23 @@ button_index = 9
 [sub_resource type="BoxShape3D" id="BoxShape3D_016sn"]
 size = Vector3(1, 1.32996, 4.19238)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0spe"]
+transparency = 1
+albedo_color = Color(0.682132, 0.583949, 0.31109, 1)
+albedo_texture = ExtResource("6_sxxhw")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_puqls"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_o0spe")
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_00m8e"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_o0spe")
+flip_faces = true
+orientation = 0
+
 [node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels")]
 player_input = NodePath("PlayerInput")
 collectables_needed_to_unlock = 2
@@ -87,10 +106,10 @@ shape = SubResource("ConvexPolygonShape3D_mc3er")
 [node name="Wheels" type="Node3D" parent="."]
 
 [node name="Wheel" parent="Wheels" instance=ExtResource("2_b3leg")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, -2.02122)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, -2.07317)
 
 [node name="Wheel2" parent="Wheels" instance=ExtResource("2_b3leg")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, 1.94987)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, 1.88308)
 
 [node name="PlayerCamera" type="PlayerCamera" parent="." node_paths=PackedStringArray("follow")]
 follow = NodePath("..")
@@ -120,5 +139,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.70545, 0)
 [node name="CollisionShape3D" parent="HitBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.164978, 0)
 shape = SubResource("BoxShape3D_016sn")
+
+[node name="Dust" parent="." instance=ExtResource("5_ohyry")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.440343, -2.07409)
+emitting = false
+draw_pass_1 = SubResource("PlaneMesh_puqls")
+
+[node name="Dust2" parent="." instance=ExtResource("5_ohyry")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.440343, 1.88622)
+emitting = false
+draw_pass_1 = SubResource("PlaneMesh_00m8e")
 
 [editable path="HitBox"]
