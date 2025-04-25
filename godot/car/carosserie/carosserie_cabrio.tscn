@@ -3,3 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://beo3g5slwhxpk" path="res://assets/carosserie/CarosserieCabrio.glb" id="1_77iqo"]
 
 [node name="CarosserieCabrio" instance=ExtResource("1_77iqo")]
+
+[node name="Cabrio" parent="." index="0"]
+cast_shadow = 0

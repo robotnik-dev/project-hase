@@ -4,7 +4,7 @@ extends GPUParticles3D
 
 @onready var car: Car = get_parent()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if car.linear_velocity.length() > speed_threshold and car.is_on_floor():
 		emitting = true
 	else:

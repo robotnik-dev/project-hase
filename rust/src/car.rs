@@ -7,6 +7,8 @@ use godot::{
 
 use crate::player_input::PlayerInput;
 
+const SPEEDBOOST_TIME: f32 = 3.0;
+
 #[derive(GodotConvert, Var, Export, Default)]
 #[godot(via = GString)]
 pub enum Effect {
@@ -67,6 +69,9 @@ struct Car {
 
     last_point_of_contact: Vector3,
 
+    #[init(val = Vector3::RIGHT)]
+    wheel_rotation_axis: Vector3,
+
     base: Base<RigidBody3D>,
 }
 
@@ -110,7 +115,10 @@ impl IRigidBody3D for Car {
         let speed = Vector3::new(velocity.x, 0., velocity.z).length();
         let move_direction = sign(&self.base().get_linear_velocity().z.to_variant()).to::<f32>();
         self.get_wheels().iter_shared().for_each(|mut wheel| {
-            wheel.rotate_object_local(Vector3::LEFT, move_direction * (delta as f32) * speed);
+            wheel.rotate(
+                self.wheel_rotation_axis,
+                move_direction * (delta as f32) * speed,
+            );
         });
 
         // update the last point of contact for grave spawning
@@ -131,6 +139,9 @@ impl IRigidBody3D for Car {
 
 #[godot_api]
 impl Car {
+    #[signal]
+    fn speed_boost_applied();
+
     #[func]
     fn setup(&mut self, start: Vector3, end: Vector3) {
         self.base_mut().set_global_position(start);
@@ -167,8 +178,24 @@ impl Car {
                 let force = self.boost_power;
                 let direction = self.get_facing_direction();
                 self.base_mut().apply_central_impulse(direction * force);
+                self.base_mut().emit_signal("speed_boost_applied", &[]);
+                // Change wheel rotation axis for funny visual effect
+                self.wheel_rotation_axis = Vector3::UP;
+                let cb = self.base().callable("set_wheel_rotation_to_normal");
+                self.base_mut().create_tween().map(|mut t| {
+                    t.tween_callback(&cb)
+                        .map(|mut cbt| cbt.set_delay(SPEEDBOOST_TIME as f64))
+                });
             }
         }
+    }
+
+    #[func]
+    fn set_wheel_rotation_to_normal(&mut self) {
+        self.wheel_rotation_axis = Vector3::RIGHT;
+        self.get_wheels().iter_shared().for_each(|mut wheel| {
+            wheel.set_rotation(Vector3::new(0.0, -180.0_f32.to_radians(), 0.0));
+        });
     }
 
     #[func]
