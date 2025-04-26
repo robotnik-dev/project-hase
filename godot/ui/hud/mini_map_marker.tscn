@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c5eiudclllj8v"]
+
+[node name="MiniMapMarker" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.807676, 0)
+layers = 8
+cast_shadow = 0

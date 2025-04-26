@@ -5,4 +5,5 @@
 [node name="CarosserieTruck" instance=ExtResource("1_oagu4")]
 
 [node name="Truck" parent="." index="0"]
+layers = 16
 cast_shadow = 0

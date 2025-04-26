@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d0b7rgobhusxq"]
+[gd_scene load_steps=20 format=3 uid="uid://d0b7rgobhusxq"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_20grt"]
 [ext_resource type="Script" path="res://ui/screens/car_selection.gd" id="2_nkdtm"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://cfm3ui1m7bqcn" path="res://car/cabrio.tscn" id="5_eukob"]
 [ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_pceyv"]
 [ext_resource type="Texture2D" uid="uid://dqfr21jboq52l" path="res://assets/ui/icons/keyboard-right-arrow.png" id="7_g5yiy"]
+[ext_resource type="Texture2D" uid="uid://kuf7bceavcq6" path="res://assets/ui/icons/keyboard-left-arrow-focused.png" id="10_bpth5"]
+[ext_resource type="Texture2D" uid="uid://cgx14ohdtdv76" path="res://assets/ui/icons/keyboard-right-arrow-focused.png" id="11_8dv4s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0mtq"]
 bg_color = Color(0.213625, 0.644759, 0.867549, 0.25098)
@@ -114,10 +116,9 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+focus_neighbor_right = NodePath("../NavigateRight")
 texture_normal = ExtResource("5_7hc31")
-texture_pressed = ExtResource("5_7hc31")
-texture_hover = ExtResource("5_7hc31")
-texture_focused = ExtResource("5_7hc31")
+texture_focused = ExtResource("10_bpth5")
 stretch_mode = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer"]
@@ -141,7 +142,9 @@ render_target_update_mode = 4
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../NavigateLeft")
 texture_normal = ExtResource("7_g5yiy")
+texture_focused = ExtResource("11_8dv4s")
 stretch_mode = 3
 
 [node name="BotRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -153,6 +156,7 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
+focus_neighbor_right = NodePath("../StartButton")
 text = "Main menu"
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BotRow"]
@@ -164,6 +168,7 @@ size_flags_stretch_ratio = 2.0
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_vertical = 8
+focus_neighbor_left = NodePath("../BackToMenuButton")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateLeft" to="." method="_on_navigate_left_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateRight" to="." method="_on_navigate_right_pressed"]

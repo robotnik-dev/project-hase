@@ -1,6 +1,8 @@
-[gd_scene load_steps=50 format=3 uid="uid://cxpqv846s0ivr"]
+[gd_scene load_steps=44 format=3 uid="uid://cxpqv846s0ivr"]
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
+[ext_resource type="PackedScene" uid="uid://b08hw7fk4rfap" path="res://maps/shared/start.tscn" id="1_mbm7a"]
+[ext_resource type="PackedScene" uid="uid://c6xksxr1mxk5m" path="res://maps/shared/end.tscn" id="2_ht43n"]
 [ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
 [ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="3_pytas"]
 [ext_resource type="PackedScene" uid="uid://ddcs8l8ogns4y" path="res://assets/terrain/road_3.gltf" id="4_g3ttt"]
@@ -155,29 +157,9 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sjlnm")
 
-[node name="Start" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000132561, 6.06913, 0.36077)
-layers = 524288
-mesh = SubResource("SphereMesh_k65at")
+[node name="Start" parent="." instance=ExtResource("1_mbm7a")]
 
-[node name="Label3D" type="Label3D" parent="Start"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-layers = 524288
-pixel_size = 0.05
-billboard = 1
-text = "Start"
-
-[node name="End" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5014, 1066.78)
-layers = 524288
-mesh = SubResource("SphereMesh_nvil5")
-
-[node name="Label3D" type="Label3D" parent="End"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-layers = 524288
-pixel_size = 0.05
-billboard = 1
-text = "End"
+[node name="End" parent="." instance=ExtResource("2_ht43n")]
 
 [node name="MainRoad1" parent="." instance=ExtResource("1_dlqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208435, 3.8147e-06, -0.116943)
@@ -271,12 +253,14 @@ shape = SubResource("ConcavePolygonShape3D_x1js7")
 [node name="ParallaxLayers" type="Node" parent="."]
 
 [node name="ParallaxLayer" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+layers = 2
 mesh = SubResource("PlaneMesh_xl1sn")
 texture = ExtResource("8_gd3fd")
 constant_speed = true
 far_away = true
 
 [node name="ParallaxLayer2" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+layers = 2
 mesh = SubResource("PlaneMesh_re7ly")
 texture = ExtResource("9_5ohc2")
 layer = 2
@@ -284,12 +268,14 @@ constant_speed = true
 speed = 3.6
 
 [node name="ParallaxLayer3" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+layers = 2
 mesh = SubResource("PlaneMesh_do87p")
 texture = ExtResource("10_y46h7")
 layer = 3
 speed = 6.1
 
 [node name="ParallaxLayer4" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+layers = 2
 mesh = SubResource("PlaneMesh_tcuel")
 texture = ExtResource("11_lx3oc")
 layer = 4
@@ -297,6 +283,7 @@ constant_speed = true
 speed = 2.2
 
 [node name="ParallaxLayer5" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+layers = 2
 mesh = SubResource("PlaneMesh_ywcw1")
 texture = ExtResource("12_jcknf")
 layer = 5
@@ -304,12 +291,14 @@ constant_speed = true
 speed = 4.4
 
 [node name="ParallaxLayer6" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+layers = 2
 mesh = SubResource("PlaneMesh_a6lta")
 texture = ExtResource("13_o75ra")
 layer = 6
 speed = 14.2
 
 [node name="ParallaxLayer7" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
+layers = 2
 mesh = SubResource("PlaneMesh_tnksx")
 texture = ExtResource("14_4v1id")
 layer = 7

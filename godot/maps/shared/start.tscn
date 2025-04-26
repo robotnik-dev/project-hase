@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b08hw7fk4rfap"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2rli2"]
+albedo_color = Color(0.140794, 0.309945, 0.557043, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k65at"]
+material = SubResource("StandardMaterial3D_2rli2")
+
+[node name="Start" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.51326, 3.19633)
+layers = 524288
+mesh = SubResource("SphereMesh_k65at")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+layers = 524288
+pixel_size = 0.05
+billboard = 1
+text = "Start"

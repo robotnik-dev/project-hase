@@ -5,4 +5,5 @@
 [node name="CarosserieDefault" instance=ExtResource("1_2pmk0")]
 
 [node name="Car" parent="." index="0"]
+layers = 16
 cast_shadow = 0

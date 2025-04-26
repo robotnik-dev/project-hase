@@ -35,6 +35,9 @@ func _ready() -> void:
 	global_position.x = LAYER_OFFSET - layer
 
 func _physics_process(_delta: float) -> void:
+	if !enabled:
+		return
+	
 	if constant_speed:
 		current_offset -= (speed * SPEED_SCALE)
 		if !far_away:
@@ -47,6 +50,9 @@ func _physics_process(_delta: float) -> void:
 	last_camera_pos = camera.global_position
 
 func _process(_delta: float) -> void:
+	if !enabled:
+		return
+	
 	global_position.z = camera.global_position.z
 	global_position.y = camera.global_position.y + camera.height
 

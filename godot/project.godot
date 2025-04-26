@@ -13,6 +13,7 @@ config_version=5
 config/name="HASE"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+run/max_fps=120
 config/icon="res://icon.svg"
 
 [autoload]
@@ -104,6 +105,13 @@ developer_ui={
 
 [layer_names]
 
+3d_render/layer_1="World"
+3d_render/layer_2="ParallaxLayer"
+3d_render/layer_3="Particles"
+3d_render/layer_4="MiniMapMarker"
+3d_render/layer_5="Car"
+3d_render/layer_6="Collectible"
+3d_render/layer_7="Grave"
 3d_render/layer_20="debug"
 3d_physics/layer_1="World"
 3d_physics/layer_2="Car"
@@ -114,7 +122,7 @@ developer_ui={
 [physics]
 
 3d/physics_engine="Rapier3D"
-rapier/solver/max_ccd_substeps=32
+rapier/solver/max_ccd_substeps=16
 
 [rendering]
 

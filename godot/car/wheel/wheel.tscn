@@ -3,3 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://hhmstx0lfiaf" path="res://assets/wheel/Wheel.glb" id="1_onv7f"]
 
 [node name="Wheel" instance=ExtResource("1_onv7f")]
+
+[node name="Wheel" parent="." index="0"]
+layers = 16
+cast_shadow = 0

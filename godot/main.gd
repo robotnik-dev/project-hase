@@ -5,6 +5,8 @@ class_name Main
 
 @export var ui: Control
 
+@export var wait_after_crash: float = 3.0
+
 ## In seconds
 @export var wait_until_next_level: float = 2.0
 ## when on: replays the level as soon as the car hits the finish line.
@@ -82,16 +84,6 @@ func start_level():
 		main_menu.queue_free()
 		main_menu = null
 	
-	# removing pause first
-	if pause_menu:
-		ui.remove_child(pause_menu)
-		pause_menu.queue_free()
-		pause_menu = null
-	
-	# adding pause menu
-	pause_menu = pause_menu_scene.instantiate()
-	ui.add_child(pause_menu)
-	
 	# setup car
 	if current_car:
 		current_car.queue_free()
@@ -107,6 +99,16 @@ func start_level():
 	hud = hud_scene.instantiate()
 	ui.add_child(hud)
 	hud.setup(current_car)
+	
+	# removing pause first
+	if pause_menu:
+		ui.remove_child(pause_menu)
+		pause_menu.queue_free()
+		pause_menu = null
+	
+	# adding pause menu
+	pause_menu = pause_menu_scene.instantiate()
+	ui.add_child(pause_menu)
 	
 	# setup level
 	if current_level:
@@ -160,8 +162,8 @@ func _on_select_car_button():
 func _on_reload_level_pressed():
 	reload_level.call_deferred()
 
-func _on_car_crashed(_position: Vector3, _last_poc: Vector3):
-	reload_level()
+func _on_car_crashed(_position: Vector3, _last_poc: Vector3, _abyss: bool):
+	create_tween().tween_callback(reload_level).set_delay(wait_after_crash)
 
 func _on_car_finished():
 	if replay_first_level:

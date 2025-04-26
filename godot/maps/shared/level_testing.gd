@@ -18,7 +18,6 @@ var current_car: Car = null
 var path_to_car_scene: String = "res://car/default_car.tscn"
 
 func _ready() -> void:
-	# TODO: inject car scene through UI or different method later
 	_on_car_selected("res://car/default_car.tscn")
 	_connect_signals()
 	start_level()
@@ -63,7 +62,7 @@ func _on_reload_level_pressed():
 func _on_car_selected(path_to_scene: String):
 	path_to_car_scene = path_to_scene
 
-func _on_car_crashed(_position: Vector3, _last_poc: Vector3):
+func _on_car_crashed(_position: Vector3, _last_poc: Vector3, _abyss: bool):
 	reload_level()
 
 func _on_car_finished():
