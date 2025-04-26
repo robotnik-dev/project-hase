@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=30 format=3 uid="uid://1b78wtvecq6o"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0ls0h3fhm2" path="res://car/previews/default_car_preview.tscn" id="1_tu35q"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_2fhm1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bh5gtta3tyrtg" path="res://car/carosserie/carosserie_default.tscn" id="6_dfo3r"]
 [ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_xk0xn"]
 [ext_resource type="PackedScene" uid="uid://cdqo7cxfnsjtd" path="res://car/particles/wind.tscn" id="7_od1ux"]
+[ext_resource type="PackedScene" uid="uid://c5eiudclllj8v" path="res://ui/hud/mini_map_marker.tscn" id="8_42oha"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -75,6 +76,13 @@ flip_faces = true
 size = Vector2(1, 1)
 orientation = 0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gnqnw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7pbxj"]
+material = SubResource("StandardMaterial3D_gnqnw")
+radius = 0.72
+height = 3.565
+
 [node name="DefaultCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels", "carosserie")]
 player_input = NodePath("PlayerInput")
 ui_preview = ExtResource("1_tu35q")
@@ -118,7 +126,7 @@ follow = NodePath("..")
 height = 5.0
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20, 0, 0)
 top_level = true
-cull_mask = 524287
+cull_mask = 524279
 v_offset = 5.0
 projection = 1
 current = true
@@ -154,5 +162,9 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="Wind" parent="." instance=ExtResource("7_od1ux")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.624123, 1.20114)
+
+[node name="MiniMapMarker" parent="." instance=ExtResource("8_42oha")]
+transform = Transform3D(1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0.715672, -0.0605893)
+mesh = SubResource("CapsuleMesh_7pbxj")
 
 [editable path="HitBox"]

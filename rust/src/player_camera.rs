@@ -38,6 +38,8 @@ impl ICamera3D for PlayerCamera {
         self.base_mut().set_projection(ProjectionType::ORTHOGONAL);
         self.set_distance(self.get_distance());
         self.set_height(self.get_height());
+        self.base_mut().add_to_group("PlayerCamera");
+        self.base_mut().set_cull_mask_value(4, false);
 
         if self.base().is_current() {
             if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {

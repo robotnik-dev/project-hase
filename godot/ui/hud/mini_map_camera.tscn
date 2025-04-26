@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4fjlsroxl73g"]
+
+[ext_resource type="Script" path="res://ui/hud/mini_map_camera.gd" id="1_xmoeo"]
+
+[sub_resource type="Environment" id="Environment_eg7yn"]
+background_energy_multiplier = 0.0
+fog_enabled = true
+fog_light_color = Color(0, 0.152906, 0.366203, 1)
+fog_density = 1.0
+
+[node name="MiniMapCamera" type="Camera3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.659, 0, 0)
+cull_mask = 9
+environment = SubResource("Environment_eg7yn")
+projection = 1
+size = 54.881
+script = ExtResource("1_xmoeo")

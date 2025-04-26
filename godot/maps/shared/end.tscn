@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6xksxr1mxk5m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lvii"]
+albedo_color = Color(0.203761, 0.428345, 0.237731, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_nvil5"]
+material = SubResource("StandardMaterial3D_4lvii")
+
+[node name="End" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5014, 972.182)
+layers = 524296
+mesh = SubResource("SphereMesh_nvil5")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+layers = 524288
+pixel_size = 0.05
+billboard = 1
+text = "End"

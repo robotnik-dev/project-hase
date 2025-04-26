@@ -16,6 +16,7 @@ radius = 0.765
 section_length = 0.011
 
 [node name="Wind" type="GPUParticles3D"]
+layers = 4
 cast_shadow = 0
 emitting = false
 amount = 53

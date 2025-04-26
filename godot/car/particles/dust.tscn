@@ -34,6 +34,7 @@ size = Vector2(1, 1)
 orientation = 0
 
 [node name="Dust" type="GPUParticles3D"]
+layers = 4
 cast_shadow = 0
 amount = 50
 lifetime = 2.47

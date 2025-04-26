@@ -105,6 +105,13 @@ developer_ui={
 
 [layer_names]
 
+3d_render/layer_1="World"
+3d_render/layer_2="ParallaxLayer"
+3d_render/layer_3="Particles"
+3d_render/layer_4="MiniMapMarker"
+3d_render/layer_5="Car"
+3d_render/layer_6="Collectible"
+3d_render/layer_7="Grave"
 3d_render/layer_20="debug"
 3d_physics/layer_1="World"
 3d_physics/layer_2="Car"
