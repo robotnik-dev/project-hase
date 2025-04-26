@@ -22,28 +22,28 @@ func _get_funny_text() -> String:
 func _get_random_number(low: float, high: float) -> float:
 	return randf_range(low, high)
 
-func _on_car_crashed(position: Vector3, last_poc: Vector3, _abyss: bool):
+func _on_car_crashed(position: Vector3, last_poc: Vector3, abyss: bool):
 	# set ray to the car position
 	raycast.global_position = position
 	raycast.force_raycast_update()
-	create_tween().tween_callback(_place_grave.bind(position, last_poc)).set_delay(0.1)
+	create_tween().tween_callback(_place_grave.bind(position, last_poc, abyss)).set_delay(0.1)
 
-func _place_grave(position: Vector3, last_poc: Vector3):
+func _place_grave(position: Vector3, last_poc: Vector3, abyss: bool):
 	var grave = grave_scene.instantiate() as Grave
 	add_child(grave)
 	position.x += _get_random_number(5., 10.)
-	var result = _find_intersection_and_angle()
-	if result.x == 0:
-		# no intersection means we fell down a cliff.
+	var angle = 0
+	if abyss:
 		# use the last point of contact for the position
 		position.y = last_poc.y
 		position.z = last_poc.z
 	else:
+		var result = _find_intersection_and_angle()
 		position.y = result.x
+		angle = result.y
 	
 	#TODO: randomize the z pos (left , right) a bit
 	
-	var angle = result.y
 	grave.setup(position, angle, _get_funny_text())
 	graves.append(grave)
 
