@@ -1,11 +1,13 @@
 use godot::{
-    classes::{Area3D, IRigidBody3D, RigidBody3D},
+    classes::{node::ProcessMode, Area3D, IRigidBody3D, RigidBody3D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
 };
 
 use crate::player_input::PlayerInput;
+
+const SPEEDBOOST_TIME: f32 = 3.0;
 
 #[derive(GodotConvert, Var, Export, Default)]
 #[godot(via = GString)]
@@ -51,6 +53,17 @@ struct Car {
     wheels: Array<Gd<Node3D>>,
 
     #[export]
+    #[init(val = 8.0)]
+    carosserie_tilt_angle: f32,
+
+    #[export]
+    #[init(val = 0.2)]
+    carosserie_tilt_duration: f32,
+
+    #[export]
+    carosserie: Option<Gd<Node3D>>,
+
+    #[export]
     #[init(val = 1800.)]
     engine_power: f32,
 
@@ -66,6 +79,9 @@ struct Car {
     drive_direction: f32,
 
     last_point_of_contact: Vector3,
+
+    #[init(val = Vector3::RIGHT)]
+    wheel_rotation_axis: Vector3,
 
     base: Base<RigidBody3D>,
 }
@@ -110,10 +126,13 @@ impl IRigidBody3D for Car {
         let speed = Vector3::new(velocity.x, 0., velocity.z).length();
         let move_direction = sign(&self.base().get_linear_velocity().z.to_variant()).to::<f32>();
         self.get_wheels().iter_shared().for_each(|mut wheel| {
-            wheel.rotate_object_local(Vector3::LEFT, move_direction * (delta as f32) * speed);
+            wheel.rotate(
+                self.wheel_rotation_axis,
+                move_direction * (delta as f32) * speed,
+            );
         });
 
-        // upate the last point of contact for grave spawning
+        // update the last point of contact for grave spawning
         if self.is_on_floor() {
             self.last_point_of_contact = self.base().get_global_position();
         }
@@ -131,6 +150,9 @@ impl IRigidBody3D for Car {
 
 #[godot_api]
 impl Car {
+    #[signal]
+    fn speed_boost_applied();
+
     #[func]
     fn setup(&mut self, start: Vector3, end: Vector3) {
         self.base_mut().set_global_position(start);
@@ -167,28 +189,104 @@ impl Car {
                 let force = self.boost_power;
                 let direction = self.get_facing_direction();
                 self.base_mut().apply_central_impulse(direction * force);
+                self.base_mut().emit_signal("speed_boost_applied", &[]);
+                // Change wheel rotation axis for funny visual effect
+                self.wheel_rotation_axis = Vector3::UP;
+                let cb = self.base().callable("set_wheel_rotation_to_normal");
+                self.base_mut().create_tween().map(|mut t| {
+                    t.tween_callback(&cb)
+                        .map(|mut cbt| cbt.set_delay(SPEEDBOOST_TIME as f64))
+                });
             }
         }
     }
 
     #[func]
+    fn set_wheel_rotation_to_normal(&mut self) {
+        self.wheel_rotation_axis = Vector3::RIGHT;
+        self.get_wheels().iter_shared().for_each(|mut wheel| {
+            wheel.set_rotation(Vector3::new(0.0, -180.0_f32.to_radians(), 0.0));
+        });
+    }
+
+    #[func]
     fn _on_drive_forward_pressed(&mut self) {
         self.drive_direction = 1.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(
+                self.carosserie_tilt_angle.to_radians(),
+                current_rot.y,
+                current_rot.z,
+            );
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]
     fn _on_drive_forward_released(&mut self) {
         self.drive_direction = 0.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(0.0, current_rot.y, current_rot.z);
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]
     fn _on_drive_backward_pressed(&mut self) {
         self.drive_direction = -1.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(
+                -self.carosserie_tilt_angle.to_radians(),
+                current_rot.y,
+                current_rot.z,
+            );
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]
     fn _on_drive_backward_released(&mut self) {
         self.drive_direction = 0.0;
+        if let Some(carosserie) = self.get_carosserie() {
+            let current_rot = carosserie.get_rotation();
+            let final_rot = Vector3::new(0.0, current_rot.y, current_rot.z);
+            let tilt_duration = self.carosserie_tilt_duration;
+            self.base_mut().create_tween().map(|mut t| {
+                t.tween_property(
+                    &carosserie,
+                    "rotation",
+                    &final_rot.to_variant(),
+                    tilt_duration as f64,
+                )
+            });
+        }
     }
 
     #[func]
@@ -213,14 +311,25 @@ impl Car {
 
     #[func]
     fn crashed(&mut self, _area_or_body: Variant) {
+        // if the collision shape is an area, it means that the crashzone in the abyss triggered the crash
+        // because there are no other areas, everything else are bodies
+        let abyss = _area_or_body.try_to::<Gd<Area3D>>().is_ok();
+
         if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
             signals.call(
                 "emit_car_crashed",
                 &[
                     self.base().get_global_position().to_variant(),
                     self.last_point_of_contact.to_variant(),
+                    abyss.to_variant(),
                 ],
             );
+            self.base_mut().set_process(false);
+            self.base_mut().set_physics_process(false);
+            // disable areas for crash detection
+            for mut area in self.crash_detects.iter_shared() {
+                area.call_deferred("set_process_mode", &[ProcessMode::DISABLED.to_variant()]);
+            }
         }
     }
 
@@ -242,6 +351,7 @@ impl Car {
         self.drive_direction
     }
 
+    #[func]
     fn is_on_floor(&self) -> bool {
         return self.base().get_colliding_bodies().iter_shared().count() > 0;
     }

@@ -49,6 +49,8 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+focus_neighbor_right = NodePath("../../TopRight/ToggleMusicButton")
+focus_neighbor_bottom = NodePath("../../../MidRow/VBoxContainer/CenterContainer/ContinueButton")
 
 [node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/TopRow"]
 layout_mode = 2
@@ -62,6 +64,8 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+focus_neighbor_left = NodePath("../../TopLeft/ToggleFullscreenButton")
+focus_neighbor_bottom = NodePath("../../../MidRow/VBoxContainer/CenterContainer/ContinueButton")
 
 [node name="MidRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -94,3 +98,4 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 8
+focus_neighbor_left = NodePath("../../MidRow/VBoxContainer/CenterContainer2/StartButton")

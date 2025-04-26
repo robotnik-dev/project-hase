@@ -150,6 +150,11 @@ impl INode for PlayerInput {
                 InputMap::singleton().action_add_event(PlayerInputKey::TiltBackward.as_str(), &key);
             }
         }
+
+        if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+            let cb = self.to_gd().callable("on_car_crashed");
+            signals.call("connect_car_crashed", &[cb.to_variant()]);
+        };
     }
 
     fn unhandled_input(&mut self, event: Gd<InputEvent>) {
@@ -181,6 +186,12 @@ impl INode for PlayerInput {
 
 #[godot_api]
 impl PlayerInput {
+    #[func]
+    /// Disable playerinput when car crashed
+    fn on_car_crashed(&mut self, _pos: Variant, _last_poc: Variant, _abyss: Variant) {
+        self.base_mut().set_process_unhandled_input(false);
+    }
+
     /// Emitted on `unhandled_input` event for `is_action_pressed` and the event `drive_forward`
     #[signal]
     fn drive_forward_pressed();

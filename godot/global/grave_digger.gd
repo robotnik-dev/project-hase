@@ -22,7 +22,7 @@ func _get_funny_text() -> String:
 func _get_random_number(low: float, high: float) -> float:
 	return randf_range(low, high)
 
-func _on_car_crashed(position: Vector3, last_poc: Vector3):
+func _on_car_crashed(position: Vector3, last_poc: Vector3, _abyss: bool):
 	# set ray to the car position
 	raycast.global_position = position
 	raycast.force_raycast_update()
