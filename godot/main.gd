@@ -84,16 +84,6 @@ func start_level():
 		main_menu.queue_free()
 		main_menu = null
 	
-	# removing pause first
-	if pause_menu:
-		ui.remove_child(pause_menu)
-		pause_menu.queue_free()
-		pause_menu = null
-	
-	# adding pause menu
-	pause_menu = pause_menu_scene.instantiate()
-	ui.add_child(pause_menu)
-	
 	# setup car
 	if current_car:
 		current_car.queue_free()
@@ -109,6 +99,16 @@ func start_level():
 	hud = hud_scene.instantiate()
 	ui.add_child(hud)
 	hud.setup(current_car)
+	
+	# removing pause first
+	if pause_menu:
+		ui.remove_child(pause_menu)
+		pause_menu.queue_free()
+		pause_menu = null
+	
+	# adding pause menu
+	pause_menu = pause_menu_scene.instantiate()
+	ui.add_child(pause_menu)
 	
 	# setup level
 	if current_level:
