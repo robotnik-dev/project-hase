@@ -1,36 +1,39 @@
 [gd_scene load_steps=6 format=3 uid="uid://dajey7a1anwm4"]
 
-[ext_resource type="Texture2D" uid="uid://cl5jq4rjgm5x0" path="res://icon.svg" id="1_8rdp1"]
+[ext_resource type="Texture2D" uid="uid://bl60l1w46tno0" path="res://assets/graves/grave1.png" id="1_arjjd"]
 [ext_resource type="Script" path="res://graves/grave.gd" id="2_0kj06"]
-[ext_resource type="FontFile" uid="uid://cm2c1fmlssaei" path="res://assets/fonts/Boldonse-Regular.ttf" id="2_da4xu"]
+[ext_resource type="FontFile" uid="uid://itewyg7c81q" path="res://assets/fonts/SEVESBRG.TTF" id="3_um6r0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qu2ym"]
 transparency = 1
-albedo_texture = ExtResource("1_8rdp1")
-uv1_scale = Vector3(0.335, 0.335, 0.335)
+albedo_texture = ExtResource("1_arjjd")
+uv1_scale = Vector3(0.3, 0.3, 0.3)
 uv1_offset = Vector3(0, 0.5, 0.5)
 uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_20gqj"]
 size = Vector3(3, 3, 3)
 
-[node name="Grave" type="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+[node name="Grave" type="Node3D"]
+script = ExtResource("2_0kj06")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3.01338, 0)
 layers = 64
 material_override = SubResource("StandardMaterial3D_qu2ym")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_20gqj")
-script = ExtResource("2_0kj06")
 
-[node name="Label3D" type="Label3D" parent="."]
+[node name="Label3D" type="Label3D" parent="Mesh"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -2, 0, 0)
 layers = 64
 sorting_offset = 10.0
-double_sided = false
-modulate = Color(0, 0, 0, 1)
-text = "You're not dead for me, you're just dead"
-font = ExtResource("2_da4xu")
-font_size = 46
+alpha_cut = 2
+modulate = Color(0.853427, 0.700908, 0.11327, 1)
+text = "You're not dead to me, you're just dead"
+font = ExtResource("3_um6r0")
+font_size = 76
+outline_size = 25
 uppercase = true
 autowrap_mode = 3
-width = 600.0
+width = 425.0

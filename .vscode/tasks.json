@@ -21,7 +21,7 @@
 			"options": {
 				"cwd": "${config:godot-rust.environment.godotProjectPath}"
 			},
-			"command": "\"${config:godot-rust.environment.godotEditorPath} --headless --verbose --export-release \"Windows Desktop\" \"export\\game.exe\"\"",
+			"command": "${config:godot-rust.environment.godotEditorPath} --headless --verbose --export-release windows \"export\\game.exe\"",
 			"group": "build"
 		},
 

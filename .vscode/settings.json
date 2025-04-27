@@ -1,5 +1,3 @@
 {
     "godotTools.editorPath.godot4": "c:\\Program Files\\Godot\\Godot.exe",
-    "godot-rust.environment.godotProjectPath": "${workspaceFolder}/godot/",
-    "godot-rust.environment.godotEditorPath": "\"C:\\Program Files\\Godot\\Godot.exe\"",
 }

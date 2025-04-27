@@ -1,7 +1,7 @@
-extends MeshInstance3D
+extends Node3D
 class_name Grave
 
-@onready var label = $Label3D
+@onready var label = $Mesh/Label3D
 
 func setup(spawn_position: Vector3, x_rotation: float, text: String):
 	label.text = text
