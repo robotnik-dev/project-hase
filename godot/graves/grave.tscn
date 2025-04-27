@@ -14,15 +14,17 @@ uv1_triplanar = true
 [sub_resource type="BoxMesh" id="BoxMesh_20gqj"]
 size = Vector3(3, 3, 3)
 
-[node name="Grave" type="MeshInstance3D"]
+[node name="Grave" type="Node3D"]
+script = ExtResource("2_0kj06")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3.01338, 0)
 layers = 64
 material_override = SubResource("StandardMaterial3D_qu2ym")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_20gqj")
-script = ExtResource("2_0kj06")
 
-[node name="Label3D" type="Label3D" parent="."]
+[node name="Label3D" type="Label3D" parent="Mesh"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -2, 0, 0)
 layers = 64
 sorting_offset = 10.0
