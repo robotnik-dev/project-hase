@@ -10,8 +10,16 @@
 			"options": {
 				"cwd": "${config:godot-rust.environment.godotProjectPath}"
 			},
-			"command": "${config:godot-rust.environment.godotEditorPath} --editor --verbose",
-			"group": "build"
+			"command": "${config:godot-rust.environment.godotEditorPath} --editor",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
 		},
 		{
 			"label": "godot-rust: Export Windows Release",
@@ -34,7 +42,15 @@
 			"options": {
 				"cwd": "${cwd}/rust"
 			},
-			"group": "build"
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			}
 		},
 		{
 			"label": "godot-rust: Build Android Debug",

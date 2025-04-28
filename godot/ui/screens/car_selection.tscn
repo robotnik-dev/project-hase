@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0b7rgobhusxq"]
+[gd_scene load_steps=16 format=3 uid="uid://d0b7rgobhusxq"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_20grt"]
 [ext_resource type="Script" path="res://ui/screens/car_selection.gd" id="2_nkdtm"]
@@ -8,12 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://hmobwq0jmbq0" path="res://car/truck.tscn" id="4_ee0tt"]
 [ext_resource type="LabelSettings" uid="uid://djovojv4or3gm" path="res://ui/resources/labels/car_preview_name.tres" id="4_nrts2"]
 [ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="5_5bjhn"]
-[ext_resource type="Texture2D" uid="uid://cv83v0hblk2km" path="res://assets/ui/icons/keyboard-left-arrow.png" id="5_7hc31"]
 [ext_resource type="PackedScene" uid="uid://cfm3ui1m7bqcn" path="res://car/cabrio.tscn" id="5_eukob"]
 [ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_pceyv"]
-[ext_resource type="Texture2D" uid="uid://dqfr21jboq52l" path="res://assets/ui/icons/keyboard-right-arrow.png" id="7_g5yiy"]
-[ext_resource type="Texture2D" uid="uid://kuf7bceavcq6" path="res://assets/ui/icons/keyboard-left-arrow-focused.png" id="10_bpth5"]
-[ext_resource type="Texture2D" uid="uid://cgx14ohdtdv76" path="res://assets/ui/icons/keyboard-right-arrow-focused.png" id="11_8dv4s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x0mtq"]
 bg_color = Color(0.213625, 0.644759, 0.867549, 0.25098)
@@ -39,7 +35,7 @@ sky = SubResource("Sky_bbhkt")
 [sub_resource type="World3D" id="World3D_tb76f"]
 environment = SubResource("Environment_g0i35")
 
-[node name="CarSelection" type="Control" node_paths=PackedStringArray("preview_viewport", "car_label", "start_button", "navigate_left", "navigate_right")]
+[node name="CarSelection" type="Control" node_paths=PackedStringArray("preview_viewport", "car_label", "start_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,12 +44,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_20grt")
 script = ExtResource("2_nkdtm")
-cars = Array[PackedScene]([ExtResource("3_gnbjh"), ExtResource("4_ee0tt"), ExtResource("5_eukob")])
+cars = Array[PackedScene]([ExtResource("3_gnbjh"), ExtResource("5_eukob"), ExtResource("4_ee0tt")])
 preview_viewport = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/PanelContainer/CarPreview/SubViewport")
 car_label = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/PreviewName")
 start_button = NodePath("MarginContainer/VBoxContainer/BotRow/StartButton")
-navigate_left = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateLeft")
-navigate_right = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateRight")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -112,17 +106,9 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="NavigateLeft" type="TextureButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-focus_neighbor_right = NodePath("../NavigateRight")
-texture_normal = ExtResource("5_7hc31")
-texture_focused = ExtResource("10_bpth5")
-stretch_mode = 3
-
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 6
 theme_override_styles/panel = SubResource("StyleBoxFlat_x0mtq")
 
 [node name="CarPreview" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/PanelContainer"]
@@ -137,15 +123,6 @@ handle_input_locally = false
 gui_disable_input = true
 size = Vector2i(311, 300)
 render_target_update_mode = 4
-
-[node name="NavigateRight" type="TextureButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-focus_neighbor_left = NodePath("../NavigateLeft")
-texture_normal = ExtResource("7_g5yiy")
-texture_focused = ExtResource("11_8dv4s")
-stretch_mode = 3
 
 [node name="BotRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -169,6 +146,3 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_vertical = 8
 focus_neighbor_left = NodePath("../BackToMenuButton")
-
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateLeft" to="." method="_on_navigate_left_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MidRow/VBoxContainer/HBoxContainer/NavigateRight" to="." method="_on_navigate_right_pressed"]

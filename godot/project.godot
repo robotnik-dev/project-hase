@@ -22,6 +22,7 @@ Signals="*res://global/signals.gd"
 GlobalWindow="*res://global/window.gd"
 Speedboost="*res://global/speedboost.gd"
 GraveDigger="*res://global/grave_digger.gd"
+GameStats="*res://global/game_stats.gd"
 
 [display]
 

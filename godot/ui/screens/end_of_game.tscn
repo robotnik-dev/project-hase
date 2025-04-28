@@ -1,0 +1,163 @@
+[gd_scene load_steps=7 format=3 uid="uid://jfro1vhp7ftt"]
+
+[ext_resource type="FontFile" uid="uid://cm2c1fmlssaei" path="res://assets/fonts/Boldonse-Regular.ttf" id="1_etcod"]
+[ext_resource type="Script" path="res://ui/screens/end_of_game.gd" id="1_srlp2"]
+[ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="2_y62dn"]
+[ext_resource type="PackedScene" uid="uid://bdm46kl3nxuow" path="res://ui/buttons/quit_button.tscn" id="3_doo2l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cpegt"]
+font = ExtResource("1_etcod")
+font_size = 46
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pokob"]
+bg_color = Color(0.169245, 0.169245, 0.169245, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="EndOfGame" type="Control" node_paths=PackedStringArray("back_to_menu", "death_value", "playtime", "cars_unlocked", "collectibles")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_srlp2")
+back_to_menu = NodePath("MarginContainer/VBoxContainer/HBoxContainer3/BackToMenuButton")
+death_value = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat/StatContainer/StatValueDeath")
+playtime = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat2/StatContainer/StatValuePlaytime")
+cars_unlocked = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat3/StatContainer/StatValueCars")
+collectibles = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat4/StatContainer/StatValueCollectible")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="MarginConainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginConainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Thanks for Playing!"
+label_settings = SubResource("LabelSettings_cpegt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pokob")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Stat" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Crashes"
+
+[node name="StatValueDeath" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "90"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat"]
+layout_mode = 2
+
+[node name="Stat2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat2/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Playtime"
+
+[node name="StatValuePlaytime" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat2/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "90 min"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat2"]
+layout_mode = 2
+
+[node name="Stat3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat3/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Cars unlocked"
+
+[node name="StatValueCars" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat3/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "3 / 3"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat3"]
+layout_mode = 2
+
+[node name="Stat4" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat4"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat4/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Collectibles"
+
+[node name="StatValueCollectible" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat4/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "12 / 12"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackToMenuButton" parent="MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("2_y62dn")]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="QuitButton" parent="MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("3_doo2l")]
+layout_mode = 2
+size_flags_horizontal = 10

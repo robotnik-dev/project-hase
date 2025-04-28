@@ -142,8 +142,9 @@ impl IRigidBody3D for Car {
         let car_pos = self.base().get_global_position();
         let end_pos = self.end_position;
         if end_pos.z - car_pos.z <= 0.1 {
-            self.finished();
             self.base_mut().set_process(false);
+            self.base_mut().set_physics_process(false);
+            self.finished();
         }
     }
 }
@@ -324,8 +325,6 @@ impl Car {
                     abyss.to_variant(),
                 ],
             );
-            self.base_mut().set_process(false);
-            self.base_mut().set_physics_process(false);
             // disable areas for crash detection
             for mut area in self.crash_detects.iter_shared() {
                 area.call_deferred("set_process_mode", &[ProcessMode::DISABLED.to_variant()]);
@@ -333,6 +332,7 @@ impl Car {
         }
     }
 
+    #[func]
     fn finished(&mut self) {
         if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
             signals.call("emit_car_finished", &[]);

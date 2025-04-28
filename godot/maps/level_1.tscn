@@ -217,7 +217,7 @@ environment = SubResource("Environment_sjlnm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.07946, 9.24091)
 
 [node name="End" parent="." instance=ExtResource("2_ht43n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 71.0544, 1220.07)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 68.0544, 1220.56)
 
 [node name="MainRoad1" parent="." instance=ExtResource("1_dlqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208435, 3.8147e-06, -0.116943)
