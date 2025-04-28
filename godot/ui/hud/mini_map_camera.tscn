@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://ui/hud/mini_map_camera.gd" id="1_xmoeo"]
 
 [sub_resource type="Environment" id="Environment_eg7yn"]
-background_energy_multiplier = 0.0
+background_color = Color(1, 1, 1, 1)
+background_energy_multiplier = 1.87
 fog_enabled = true
-fog_light_color = Color(0, 0.152906, 0.366203, 1)
+fog_light_color = Color(0, 0, 0, 1)
 fog_density = 1.0
 
 [node name="MiniMapCamera" type="Camera3D"]

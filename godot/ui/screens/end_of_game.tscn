@@ -18,7 +18,7 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-[node name="EndOfGame" type="Control" node_paths=PackedStringArray("back_to_menu", "death_value", "playtime", "cars_unlocked", "collectibles")]
+[node name="EndOfGame" type="Control" node_paths=PackedStringArray("back_to_menu", "death_value", "playtime", "cars_unlocked", "collectibles", "flips")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,6 +31,7 @@ death_value = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContain
 playtime = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat2/StatContainer/StatValuePlaytime")
 cars_unlocked = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat3/StatContainer/StatValueCars")
 collectibles = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat4/StatContainer/StatValueCollectible")
+flips = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat5/StatContainer/StatValueFlips")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -88,6 +89,27 @@ size_flags_horizontal = 6
 text = "90"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat"]
+layout_mode = 2
+
+[node name="Stat5" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat5"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StatLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat5/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Flips"
+
+[node name="StatValueFlips" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat5/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "90"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/Stat5"]
 layout_mode = 2
 
 [node name="Stat2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]

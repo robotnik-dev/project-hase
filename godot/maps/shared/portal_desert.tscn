@@ -1,0 +1,101 @@
+[gd_scene load_steps=15 format=3 uid="uid://c6xksxr1mxk5m"]
+
+[ext_resource type="Texture2D" uid="uid://bdkbqemfyu3xu" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_basecolor.png" id="1_v27xr"]
+[ext_resource type="Texture2D" uid="uid://jji6xakpotpe" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_emissive.png" id="2_h6mmo"]
+[ext_resource type="Texture2D" uid="uid://c0frr821ua18l" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_metallic.png" id="3_etf6y"]
+[ext_resource type="Texture2D" uid="uid://ct8c3pk6kld36" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_normal.png" id="4_kh8dt"]
+[ext_resource type="Texture2D" uid="uid://cn01yo3w42dh8" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_roughness.png" id="5_stts0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xbgj2"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qv4i0"]
+noise = SubResource("FastNoiseLite_xbgj2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmr8d"]
+albedo_texture = ExtResource("1_v27xr")
+metallic = 1.0
+metallic_texture = ExtResource("3_etf6y")
+roughness_texture = ExtResource("5_stts0")
+emission = Color(0.147591, 0.193169, 0.0243987, 1)
+emission_energy_multiplier = 0.35
+emission_texture = ExtResource("2_h6mmo")
+normal_enabled = true
+normal_texture = ExtResource("4_kh8dt")
+rim_enabled = true
+rim_texture = SubResource("NoiseTexture2D_qv4i0")
+ao_light_affect = 0.16
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_q1nqj"]
+size = Vector3(14.41, 6.065, 11.35)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04mo8"]
+albedo_texture = ExtResource("1_v27xr")
+metallic = 1.0
+metallic_texture = ExtResource("3_etf6y")
+roughness_texture = ExtResource("5_stts0")
+emission_enabled = true
+emission = Color(0.418618, 0.351117, 0.0671383, 1)
+emission_texture = ExtResource("2_h6mmo")
+normal_enabled = true
+normal_texture = ExtResource("4_kh8dt")
+rim = 0.22
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="Curve" id="Curve_brs5l"]
+_data = [Vector2(0, 0.509596), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_n4xpj"]
+curve = SubResource("Curve_brs5l")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1k1vm"]
+emission_shape_scale = Vector3(0, 1.5, 2.5)
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector3(0, 1, 1)
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -14.0
+radial_accel_max = -12.4
+scale_curve = SubResource("CurveTexture_n4xpj")
+
+[sub_resource type="SphereMesh" id="SphereMesh_0bov0"]
+radius = 0.1
+height = 0.2
+
+[node name="PortalDesert" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.965926, 0.258819, -1.13133e-08, 0, -4.37114e-08, -1, -0.258819, 0.965926, -4.2222e-08, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_mmr8d")
+cast_shadow = 0
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -8.88178e-16, -7.10543e-15, 1, 4.92764e-16, -3.43591e-08, -0.786043)
+inner_radius = 5.0
+outer_radius = 10.0
+sides = 64
+ring_sides = 36
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -1.77636e-15, -1.06581e-14, 1, -6.3, -0.0850002, 3.82937)
+operation = 2
+mesh = SubResource("BoxMesh_q1nqj")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -5.32907e-15, -3.19744e-14, 1, 7.7, 0.249, 4.90885)
+operation = 2
+mesh = SubResource("BoxMesh_q1nqj")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.28462, 1.05511)
+layers = 4
+material_override = SubResource("StandardMaterial3D_04mo8")
+amount = 512
+lifetime = 0.55
+process_material = SubResource("ParticleProcessMaterial_1k1vm")
+draw_pass_1 = SubResource("SphereMesh_0bov0")

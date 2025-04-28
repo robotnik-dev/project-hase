@@ -155,14 +155,6 @@ func next_level():
 		
 		# add eog screen
 		end_of_game = end_of_game_scene.instantiate()
-		end_of_game.setup(
-			GameStats.crashes,
-			GameStats.playtime,
-			GameStats.cars_unlocked,
-			GameStats.max_cars,
-			GameStats.collected,
-			GameStats.max_collectibles,
-		)
 		ui.add_child(end_of_game)
 		return
 	else:
