@@ -20,7 +20,6 @@ jobs:
       - uses: phish108/autotag-action@v1.1.64
         id: autotag
         with:
-          with-v: true
           github-token: ${{ secrets.PAT }}
 
 
@@ -119,7 +118,7 @@ jobs:
         with:
           tag_name: ${{ needs.bump-version.outputs.new-tag }}
           make_latest: true
-          name: Release ${{ needs.bump-version.outputs.new-tag }}
+          name: ${{ needs.bump-version.outputs.new-tag }}
           draft: false
           prerelease: false
           generate_release_notes: true
