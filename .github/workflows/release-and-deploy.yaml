@@ -70,6 +70,21 @@ jobs:
           VERSION: ${{ needs.bump-version.outputs.new-tag }}
 
 
+  discord-notify-itchio:
+    name: Notify Discord Itch.io
+    needs: [deploy-itchio, bump-version]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        uses: stegzilla/discord-notify@v4
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          title: Neue Version veröffentlicht
+          message: "Spiel: **${{ vars.ITCHIO_GAMENAME }}**\nVersion: ${{ needs.bump-version.outputs.new-tag }}\nLink zur zur Itch.io Seite: ${{ secrets.ITCHIO_SECRET_URL }}"
+          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          username: My Purpose Is To Notify
+
+
   prepare-releases:
     name: Prepare Release Asset for ${{ matrix.platform.id }}
     needs: [bump-version, generate-target-matrix]
