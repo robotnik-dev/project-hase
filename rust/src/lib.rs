@@ -1,14 +1,14 @@
+use collectibles::Collectibles;
 use content_loader::ContentLoader;
 use godot::{classes::Engine, prelude::*};
-use savegame::SaveGame;
 
 mod car;
+mod collectibles;
 mod content_loader;
 mod flip_detection;
 mod level;
 mod player_camera;
 mod player_input;
-mod savegame;
 
 struct GodotRustExtension;
 
@@ -16,7 +16,7 @@ struct GodotRustExtension;
 unsafe impl ExtensionLibrary for GodotRustExtension {
     fn on_level_init(level: InitLevel) {
         if level == InitLevel::Scene {
-            Engine::singleton().register_singleton("SaveGame", &SaveGame::new_alloc());
+            Engine::singleton().register_singleton("Collectibles", &Collectibles::new_alloc());
             Engine::singleton().register_singleton("ContentLoader", &ContentLoader::new_alloc());
         }
     }
@@ -24,14 +24,14 @@ unsafe impl ExtensionLibrary for GodotRustExtension {
     fn on_level_deinit(level: InitLevel) {
         if level == InitLevel::Scene {
             let mut engine = Engine::singleton();
-            let savegame = "SaveGame";
+            let collectibles = "Collectibles";
             let content_loader = "ContentLoader";
 
-            if let Some(singleton) = engine.get_singleton(savegame) {
-                engine.unregister_singleton(savegame);
+            if let Some(singleton) = engine.get_singleton(collectibles) {
+                engine.unregister_singleton(collectibles);
                 singleton.free();
             } else {
-                godot_error!("Failed to get singleton: {savegame}");
+                godot_error!("Failed to get singleton: {collectibles}");
             }
 
             if let Some(singleton) = engine.get_singleton(content_loader) {

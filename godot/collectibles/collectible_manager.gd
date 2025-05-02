@@ -18,7 +18,7 @@ func _ready() -> void:
 	Signals.connect_collected(_on_collected)
 
 func _load_collected() -> Array:
-	return SaveGame.get_collected_for_level(get_parent().level_id)
+	return Collectibles.get_collected_for_level(get_parent().level_id)
 
 func _assign_ids():
 	var id = 0
@@ -46,6 +46,4 @@ func _free_aleady_collected():
 			id += 1
 
 func _on_collected(id: int):
-	SaveGame.collected_in_level(id, get_parent().level_id)
-	if !debug_mode:
-		SaveGame.save()
+	Collectibles.collected_in_level(id, get_parent().level_id)

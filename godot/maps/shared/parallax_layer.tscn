@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bwqs1g45dsk5a"]
 
-[ext_resource type="Script" path="res://maps/shared/parallax_layer.gd" id="3_ys8cg"]
+[ext_resource type="Script" uid="uid://bas3o776ha62s" path="res://maps/shared/parallax_layer.gd" id="3_ys8cg"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_37fvb"]
 resource_local_to_scene = true

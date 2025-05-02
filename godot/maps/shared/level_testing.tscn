@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://1482sky7hw1m"]
 
-[ext_resource type="Script" path="res://maps/shared/level_testing.gd" id="1_1psiu"]
+[ext_resource type="Script" uid="uid://ci7aeg3uos4f6" path="res://maps/shared/level_testing.gd" id="1_1psiu"]
 [ext_resource type="PackedScene" uid="uid://cxpqv846s0ivr" path="res://maps/level_1.tscn" id="2_3xowb"]
 
 [node name="LevelTesting" type="Node"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bdm46kl3nxuow"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_sr4do"]
-[ext_resource type="Script" path="res://ui/buttons/quit_button.gd" id="2_bt4rw"]
+[ext_resource type="Script" uid="uid://btbuigs8gt6a2" path="res://ui/buttons/quit_button.gd" id="2_bt4rw"]
 
 [node name="QuitButton" type="Button"]
 custom_minimum_size = Vector2(250, 0)

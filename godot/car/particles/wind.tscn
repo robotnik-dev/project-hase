@@ -1,26 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdqo7cxfnsjtd"]
+[gd_scene load_steps=3 format=3 uid="uid://cdqo7cxfnsjtd"]
 
-[ext_resource type="Script" path="res://car/particles/wind.gd" id="1_5obj3"]
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n43uk"]
-emission_shape = 3
-emission_box_extents = Vector3(1, 1, 0)
-direction = Vector3(0, 0, -1)
-spread = 0.0
-initial_velocity_min = 5.13
-initial_velocity_max = 5.13
-gravity = Vector3(0, 0, 0)
+[ext_resource type="Script" uid="uid://dfl2an1ny2ki6" path="res://car/particles/wind.gd" id="1_5obj3"]
 
 [sub_resource type="TubeTrailMesh" id="TubeTrailMesh_vfecx"]
 radius = 0.765
 section_length = 0.011
 
-[node name="Wind" type="GPUParticles3D"]
+[node name="Wind" type="CPUParticles3D"]
 layers = 4
 cast_shadow = 0
 emitting = false
 amount = 53
 lifetime = 0.8
-process_material = SubResource("ParticleProcessMaterial_n43uk")
-draw_pass_1 = SubResource("TubeTrailMesh_vfecx")
+fixed_fps = 30
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
+mesh = SubResource("TubeTrailMesh_vfecx")
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 0)
+direction = Vector3(0, 0, -1)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 5.13
+initial_velocity_max = 5.13
 script = ExtResource("1_5obj3")

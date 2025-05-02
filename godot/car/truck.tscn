@@ -93,7 +93,7 @@ height = 8.16
 
 [node name="HeavyCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels", "carosserie")]
 player_input = NodePath("PlayerInput")
-collectables_needed_to_unlock = 9
+collectables_needed_to_unlock = 6
 ui_preview = ExtResource("1_4ooac")
 ui_display_name = &"Truck"
 crash_detects = [NodePath("HitBox")]
