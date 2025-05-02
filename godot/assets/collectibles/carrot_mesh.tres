@@ -1,0 +1,8 @@
+[gd_resource type="PlaneMesh" load_steps=2 format=3 uid="uid://cnihiw0u8kems"]
+
+[ext_resource type="Material" uid="uid://dtqvfeoswdxj5" path="res://assets/collectibles/carrot_image.tres" id="1_w6urf"]
+
+[resource]
+material = ExtResource("1_w6urf")
+flip_faces = true
+orientation = 0

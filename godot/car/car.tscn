@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=29 format=3 uid="uid://1b78wtvecq6o"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0ls0h3fhm2" path="res://car/previews/default_car_preview.tscn" id="1_tu35q"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_2fhm1"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_61syv"]
 [ext_resource type="PackedScene" uid="uid://bh5gtta3tyrtg" path="res://car/carosserie/carosserie_default.tscn" id="6_dfo3r"]
 [ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_xk0xn"]
-[ext_resource type="PackedScene" uid="uid://cdqo7cxfnsjtd" path="res://car/particles/wind.tscn" id="7_od1ux"]
 [ext_resource type="PackedScene" uid="uid://c5eiudclllj8v" path="res://ui/hud/mini_map_marker.tscn" id="8_42oha"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
@@ -165,9 +164,6 @@ mesh = SubResource("PlaneMesh_72ido")
 
 [node name="CarosserieDefault" parent="." instance=ExtResource("6_dfo3r")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-
-[node name="Wind" parent="." instance=ExtResource("7_od1ux")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.624123, 1.20114)
 
 [node name="MiniMapMarker" parent="." instance=ExtResource("8_42oha")]
 transform = Transform3D(1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0.705824, -0.0605893)

@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2boneeg7heh4"
-path.s3tc="res://.godot/imported/FineClumpySand_height.png-01fb60b1656d74845ea3520009f7521d.s3tc.ctex"
-path.etc2="res://.godot/imported/FineClumpySand_height.png-01fb60b1656d74845ea3520009f7521d.etc2.ctex"
+uid="uid://ct3cy7ti037kd"
+path.s3tc="res://.godot/imported/carrot.png-e39b3b40672ea8f4126ad81bdfca1ade.s3tc.ctex"
+path.etc2="res://.godot/imported/carrot.png-e39b3b40672ea8f4126ad81bdfca1ade.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_height.png"
-dest_files=["res://.godot/imported/FineClumpySand_height.png-01fb60b1656d74845ea3520009f7521d.s3tc.ctex", "res://.godot/imported/FineClumpySand_height.png-01fb60b1656d74845ea3520009f7521d.etc2.ctex"]
+source_file="res://assets/collectibles/carrot.png"
+dest_files=["res://.godot/imported/carrot.png-e39b3b40672ea8f4126ad81bdfca1ade.s3tc.ctex", "res://.godot/imported/carrot.png-e39b3b40672ea8f4126ad81bdfca1ade.etc2.ctex"]
 
 [params]
 

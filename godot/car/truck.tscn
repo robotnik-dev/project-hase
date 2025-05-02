@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://hmobwq0jmbq0"]
+[gd_scene load_steps=28 format=3 uid="uid://hmobwq0jmbq0"]
 
 [ext_resource type="PackedScene" uid="uid://da4ttchiynti7" path="res://car/previews/heavy_car_preview.tscn" id="1_4ooac"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_b3leg"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_evr0b"]
 [ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_ohyry"]
 [ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_sxxhw"]
-[ext_resource type="PackedScene" uid="uid://cdqo7cxfnsjtd" path="res://car/particles/wind.tscn" id="7_utrl5"]
 [ext_resource type="PackedScene" uid="uid://c5eiudclllj8v" path="res://ui/hud/mini_map_marker.tscn" id="8_uls1x"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
@@ -62,30 +61,19 @@ transparency = 1
 albedo_color = Color(0.682132, 0.583949, 0.31109, 1)
 albedo_texture = ExtResource("6_sxxhw")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_puqls"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_kyldw"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_o0spe")
 flip_faces = true
+size = Vector2(1, 1)
 orientation = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_00m8e"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_xvrjn"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_o0spe")
 flip_faces = true
+size = Vector2(1, 1)
 orientation = 0
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7l88c"]
-emission_shape = 3
-emission_box_extents = Vector3(1, 2.465, 0)
-direction = Vector3(0, 0, -1)
-spread = 0.0
-initial_velocity_min = 5.13
-initial_velocity_max = 5.13
-gravity = Vector3(0, 0, 0)
-
-[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_f8xl5"]
-radius = 0.765
-section_length = 0.026
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_52q65"]
 radius = 1.98
@@ -162,20 +150,11 @@ shape = SubResource("BoxShape3D_016sn")
 
 [node name="Dust" parent="." instance=ExtResource("5_ohyry")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.440343, -2.07409)
-emitting = false
-draw_pass_1 = SubResource("PlaneMesh_puqls")
+mesh = SubResource("PlaneMesh_kyldw")
 
 [node name="Dust2" parent="." instance=ExtResource("5_ohyry")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.440343, 1.88622)
-emitting = false
-draw_pass_1 = SubResource("PlaneMesh_00m8e")
-
-[node name="Wind" parent="." instance=ExtResource("7_utrl5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48343, 3.87339)
-process_material = SubResource("ParticleProcessMaterial_7l88c")
-draw_pass_1 = SubResource("TubeTrailMesh_f8xl5")
-on_speed_threshold = 40.0
-off_speed_threshold = 30.0
+mesh = SubResource("PlaneMesh_xvrjn")
 
 [node name="MiniMapMarker" parent="." instance=ExtResource("8_uls1x")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.76915, 0.453269)
