@@ -51,6 +51,11 @@ impl ICamera3D for PlayerCamera {
             let cb = self.to_gd().callable("on_car_crashed");
             signals.call("connect_car_crashed", &[cb.to_variant()]);
         };
+        
+        if let Some(mut signals) = self.base().get_node_or_null("/root/Signals") {
+            let cb = self.to_gd().callable("on_car_finished");
+            signals.call("connect_car_finished", &[cb.to_variant()]);
+        };
     }
 
     fn process(&mut self, _delta: f64) {
@@ -80,6 +85,10 @@ impl PlayerCamera {
                 tween.tween_property(cam, "global_position", &pos.to_variant(), 1.0);
             }
         }
+    }
+    #[func]
+    fn on_car_finished(&mut self) {
+        self.base_mut().call_deferred("set_process", &[false.to_variant()]);
     }
 
     #[func]

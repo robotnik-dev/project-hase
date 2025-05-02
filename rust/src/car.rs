@@ -141,9 +141,10 @@ impl IRigidBody3D for Car {
     fn process(&mut self, _delta: f64) {
         let car_pos = self.base().get_global_position();
         let end_pos = self.end_position;
-        if end_pos.z - car_pos.z <= 0.1 {
+        if (end_pos.z - car_pos.z).abs() <= 1.0 && (end_pos.y - car_pos.y).abs() <= 16.0 {
             self.base_mut().set_process(false);
             self.base_mut().set_physics_process(false);
+            self.base_mut().set_visible(false);
             self.finished();
         }
     }

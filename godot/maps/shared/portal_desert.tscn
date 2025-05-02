@@ -47,21 +47,32 @@ uv1_triplanar = true
 uv1_world_triplanar = true
 
 [sub_resource type="Curve" id="Curve_brs5l"]
-_data = [Vector2(0, 0.509596), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+max_value = 2.0
+_data = [Vector2(0, 0.242885), 0.0, 0.0, 0, 0, Vector2(0.992793, 1.38915), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_n4xpj"]
 curve = SubResource("Curve_brs5l")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1k1vm"]
-emission_shape_scale = Vector3(0, 1.5, 2.5)
-emission_shape = 1
-emission_sphere_radius = 4.0
+emission_shape_scale = Vector3(0, 1, 1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 20.0
+emission_ring_radius = 16.4
+emission_ring_inner_radius = 14.42
 direction = Vector3(0, 1, 1)
 gravity = Vector3(0, 0, 0)
-radial_accel_min = -14.0
-radial_accel_max = -12.4
+linear_accel_min = 5.95
+linear_accel_max = 5.95
+radial_accel_min = -16.53
+radial_accel_max = -12.48
+damping_min = 9.168
+damping_max = 11.633
+attractor_interaction_enabled = false
 scale_curve = SubResource("CurveTexture_n4xpj")
+hue_variation_min = -0.48
+hue_variation_max = 0.41
 
 [sub_resource type="SphereMesh" id="SphereMesh_0bov0"]
 radius = 0.1
@@ -70,7 +81,7 @@ height = 0.2
 [node name="PortalDesert" type="Node3D"]
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-transform = Transform3D(0.965926, 0.258819, -1.13133e-08, 0, -4.37114e-08, -1, -0.258819, 0.965926, -4.2222e-08, 0, 1, 0)
+transform = Transform3D(0.965926, 0.258819, -1.13133e-08, 0, -4.37114e-08, -1, -0.258819, 0.965926, -4.2222e-08, 0, 2.45045, 0)
 material_override = SubResource("StandardMaterial3D_mmr8d")
 cast_shadow = 0
 
@@ -82,20 +93,21 @@ sides = 64
 ring_sides = 36
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -1.77636e-15, -1.06581e-14, 1, -6.3, -0.0850002, 3.82937)
+transform = Transform3D(1, -1.49012e-08, 0, 1.49012e-08, 1, 7.10543e-15, -8.88178e-16, -1.06581e-14, 1, -6.3, -0.085, 8.1511)
 operation = 2
 mesh = SubResource("BoxMesh_q1nqj")
 
 [node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, -5.32907e-15, -3.19744e-14, 1, 7.7, 0.249, 4.90885)
+transform = Transform3D(1, -1.49012e-08, 0, 1.49012e-08, 1, 7.10543e-15, -4.44089e-15, -3.19744e-14, 1, 7.7, 0.249, 9.08258)
 operation = 2
 mesh = SubResource("BoxMesh_q1nqj")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.28462, 1.05511)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.42656, 1.9941)
 layers = 4
 material_override = SubResource("StandardMaterial3D_04mo8")
-amount = 512
-lifetime = 0.55
+amount = 1024
+lifetime = 1.19
+visibility_aabb = AABB(-4, -10, -20, 8, 20, 40)
 process_material = SubResource("ParticleProcessMaterial_1k1vm")
 draw_pass_1 = SubResource("SphereMesh_0bov0")

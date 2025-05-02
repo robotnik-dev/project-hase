@@ -214,10 +214,10 @@ shadow_enabled = true
 environment = SubResource("Environment_sjlnm")
 
 [node name="Start" parent="." instance=ExtResource("1_mbm7a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.55506, 9.26891)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.32933, 9.56351)
 
 [node name="PortalDesert" parent="." instance=ExtResource("2_ht43n")]
-transform = Transform3D(1, 0, 0, 0, 0.998027, 0.0627905, 0, -0.0627905, 0.998027, 3, 61.944, 1218.49)
+transform = Transform3D(1, 0, 0, 0, 0.998075, 0.062024, 0, -0.062024, 0.998075, 3, 64.7174, 1218.49)
 
 [node name="MainRoad1" parent="." instance=ExtResource("1_dlqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208435, 3.8147e-06, -0.116943)
