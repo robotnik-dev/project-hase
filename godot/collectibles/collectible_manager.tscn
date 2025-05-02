@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://lj24pc10v5og"]
 
-[ext_resource type="Script" path="res://collectibles/collectible_manager.gd" id="1_pt7tm"]
+[ext_resource type="Script" uid="uid://m3mhjb7xt2xs" path="res://collectibles/collectible_manager.gd" id="1_pt7tm"]
 
 [node name="CollectibleManager" type="Node" groups=["Persist"]]
 script = ExtResource("1_pt7tm")

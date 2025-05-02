@@ -47,7 +47,7 @@ uv1_triplanar = true
 uv1_world_triplanar = true
 
 [sub_resource type="Curve" id="Curve_brs5l"]
-max_value = 2.0
+_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0.242885), 0.0, 0.0, 0, 0, Vector2(0.992793, 1.38915), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -61,6 +61,7 @@ emission_ring_axis = Vector3(0, 1, 0)
 emission_ring_height = 20.0
 emission_ring_radius = 16.4
 emission_ring_inner_radius = 14.42
+emission_ring_cone_angle = 90.0
 direction = Vector3(0, 1, 1)
 gravity = Vector3(0, 0, 0)
 linear_accel_min = 5.95

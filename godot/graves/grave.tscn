@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dajey7a1anwm4"]
 
 [ext_resource type="Texture2D" uid="uid://bl60l1w46tno0" path="res://assets/graves/grave1.png" id="1_arjjd"]
-[ext_resource type="Script" path="res://graves/grave.gd" id="2_0kj06"]
+[ext_resource type="Script" uid="uid://b70kt8w24bnbr" path="res://graves/grave.gd" id="2_0kj06"]
 [ext_resource type="FontFile" uid="uid://itewyg7c81q" path="res://assets/fonts/SEVESBRG.TTF" id="3_um6r0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qu2ym"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://qemyf63hw3n"]
 
 [ext_resource type="Texture2D" uid="uid://dwwml4utgdsf6" path="res://assets/ui/icons/fullscreen.png" id="1_6wx4d"]
-[ext_resource type="Script" path="res://ui/buttons/toggle_fullscreen_button.gd" id="2_ep645"]
+[ext_resource type="Script" uid="uid://dnp24kyn16cj" path="res://ui/buttons/toggle_fullscreen_button.gd" id="2_ep645"]
 
 [node name="ToggleFullscreenButton" type="Button"]
 anchors_preset = 8

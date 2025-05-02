@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cdqo7cxfnsjtd"]
 
-[ext_resource type="Script" path="res://car/particles/wind.gd" id="1_5obj3"]
+[ext_resource type="Script" uid="uid://dfl2an1ny2ki6" path="res://car/particles/wind.gd" id="1_5obj3"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n43uk"]
 emission_shape = 3

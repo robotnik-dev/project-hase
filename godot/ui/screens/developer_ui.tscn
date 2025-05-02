@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://fpsbtf2ehc32"]
 
-[ext_resource type="Script" path="res://ui/screens/developer_ui.gd" id="1_tws1o"]
+[ext_resource type="Script" uid="uid://dqn05db7vf3sy" path="res://ui/screens/developer_ui.gd" id="1_tws1o"]
 [ext_resource type="PackedScene" uid="uid://jjyu2unlqg73" path="res://ui/buttons/replay_level_button.tscn" id="2_5kkar"]
 
 [node name="DeveloperUI" type="Control" node_paths=PackedStringArray("front_progress", "back_progress")]

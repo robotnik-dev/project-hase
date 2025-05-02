@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cr4sbtjtwextc"]
 
-[ext_resource type="Script" path="res://terrain/terrain.gd" id="1_eq2fa"]
+[ext_resource type="Script" uid="uid://sq4jexrnf76r" path="res://terrain/terrain.gd" id="1_eq2fa"]
 
 [sub_resource type="Curve3D" id="Curve3D_e7of6"]
 resource_local_to_scene = true

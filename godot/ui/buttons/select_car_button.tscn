@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bi4ykef7jkxfp"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_2ich8"]
-[ext_resource type="Script" path="res://ui/buttons/select_car_button.gd" id="2_qb56i"]
+[ext_resource type="Script" uid="uid://xfebvues1wva" path="res://ui/buttons/select_car_button.gd" id="2_qb56i"]
 
 [node name="SelectCarButton" type="Button"]
 custom_minimum_size = Vector2(350, 0)

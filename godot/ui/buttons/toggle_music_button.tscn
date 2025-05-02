@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://beykw31pm4who" path="res://assets/ui/icons/sound.png" id="1_4tbkr"]
 [ext_resource type="Texture2D" uid="uid://d2ln7lv757a8c" path="res://assets/ui/icons/mute.png" id="1_6efsn"]
-[ext_resource type="Script" path="res://ui/buttons/toggle_music_button.gd" id="3_buj0f"]
+[ext_resource type="Script" uid="uid://bfsc01x436nkh" path="res://ui/buttons/toggle_music_button.gd" id="3_buj0f"]
 
 [node name="ToggleMusicButton" type="CheckButton"]
 anchors_preset = 8

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d4fjlsroxl73g"]
 
-[ext_resource type="Script" path="res://ui/hud/mini_map_camera.gd" id="1_xmoeo"]
+[ext_resource type="Script" uid="uid://c6hgw37ifcv4l" path="res://ui/hud/mini_map_camera.gd" id="1_xmoeo"]
 
 [sub_resource type="Environment" id="Environment_eg7yn"]
 background_color = Color(1, 1, 1, 1)

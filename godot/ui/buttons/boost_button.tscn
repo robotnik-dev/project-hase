@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_7775a"]
 [ext_resource type="Texture2D" uid="uid://xbx3cddh5jg" path="res://assets/ui/icons/spacebar_filled_icon.png" id="2_6vm8q"]
-[ext_resource type="Script" path="res://ui/buttons/boost_button.gd" id="3_icqa2"]
+[ext_resource type="Script" uid="uid://cd7htmee68541" path="res://ui/buttons/boost_button.gd" id="3_icqa2"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_2evi2"]
 device = -1
@@ -49,8 +49,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3hwel"]
 _data = {
-"RESET": SubResource("Animation_2qwdw"),
-"idle": SubResource("Animation_g46h1")
+&"RESET": SubResource("Animation_2qwdw"),
+&"idle": SubResource("Animation_g46h1")
 }
 
 [node name="BoostButton" type="Button"]

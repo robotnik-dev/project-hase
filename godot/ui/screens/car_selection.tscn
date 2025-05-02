@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://d0b7rgobhusxq"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_20grt"]
-[ext_resource type="Script" path="res://ui/screens/car_selection.gd" id="2_nkdtm"]
+[ext_resource type="Script" uid="uid://barblmxbvo4rb" path="res://ui/screens/car_selection.gd" id="2_nkdtm"]
 [ext_resource type="PackedScene" uid="uid://1b78wtvecq6o" path="res://car/car.tscn" id="3_gnbjh"]
 [ext_resource type="PackedScene" uid="uid://qemyf63hw3n" path="res://ui/buttons/toggle_fullscreen_button.tscn" id="3_ljfg4"]
 [ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_3dsoq"]

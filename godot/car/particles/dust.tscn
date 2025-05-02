@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://ehb5yttghf4x"]
 
 [ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="1_7m26r"]
-[ext_resource type="Script" path="res://car/particles/dust.gd" id="1_sms1u"]
+[ext_resource type="Script" uid="uid://b0n04rew2vmba" path="res://car/particles/dust.gd" id="1_sms1u"]
 
 [sub_resource type="Curve" id="Curve_kim8j"]
 _data = [Vector2(0, 0.997797), 0.0, -2.4987, 0, 0, Vector2(1, 0), -0.997797, 0.0, 1, 0]
