@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cfm3ui1m7bqcn"]
+[gd_scene load_steps=28 format=3 uid="uid://cfm3ui1m7bqcn"]
 
 [ext_resource type="PackedScene" uid="uid://lcydl2mrj708" path="res://car/previews/cabrio_preview.tscn" id="1_0n2f3"]
 [ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_8krvb"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_2t6no"]
 [ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_vxw76"]
 [ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_8m57j"]
-[ext_resource type="PackedScene" uid="uid://cdqo7cxfnsjtd" path="res://car/particles/wind.tscn" id="7_a34ku"]
 [ext_resource type="PackedScene" uid="uid://c5eiudclllj8v" path="res://ui/hud/mini_map_marker.tscn" id="8_8857a"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
@@ -62,28 +61,19 @@ transparency = 1
 albedo_color = Color(0.682132, 0.583949, 0.31109, 1)
 albedo_texture = ExtResource("6_8m57j")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_kigoa"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_vhjut"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_o0spe")
 flip_faces = true
 size = Vector2(1, 1)
 orientation = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_amata"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_m4uv7"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_o0spe")
 flip_faces = true
 size = Vector2(1, 1)
 orientation = 0
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lq0iw"]
-emission_shape = 3
-emission_box_extents = Vector3(1, 0.44, 0)
-direction = Vector3(0, 0, -1)
-spread = 0.0
-initial_velocity_min = 5.13
-initial_velocity_max = 5.13
-gravity = Vector3(0, 0, 0)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wp82x"]
 radius = 0.31
@@ -161,19 +151,11 @@ shape = SubResource("BoxShape3D_cneas")
 
 [node name="Dust" parent="." instance=ExtResource("5_vxw76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00991571, -1.25832)
-emitting = false
-draw_pass_1 = SubResource("PlaneMesh_kigoa")
+mesh = SubResource("PlaneMesh_vhjut")
 
 [node name="Dust2" parent="." instance=ExtResource("5_vxw76")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00991571, 1.06194)
-emitting = false
-draw_pass_1 = SubResource("PlaneMesh_amata")
-
-[node name="Wind" parent="." instance=ExtResource("7_a34ku")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.519337, 1.11657)
-process_material = SubResource("ParticleProcessMaterial_lq0iw")
-on_speed_threshold = 80.0
-off_speed_threshold = 50.0
+mesh = SubResource("PlaneMesh_m4uv7")
 
 [node name="MiniMapMarker" parent="." instance=ExtResource("8_8857a")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.534104, -0.0508971)

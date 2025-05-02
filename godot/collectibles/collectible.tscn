@@ -1,27 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://coxl0dthgu5s0"]
+[gd_scene load_steps=4 format=3 uid="uid://coxl0dthgu5s0"]
 
 [ext_resource type="Script" uid="uid://dj8kq1nay7t8o" path="res://collectibles/collectible.gd" id="1_evlhv"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f8uii"]
-load_path = "res://.godot/imported/fullscreen.png-957a4bb32b202611bbe636f3332bee3d.s3tc.ctex"
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e2y3q"]
-resource_local_to_scene = true
-transparency = 1
-albedo_texture = SubResource("CompressedTexture2D_f8uii")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_bueog"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_e2y3q")
-flip_faces = true
-orientation = 0
+[ext_resource type="PlaneMesh" uid="uid://cnihiw0u8kems" path="res://assets/collectibles/carrot_mesh.tres" id="1_m0tds"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g41jo"]
 size = Vector3(1, 2, 2)
 
 [node name="Collectible" type="MeshInstance3D"]
 layers = 40
-mesh = SubResource("PlaneMesh_bueog")
+mesh = ExtResource("1_m0tds")
 script = ExtResource("1_evlhv")
 
 [node name="Area3D" type="Area3D" parent="."]
