@@ -1,4 +1,4 @@
-extends GPUParticles3D
+extends CPUParticles3D
 
 @export var on_speed_threshold: float = 30.0
 @export var off_speed_threshold: float = 10.0

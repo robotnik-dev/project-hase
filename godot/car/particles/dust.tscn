@@ -1,25 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://ehb5yttghf4x"]
+[gd_scene load_steps=6 format=3 uid="uid://ehb5yttghf4x"]
 
 [ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="1_7m26r"]
 [ext_resource type="Script" uid="uid://b0n04rew2vmba" path="res://car/particles/dust.gd" id="1_sms1u"]
-
-[sub_resource type="Curve" id="Curve_kim8j"]
-_data = [Vector2(0, 0.997797), 0.0, -2.4987, 0, 0, Vector2(1, 0), -0.997797, 0.0, 1, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_uwn1t"]
-curve = SubResource("Curve_kim8j")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hm2ug"]
-lifetime_randomness = 0.4
-direction = Vector3(0, 1, -2)
-spread = 10.0
-initial_velocity_min = 3.66
-initial_velocity_max = 5.76
-gravity = Vector3(0, 8.46, 0)
-damping_min = 8.423
-damping_max = 15.853
-scale_curve = SubResource("CurveTexture_uwn1t")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0spe"]
 transparency = 1
@@ -33,12 +15,27 @@ flip_faces = true
 size = Vector2(1, 1)
 orientation = 0
 
-[node name="Dust" type="GPUParticles3D"]
+[sub_resource type="Curve" id="Curve_kim8j"]
+_data = [Vector2(0, 0.997797), 0.0, -2.4987, 0, 0, Vector2(1, 0), -0.997797, 0.0, 1, 0]
+point_count = 2
+
+[node name="Dust" type="CPUParticles3D"]
 layers = 4
 cast_shadow = 0
+emitting = false
 amount = 50
 lifetime = 2.47
-process_material = SubResource("ParticleProcessMaterial_hm2ug")
-draw_pass_1 = SubResource("PlaneMesh_6nnn7")
+lifetime_randomness = 0.4
+fixed_fps = 30
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
+mesh = SubResource("PlaneMesh_6nnn7")
+direction = Vector3(0, 1, -2)
+spread = 10.0
+gravity = Vector3(0, 8.46, 0)
+initial_velocity_min = 3.66
+initial_velocity_max = 5.76
+damping_min = 8.423
+damping_max = 15.853
+scale_amount_curve = SubResource("Curve_kim8j")
 script = ExtResource("1_sms1u")
 speed_threshold = 8.0
