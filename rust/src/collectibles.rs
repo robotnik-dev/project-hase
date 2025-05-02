@@ -5,9 +5,8 @@ use godot::{
     obj::Base,
     prelude::{godot_api, GodotClass},
 };
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, PartialEq, Default, Clone)]
+#[derive(Debug, PartialEq, Default, Clone)]
 struct Level {
     id: i32,
     collected_ids: Vec<i32>,
