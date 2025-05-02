@@ -4,7 +4,6 @@
 
 [sub_resource type="Environment" id="Environment_eg7yn"]
 background_color = Color(1, 1, 1, 1)
-background_energy_multiplier = 0.0
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 1.0
 

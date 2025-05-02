@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://jfro1vhp7ftt"]
+[gd_scene load_steps=6 format=3 uid="uid://jfro1vhp7ftt"]
 
 [ext_resource type="FontFile" uid="uid://cm2c1fmlssaei" path="res://assets/fonts/Boldonse-Regular.ttf" id="1_etcod"]
 [ext_resource type="Script" uid="uid://mhicxpgq0lb2" path="res://ui/screens/end_of_game.gd" id="1_srlp2"]
 [ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="2_y62dn"]
-[ext_resource type="PackedScene" uid="uid://bdm46kl3nxuow" path="res://ui/buttons/quit_button.tscn" id="3_doo2l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cpegt"]
 font = ExtResource("1_etcod")
@@ -178,8 +177,4 @@ size_flags_vertical = 3
 
 [node name="BackToMenuButton" parent="MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("2_y62dn")]
 layout_mode = 2
-size_flags_horizontal = 2
-
-[node name="QuitButton" parent="MarginContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("3_doo2l")]
-layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 6

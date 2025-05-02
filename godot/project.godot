@@ -26,19 +26,9 @@ GameStats="*res://global/game_stats.gd"
 
 [display]
 
-window/size/initial_position_type=2
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-window/size/viewport_width.windows=960
-window/size/viewport_height.windows=540
-window/stretch/mode.windows="canvas_items"
-window/stretch/aspect.windows="keep_width"
-window/stretch/mode.android="canvas_items"
-window/size/viewport_width.android=1280
-window/size/viewport_height.android=720
-window/stretch/aspect.android="keep"
 
 [editor_plugins]
 
