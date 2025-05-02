@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://fpsbtf2ehc32"]
+[gd_scene load_steps=3 format=3 uid="uid://fpsbtf2ehc32"]
 
 [ext_resource type="Script" path="res://ui/screens/developer_ui.gd" id="1_tws1o"]
 [ext_resource type="PackedScene" uid="uid://jjyu2unlqg73" path="res://ui/buttons/replay_level_button.tscn" id="2_5kkar"]
-[ext_resource type="Script" path="res://developer/delete_save_game.gd" id="3_n1mr8"]
 
 [node name="DeveloperUI" type="Control" node_paths=PackedStringArray("front_progress", "back_progress")]
 layout_mode = 3
@@ -37,13 +36,6 @@ size_flags_vertical = 4
 size_flags_stretch_ratio = 5.0
 focus_mode = 1
 
-[node name="DeleteSaveGame" type="Button" parent="MarginContainer/VBoxContainer/Top"]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-text = "Delete Savegame"
-script = ExtResource("3_n1mr8")
-
 [node name="Mid" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -71,4 +63,3 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Top/ReplayLevelButton" to="." method="_on_replay_level_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Top/DeleteSaveGame" to="MarginContainer/VBoxContainer/Top/DeleteSaveGame" method="_on_pressed"]

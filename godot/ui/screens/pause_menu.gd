@@ -18,7 +18,6 @@ func toggle_pause():
 	visible = get_tree().paused
 	if visible:
 		continue_button.grab_focus()
-		SaveGame.save()
 
 func _on_car_crashed(_a, _b, _c):
 	set_process_unhandled_input(false)

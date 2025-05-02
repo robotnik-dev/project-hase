@@ -44,7 +44,7 @@ func _render_preview():
 
 
 func _load_collected() -> int:
-	return SaveGame.get_sum_of_collected()
+	return Collectibles.get_sum_of_collected()
 
 
 func _on_navigate_left_pressed() -> void:

@@ -40,8 +40,6 @@ var car_crashed: bool = false
 func _ready() -> void:
 	_connect_signals()
 	start_main_menu()
-	# loading savegame
-	SaveGame.load()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("developer_ui"):

@@ -8,12 +8,12 @@ var playtime: float = 0.0:
 
 var cars_unlocked: int = 0:
 	get():
-		var sum_collected = SaveGame.get_sum_of_collected()
-		if sum_collected >= 9:
+		var sum_collected = Collectibles.get_sum_of_collected()
+		if sum_collected >= 6:
 			return 3
 		elif sum_collected <= 0:
 			return 1
-		elif sum_collected >= 6:
+		elif sum_collected >= 3:
 			return 2
 		else:
 			return 0
@@ -21,7 +21,7 @@ var cars_unlocked: int = 0:
 var max_cars: int = 3
 var collected: int = 0:
 	get():
-		return SaveGame.get_sum_of_collected()
+		return Collectibles.get_sum_of_collected()
 var max_collectibles: int = 9
 
 func _ready() -> void:
