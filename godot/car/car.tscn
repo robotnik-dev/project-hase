@@ -170,7 +170,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.624123, 1.20114)
 
 [node name="MiniMapMarker" parent="." instance=ExtResource("8_42oha")]
-transform = Transform3D(1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0.715672, -0.0605893)
+transform = Transform3D(1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0.705824, -0.0605893)
 mesh = SubResource("CapsuleMesh_7pbxj")
 
 [editable path="HitBox"]

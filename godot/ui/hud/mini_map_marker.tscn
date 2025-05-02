@@ -1,6 +1,11 @@
-[gd_scene format=3 uid="uid://c5eiudclllj8v"]
+[gd_scene load_steps=2 format=3 uid="uid://c5eiudclllj8v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1k0gm"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.433568, 0.619632, 0.948509, 1)
 
 [node name="MiniMapMarker" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.807676, 0)
 layers = 8
+material_overlay = SubResource("StandardMaterial3D_1k0gm")
 cast_shadow = 0
