@@ -30,14 +30,35 @@ jobs:
           echo "Previous Suite ID: $SUITE_ID"
           echo "SUITE_ID=$SUITE_ID" >> "$GITHUB_ENV"
 
-          ARTIFACT_ID=$(gh api "/repos/$OWNER/$REPO/actions/artifacts" \
-            --jq "[.artifacts.[] |
-            select(.workflow_run.id==${PREVIOUS_JOB_ID}) |
-            select(.expired==false)][0] |
-            .id")
+          ARTIFACT_ID_WIN=$(gh api "/repos/$OWNER/$REPO/actions/artifacts" \
+            --jq '[.artifacts.[] |
+            select(.workflow_run.id=='${PREVIOUS_JOB_ID}') |
+            select(.expired==false) |
+            select(.name=="windows")][0] |
+            .id')
 
-          echo "Artifact ID: $ARTIFACT_ID"
-          echo "ARTIFACT_ID=$ARTIFACT_ID" >> "$GITHUB_ENV"
+          echo "Artifact ID_WIN: $ARTIFACT_ID_WIN"
+          echo "ARTIFACT_ID_WIN=$ARTIFACT_ID_WIN" >> "$GITHUB_ENV"
+
+          ARTIFACT_ID_LINUX=$(gh api "/repos/$OWNER/$REPO/actions/artifacts" \
+            --jq '[.artifacts.[] |
+            select(.workflow_run.id=='${PREVIOUS_JOB_ID}') |
+            select(.expired==false) |
+            select(.name=="linux")][0] |
+            .id')
+
+          echo "Artifact ID_LINUX: $ARTIFACT_ID_LINUX"
+          echo "ARTIFACT_ID_LINUX=$ARTIFACT_ID_LINUX" >> "$GITHUB_ENV"
+
+          ARTIFACT_ID_MAC=$(gh api "/repos/$OWNER/$REPO/actions/artifacts" \
+            --jq '[.artifacts.[] |
+            select(.workflow_run.id=='${PREVIOUS_JOB_ID}') |
+            select(.expired==false) |
+            select(.name=="mac")][0] |
+            .id')
+
+          echo "Artifact ID_MAC: $ARTIFACT_ID_MAC"
+          echo "ARTIFACT_ID_MAC=$ARTIFACT_ID_MAC" >> "$GITHUB_ENV"
 
           PR_NUMBER=$(jq -r '.pull_requests[0].number' \
             <<< "$WORKFLOW_RUN_EVENT_OBJ")
@@ -61,7 +82,9 @@ jobs:
       - name: Update Comment
         env:
           JOB_PATH: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ env.PREVIOUS_JOB_ID }}"
-          ARTIFACT_URL: "${{ github.server_url }}/${{ github.repository }}/suites/${{ env.SUITE_ID }}/artifacts/${{ env.ARTIFACT_ID }}"
+          ARTIFACT_URL_WIN: "${{ github.server_url }}/${{ github.repository }}/suites/${{ env.SUITE_ID }}/artifacts/${{ env.ARTIFACT_ID_WIN }}"
+          ARTIFACT_URL_LINUX: "${{ github.server_url }}/${{ github.repository }}/suites/${{ env.SUITE_ID }}/artifacts/${{ env.ARTIFACT_ID_LINUX }}"
+          ARTIFACT_URL_MAC: "${{ github.server_url }}/${{ github.repository }}/suites/${{ env.SUITE_ID }}/artifacts/${{ env.ARTIFACT_ID_MAC }}"
           HEAD_SHA: "${{ env.HEAD_SHA }}"
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -75,10 +98,12 @@ jobs:
             You can find the link to the games down below.
             Beware, the link is only valid for 24 hours!
 
-            | Name     | Link                    |
-            | -------- | ----------------------- |
-            | Commit   | ${{ env.HEAD_SHA }}     |
-            | Logs     | ${{ env.JOB_PATH }}     |
-            | Games    | ${{ env.ARTIFACT_URL }} |
+            | Name     | Link                        |
+            | ---------| --------------------------- |
+            | Commit   | ${{ env.HEAD_SHA }}         |
+            | Logs     | ${{ env.JOB_PATH }}         |
+            | Windows  | ${{ env.ARTIFACT_URL_WIN }} |
+            | Linux    | ${{ env.ARTIFACT_URL_LINUX }} |
+            | Mac      | ${{ env.ARTIFACT_URL_MAC }} |
 
             [badge]: https://img.shields.io/badge/Build_Success!-0d1117?style=for-the-badge&labelColor=3fb950&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIj48cGF0aCBkPSJNMjEuMDMgNS43MmEuNzUuNzUgMCAwIDEgMCAxLjA2bC0xMS41IDExLjVhLjc0Ny43NDcgMCAwIDEtMS4wNzItLjAxMmwtNS41LTUuNzVhLjc1Ljc1IDAgMSAxIDEuMDg0LTEuMDM2bDQuOTcgNS4xOTVMMTkuOTcgNS43MmEuNzUuNzUgMCAwIDEgMS4wNiAwWiI+PC9wYXRoPjwvc3ZnPg==
