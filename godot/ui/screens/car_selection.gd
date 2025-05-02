@@ -8,14 +8,18 @@ class_name UICarSelection
 @export var car_label: Label
 
 @export var start_button: Button
-@export var navigate_left: TextureButton
-@export var navigate_right: TextureButton
 
 var current_idx: int = 0
 
 func _ready() -> void:
-	navigate_right.grab_focus()
 	_render_preview()
+	start_button.grab_focus()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_left"):
+		_on_navigate_left_pressed()
+	elif event.is_action_pressed("ui_right"):
+		_on_navigate_right_pressed()
 
 func _render_preview():
 	for c in preview_viewport.get_children():
@@ -37,6 +41,7 @@ func _render_preview():
 			start_button.disabled = true
 	else:
 		car_label.text = "No Preview set"
+
 
 func _load_collected() -> int:
 	return SaveGame.get_sum_of_collected()

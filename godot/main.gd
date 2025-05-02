@@ -32,6 +32,10 @@ var select_car_menu_scene: PackedScene = preload("res://ui/screens/car_selection
 var select_car_menu: UICarSelection
 var hud_scene: PackedScene = preload("res://ui/hud/hud.tscn")
 var hud: HUD
+var end_of_game_scene: PackedScene = preload("res://ui/screens/end_of_game.tscn")
+var end_of_game: UIEndOfGame
+
+var car_crashed: bool = false
 
 func _ready() -> void:
 	_connect_signals()
@@ -63,15 +67,23 @@ func start_main_menu():
 		select_car_menu.queue_free()
 		select_car_menu = null
 	
-	if current_car:
+	if is_instance_valid(current_car):
 		current_car.queue_free()
 		current_car = null
 	
-	if current_level:
+	if is_instance_valid(current_level):
 		current_level.queue_free()
 		current_level = null
+	
+	# removing enf of game menu
+	if is_instance_valid(end_of_game):
+		ui.remove_child(end_of_game)
+		end_of_game.queue_free()
+		end_of_game = null
 
 func start_level():
+	car_crashed = false
+	
 	# grab selected car from the selection menu
 	if select_car_menu:
 		car_scene = select_car_menu.cars[select_car_menu.current_idx]
@@ -84,8 +96,14 @@ func start_level():
 		main_menu.queue_free()
 		main_menu = null
 	
+	# removing enf of game menu
+	if end_of_game:
+		ui.remove_child(end_of_game)
+		end_of_game.queue_free()
+		end_of_game = null
+	
 	# setup car
-	if current_car:
+	if is_instance_valid(current_car):
 		current_car.queue_free()
 	current_car = car_scene.instantiate()
 	add_child(current_car)
@@ -111,7 +129,7 @@ func start_level():
 	ui.add_child(pause_menu)
 	
 	# setup level
-	if current_level:
+	if is_instance_valid(current_level):
 		current_level.queue_free()
 	
 	var scene = level_scenes[current_level_idx]
@@ -125,8 +143,20 @@ func reload_level():
 
 func next_level():
 	if level_scenes.size() <= current_level_idx + 1:
-		# TODO: proper end of game, just first level again for now
 		current_level_idx = 0
+		
+		# unload level
+		current_level.queue_free()
+		current_car.queue_free()
+		# removing HUD
+		if hud:
+			hud.queue_free()
+			hud = null
+		
+		# add eog screen
+		end_of_game = end_of_game_scene.instantiate()
+		ui.add_child(end_of_game)
+		return
 	else:
 		current_level_idx += 1
 	Signals.emit_new_level_started(get_current_level_id() + 1)
@@ -156,6 +186,25 @@ func _on_select_car_button():
 		main_menu.queue_free()
 		main_menu = null
 	
+	# removing pause menu
+	if pause_menu:
+		ui.remove_child(pause_menu)
+		pause_menu.queue_free()
+		pause_menu = null
+	
+	# unload level
+	if is_instance_valid(current_level):
+		current_level.queue_free()
+	if is_instance_valid(current_car):
+		current_car.queue_free()
+	# removing HUD
+	if hud:
+		hud.queue_free()
+		hud = null
+	
+	# ensure game is not paused
+	get_tree().paused = false
+	
 	select_car_menu = select_car_menu_scene.instantiate()
 	ui.add_child(select_car_menu)
 
@@ -163,9 +212,13 @@ func _on_reload_level_pressed():
 	reload_level.call_deferred()
 
 func _on_car_crashed(_position: Vector3, _last_poc: Vector3, _abyss: bool):
+	car_crashed = true
 	create_tween().tween_callback(reload_level).set_delay(wait_after_crash)
 
 func _on_car_finished():
+	if car_crashed:
+		return
+	
 	if replay_first_level:
 		reload_level()
 	else:

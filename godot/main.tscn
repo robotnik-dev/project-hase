@@ -11,7 +11,6 @@
 script = ExtResource("1_10p37")
 dev_ui = NodePath("DeveloperUI")
 ui = NodePath("UI")
-wait_until_next_level = 0.3
 level_scenes = Array[PackedScene]([ExtResource("2_672or")])
 
 [node name="UI" type="Control" parent="."]

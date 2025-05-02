@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bv47fbhmjhqr8" path="res://assets/terrain/road_1.gltf" id="1_dlqdw"]
 [ext_resource type="PackedScene" uid="uid://b08hw7fk4rfap" path="res://maps/shared/start.tscn" id="1_mbm7a"]
-[ext_resource type="PackedScene" uid="uid://c6xksxr1mxk5m" path="res://maps/shared/end.tscn" id="2_ht43n"]
+[ext_resource type="PackedScene" uid="uid://c6xksxr1mxk5m" path="res://maps/shared/portal_desert.tscn" id="2_ht43n"]
 [ext_resource type="PackedScene" uid="uid://b3ue3dehk5evc" path="res://assets/terrain/road_2.gltf" id="3_p03wx"]
 [ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="3_pytas"]
 [ext_resource type="PackedScene" uid="uid://ddcs8l8ogns4y" path="res://assets/terrain/road_3.gltf" id="4_g3ttt"]
@@ -204,7 +204,7 @@ data = PackedVector3Array(2, 1, 59, 2, -11.0001, 59, -2, -11.0001, 59, -2, -11.0
 
 [node name="Level1" type="Level" node_paths=PackedStringArray("start", "end")]
 start = NodePath("Start")
-end = NodePath("End")
+end = NodePath("PortalDesert")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 1.13133e-08, -0.258819, 0.258819, -4.2222e-08, 0.965926, 0, -1, -4.37114e-08, 0, 0, 0)
@@ -214,10 +214,10 @@ shadow_enabled = true
 environment = SubResource("Environment_sjlnm")
 
 [node name="Start" parent="." instance=ExtResource("1_mbm7a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.07946, 9.24091)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.32933, 9.56351)
 
-[node name="End" parent="." instance=ExtResource("2_ht43n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 71.0544, 1220.07)
+[node name="PortalDesert" parent="." instance=ExtResource("2_ht43n")]
+transform = Transform3D(1, 0, 0, 0, 0.998075, 0.062024, 0, -0.062024, 0.998075, 3, 64.7174, 1218.49)
 
 [node name="MainRoad1" parent="." instance=ExtResource("1_dlqdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208435, 3.8147e-06, -0.116943)
