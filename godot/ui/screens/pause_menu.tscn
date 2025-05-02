@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmq7275sgi63j"]
+[gd_scene load_steps=9 format=3 uid="uid://cmq7275sgi63j"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_tnlr6"]
 [ext_resource type="Script" uid="uid://xoicsko1pobl" path="res://ui/screens/pause_menu.gd" id="2_1xriq"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://c7uovkkq6ub3u" path="res://ui/buttons/continue_button.tscn" id="5_qnrcv"]
 [ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="6_1lf7p"]
 [ext_resource type="PackedScene" uid="uid://bi4ykef7jkxfp" path="res://ui/buttons/select_car_button.tscn" id="6_j8tib"]
-[ext_resource type="PackedScene" uid="uid://bdm46kl3nxuow" path="res://ui/buttons/quit_button.tscn" id="7_kn0ck"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2euyv"]
 bg_color = Color(0.196078, 0.196078, 0.196078, 0.52549)
@@ -101,9 +100,3 @@ layout_mode = 2
 [node name="BotRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="QuitButton" parent="PanelContainer/MarginContainer/VBoxContainer/BotRow" instance=ExtResource("7_kn0ck")]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 8
-focus_neighbor_left = NodePath("../../MidRow/VBoxContainer/CenterContainer2/StartButton")
