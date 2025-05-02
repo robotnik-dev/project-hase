@@ -1,0 +1,128 @@
+name: Release and Deploy
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  bump-version:
+    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no tag')
+    runs-on: ubuntu-latest
+    permissions: write-all
+    outputs:
+      new-tag: ${{ steps.autotag.outputs.new-tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: phish108/autotag-action@v1.1.64
+        id: autotag
+        with:
+          with-v: true
+          github-token: ${{ secrets.PAT }}
+
+
+  generate-target-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate matrix
+        id: generate-matrix
+        env:
+          TARGETS: ${{ vars.TARGETS }}
+        run: |
+          JSON_CONTENT=$(cat target-matrix.json)
+          TARGETS_ARRAY=$(echo "$TARGETS" | jq -c '.')
+          FILTERED_JSON=$(echo "$JSON_CONTENT" | jq -c --argjson targets "$TARGETS_ARRAY" '[.[] | select(.id as $id | $targets | index($id) != null and $id != "web")]')
+          echo "matrix=$FILTERED_JSON" >> $GITHUB_OUTPUT
+
+          # Print for debugging
+          echo "Generated matrix with filtered targets:"
+          echo "$FILTERED_JSON" | jq '.'
+
+
+  deploy-itchio:
+    name: Deploy web build to itch.io
+    needs: bump-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v9
+        with:
+          name: web
+          workflow: ci.yaml
+          pr: ${{ github.event.pull_request.number }}
+
+      - name: Deploy web build
+        uses: manleydev/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: web
+          ITCH_GAME: ${{ vars.ITCHIO_GAMENAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: web
+          VERSION: ${{ needs.bump-version.outputs.new-tag }}
+
+
+  prepare-releases:
+    name: Prepare Release Asset for ${{ matrix.platform.id }}
+    needs: [bump-version, generate-target-matrix]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ${{ fromJson(needs.generate-target-matrix.outputs.matrix) }}
+    steps:
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v9
+        with:
+          name: ${{ matrix.platform.id }}
+          workflow: ci.yaml
+          pr: ${{ github.event.pull_request.number }}
+          path: artifacts/${{ matrix.platform.id }}
+
+      - name: Zip Artifacts
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r artifacts/${{ matrix.platform.id }}.zip artifacts/${{ matrix.platform.id }}
+
+      - name: Upload artifact for release job
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-asset-${{ matrix.platform.id }}
+          path: artifacts/*.zip
+          retention-days: 1
+
+
+  create-release:
+    name: Create GitHub Release
+    needs: [bump-version, prepare-releases]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all release assets
+        uses: actions/download-artifact@v4
+        with:
+          path: release
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.bump-version.outputs.new-tag }}
+          make_latest: true
+          name: Release ${{ needs.bump-version.outputs.new-tag }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          append_body: true
+          files: |
+            release/*
