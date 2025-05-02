@@ -10,63 +10,72 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  generate-target-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate matrix
+        id: generate-matrix
+        env:
+          TARGETS: ${{ vars.TARGETS }}
+        run: |
+          JSON_CONTENT=$(cat target-matrix.json)
+          TARGETS_ARRAY=$(echo "$TARGETS" | jq -c '.')
+          FILTERED_JSON=$(echo "$JSON_CONTENT" | jq -c --argjson targets "$TARGETS_ARRAY" '[.[] | select(.id as $id | $targets | index($id) != null)]')
+          echo "matrix=$FILTERED_JSON" >> $GITHUB_OUTPUT
+
+          # Print for debugging
+          echo "Generated matrix with filtered targets:"
+          echo "$FILTERED_JSON" | jq '.'
+
+
   test-and-build:
-    name: ${{ matrix.platform.os-name }} - ${{ matrix.environment }}
+    needs: generate-target-matrix
+    runs-on: ${{ matrix.platform.runs-on }}
+    name: ${{ matrix.platform.os-name }} - ${{ matrix.platform.id }} - ${{ matrix.environment }}
     strategy:
       matrix:
         environment: [debug, release]
-        platform:
-          - os-name: Linux-x86_64
-            runs-on: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            output: librust.so
-            command: both
-            toolchain: stable
+        platform: ${{fromJson(needs.generate-target-matrix.outputs.matrix)}}
 
-          - os-name: Windows-x86_64
-            runs-on: windows-latest
-            target: x86_64-pc-windows-msvc
-            output: rust.dll
-            command: both
-            toolchain: stable
-
-          - os-name: macOS-x86_64
-            runs-on: macOS-latest
-            target: x86_64-apple-darwin
-            output: librust.dylib
-            command: both
-            toolchain: stable
-
-    runs-on: ${{ matrix.platform.runs-on }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build ${{ matrix.environment }} binary
-        uses: houseabsolute/actions-rust-cross@v1.0.3
+        uses: houseabsolute/actions-rust-cross@v1.0.4
         with:
           working-directory: rust
           # FIXME: https://github.com/cross-rs/cross/issues/1222
           # cross-version: c7dee4d008475ce1c140773cbcd6078f4b86c2aa
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
-          args: ${{ matrix.environment == 'release' && '--locked --release' || '--locked' }}
+          args: ${{ matrix.environment == 'release' && '--locked --release' || '--locked' }} ${{ matrix.platform.args }}
           toolchain: ${{ matrix.platform.toolchain }}
           strip: true
 
-      - name: Upload Artifact
+      - name: Upload ${{ matrix.environment }} artifact
         uses: actions/upload-artifact@v4
         with:
-          name: rust-${{ matrix.environment }}-${{ matrix.platform.os-name }}-${{ github.sha }}
+          name: rust-${{ matrix.environment }}-${{ matrix.platform.id }}
           path: rust/target/${{ matrix.platform.target }}/${{ matrix.environment }}/${{ matrix.platform.output }}
           retention-days: 1
 
 
   export:
-    name: Export Game Builds
-    needs: test-and-build
+    name: Export for ${{ matrix.platform.id }}
+    needs: [generate-target-matrix, test-and-build]
     permissions: write-all
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ${{fromJson(needs.generate-target-matrix.outputs.matrix)}}
+    env:
+      TARGET: ${{ matrix.platform.id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -77,7 +86,7 @@ jobs:
           sudo apt install wine64
           echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
 
-      - name: Download Release Artifacts
+      - name: Download all release artifacts
         uses: actions/download-artifact@v4
         with:
           path: rust/target/release
@@ -91,12 +100,31 @@ jobs:
           pattern: rust-debug-*
           merge-multiple: true
 
-      - name: Rename Executables
+      - name: Download target release artifact
+        uses: actions/download-artifact@v4
+        if: ${{ matrix.platform.rust-lib-path != '' }}
+        with:
+          path: rust/target/${{ matrix.platform.rust-lib-path }}/release
+          pattern: rust-release-${{ matrix.platform.id }}
+          merge-multiple: true
+
+      - name: Download target debug artifact
+        uses: actions/download-artifact@v4
+        if: ${{ matrix.platform.rust-lib-path != '' }}
+        with:
+          path: rust/target/${{ matrix.platform.rust-lib-path }}/debug
+          pattern: rust-debug-${{ matrix.platform.id }}
+          merge-multiple: true
+
+      - name: Rename Executable
+        if: ${{ matrix.platform.id != 'web' && matrix.platform.id != 'android' }}
         env:
           GAME_NAME: ${{ vars.ITCHIO_GAMENAME }}
-        run: sed -i '/^export_path/s/mac.zip/'"$GAME_NAME"'.zip/; /^export_path/s/linux.x86_64/'"$GAME_NAME"'.x86_64/; /^export_path/s/windows.exe/'"$GAME_NAME"'.exe/' $GITHUB_WORKSPACE/godot/export_presets.cfg
+          PLATFORM: ${{ matrix.platform.id }}
+          FILE_EXTENSION: ${{ matrix.platform.extension }}
+        run: sed -i "s|export_path=\".*$PLATFORM$FILE_EXTENSION\"|export_path=\"$GAME_NAME$FILE_EXTENSION\"|g" $GITHUB_WORKSPACE/godot/export_presets.cfg
 
-      - name: Export Games
+      - name: Export for ${{ env.TARGET }}
         id: export
         uses: firebelley/godot-export@v6.0.0
         with:
@@ -105,14 +133,28 @@ jobs:
           relative_project_path: godot
           relative_export_path: build
           cache: true
-          # TODO: for android and web later. You can just name the presets you want to export
-          # presets_to_export: "win, linux, mac"
           verbose: true
+          presets_to_export: ${{ env.TARGET }}
           wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
 
       - name: Upload Development Build
         uses: actions/upload-artifact@v4
         with:
-          name: games
+          name: ${{ matrix.platform.id }}
           path: build/
           retention-days: 1
+
+
+  results:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    name: Final Results
+    needs: [export]
+    steps:
+      - run: |
+          result="${{ needs.export.result }}"
+          if [[ $result == "success" || $result == "skipped" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
