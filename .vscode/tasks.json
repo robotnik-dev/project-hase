@@ -10,7 +10,12 @@
 			"options": {
 				"cwd": "${config:godot-rust.environment.godotProjectPath}"
 			},
-			"command": "${config:godot-rust.environment.godotEditorPath} --editor",
+			"windows": {
+				"command": "${config:godot-rust.environment.godotEditorPath} --editor",
+			},
+			"osx":{
+				"command": "/Applications/Godot.app/Contents/MacOS/Godot --editor"
+			},
 			"group": "build",
 			"presentation": {
 				"echo": true,
@@ -22,14 +27,19 @@
 			}
 		},
 		{
-			"label": "godot-rust: Export Windows Release",
+			"label": "godot-rust: Export Release",
 			"detail": "Builds release rust game library, then exports",
 			"dependsOn": "godot-rust: Build Release",
 			"type": "shell",
 			"options": {
 				"cwd": "${config:godot-rust.environment.godotProjectPath}"
 			},
-			"command": "${config:godot-rust.environment.godotEditorPath} --headless --verbose --export-release windows \"export\\game.exe\"",
+			"windows":{
+				"command": "${config:godot-rust.environment.godotEditorPath} --headless --verbose --export-release windows \"export\\game.exe\"",
+			},
+			"osx":{
+				"command": "/Applications/Godot.app/Contents/MacOS/Godot --headless --verbose --export-release mac \"export\\game.zip\""
+			},
 			"group": "build"
 		},
 
