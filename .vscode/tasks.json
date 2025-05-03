@@ -76,7 +76,12 @@
 			"label": "godot-rust: Build Web Debug",
 			"detail": "Builds debug rust game library for HTML5",
 			"type": "shell",
-			"command": "${userHome}\\emsdk\\emsdk activate 3.1.62 && ${userHome}\\emsdk\\emsdk_env.bat && cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten",
+			"windows":{
+				"command": "${userHome}\\emsdk\\emsdk activate 3.1.62 && ${userHome}\\emsdk\\emsdk_env.bat && cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten",
+			},
+			"osx":{
+				"command": "${userHome}/emsdk/emsdk activate 3.1.62 && source ${userHome}/emsdk/emsdk_env.sh && cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten",
+			},
 			"options": {
 				"cwd": "${cwd}/rust"
 			},
