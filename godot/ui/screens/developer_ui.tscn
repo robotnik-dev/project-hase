@@ -36,6 +36,12 @@ size_flags_vertical = 4
 size_flags_stretch_ratio = 5.0
 focus_mode = 1
 
+[node name="UnlockAllCarsButton" type="Button" parent="MarginContainer/VBoxContainer/Top"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "Unlock all cars"
+
 [node name="Mid" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -63,3 +69,4 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Top/ReplayLevelButton" to="." method="_on_replay_level_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Top/UnlockAllCarsButton" to="." method="_on_unlock_all_cars_button_pressed"]
