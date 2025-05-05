@@ -23,7 +23,6 @@ ao_texture = ExtResource("4_tj2kc")
 heightmap_scale = 3.51
 heightmap_texture = ExtResource("4_vyrkx")
 heightmap_flip_texture = true
-subsurf_scatter_enabled = true
 subsurf_scatter_strength = 0.64
 subsurf_scatter_skin_mode = true
 detail_enabled = true
