@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://duxel8khgocx6"]
+[gd_scene load_steps=9 format=3 uid="uid://duxel8khgocx6"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_7775a"]
 [ext_resource type="Texture2D" uid="uid://51265bsx8ipj" path="res://assets/runes/wind-small-shoe.svg" id="3_0x2pa"]
@@ -10,8 +10,12 @@ device = -1
 keycode = 32
 unicode = 32
 
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_o7gyn"]
+button_index = 3
+pressed = true
+
 [sub_resource type="Shortcut" id="Shortcut_n6d46"]
-events = [SubResource("InputEventKey_o7gyn")]
+events = [SubResource("InputEventKey_o7gyn"), SubResource("InputEventJoypadButton_o7gyn")]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n6d46"]
 shader = ExtResource("3_o7gyn")
