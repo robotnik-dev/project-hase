@@ -1,90 +1,79 @@
-[gd_scene load_steps=10 format=3 uid="uid://duxel8khgocx6"]
+[gd_scene load_steps=6 format=3 uid="uid://duxel8khgocx6"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_7775a"]
-[ext_resource type="Texture2D" uid="uid://xbx3cddh5jg" path="res://assets/ui/icons/spacebar_filled_icon.png" id="2_6vm8q"]
+[ext_resource type="Texture2D" uid="uid://51265bsx8ipj" path="res://assets/runes/wind-small-shoe.svg" id="3_0x2pa"]
 [ext_resource type="Script" uid="uid://cd7htmee68541" path="res://ui/buttons/boost_button.gd" id="3_icqa2"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_2evi2"]
+[sub_resource type="InputEventKey" id="InputEventKey_o7gyn"]
 device = -1
 keycode = 32
 unicode = 32
 
-[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_og72j"]
-button_index = 2
-pressed = true
+[sub_resource type="Shortcut" id="Shortcut_n6d46"]
+events = [SubResource("InputEventKey_o7gyn")]
 
-[sub_resource type="Shortcut" id="Shortcut_ji3l3"]
-events = [SubResource("InputEventKey_2evi2"), SubResource("InputEventJoypadButton_og72j")]
+[node name="Boost" type="Control" node_paths=PackedStringArray("button", "progress")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+mouse_filter = 2
+theme = ExtResource("1_7775a")
+theme_type_variation = &"BigMenuButton"
+script = ExtResource("3_icqa2")
+button = NodePath("CenterContainer/TextureRect/Button")
+progress = NodePath("CenterContainer/TextureRect/Button/TextureProgressBar")
 
-[sub_resource type="Animation" id="Animation_2qwdw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[sub_resource type="Animation" id="Animation_g46h1"]
-resource_name = "idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
-}
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+expand_mode = 1
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3hwel"]
-_data = {
-&"RESET": SubResource("Animation_2qwdw"),
-&"idle": SubResource("Animation_g46h1")
-}
+[node name="Button" type="Button" parent="CenterContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+shortcut = SubResource("Shortcut_n6d46")
+flat = true
 
-[node name="BoostButton" type="Button"]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CenterContainer/TextureRect/Button"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -35.0
-offset_right = 76.0
-offset_bottom = 35.0
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(125, 35)
-size_flags_horizontal = 6
-size_flags_vertical = 4
-focus_mode = 0
-mouse_filter = 2
-theme = ExtResource("1_7775a")
-theme_type_variation = &"BigMenuButton"
-button_mask = 0
-shortcut = SubResource("Shortcut_ji3l3")
-shortcut_feedback = false
-shortcut_in_tooltip = false
-text = "BOOST"
-icon = ExtResource("2_6vm8q")
-icon_alignment = 2
-script = ExtResource("3_icqa2")
+max_value = 1.0
+step = 0.01
+fill_mode = 5
+radial_initial_angle = 297.9
+nine_patch_stretch = true
+stretch_margin_left = 150
+stretch_margin_top = 150
+stretch_margin_right = 150
+stretch_margin_bottom = 150
+texture_progress = ExtResource("3_0x2pa")
+tint_progress = Color(0.0823529, 0.560784, 1, 1)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_3hwel")
-}
-autoplay = "idle"
-
-[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="CenterContainer/TextureRect/Button" to="." method="_on_button_pressed"]
