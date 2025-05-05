@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dajey7a1anwm4"]
+[gd_scene load_steps=8 format=3 uid="uid://dajey7a1anwm4"]
 
 [ext_resource type="Texture2D" uid="uid://bl60l1w46tno0" path="res://assets/graves/grave1.png" id="1_arjjd"]
 [ext_resource type="Script" uid="uid://b70kt8w24bnbr" path="res://graves/grave.gd" id="2_0kj06"]
 [ext_resource type="FontFile" uid="uid://itewyg7c81q" path="res://assets/fonts/SEVESBRG.TTF" id="3_um6r0"]
+[ext_resource type="PackedScene" uid="uid://c5eiudclllj8v" path="res://ui/hud/mini_map_marker.tscn" id="4_esb2v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qu2ym"]
 transparency = 1
@@ -14,8 +15,15 @@ uv1_triplanar = true
 [sub_resource type="BoxMesh" id="BoxMesh_20gqj"]
 size = Vector3(3, 3, 3)
 
+[sub_resource type="TextMesh" id="TextMesh_1q1en"]
+text = "GG"
+font_size = 127
+pixel_size = 0.03
+
 [node name="Grave" type="Node3D"]
 script = ExtResource("2_0kj06")
+width = 5.0
+height = 5.83
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3.01338, 0)
@@ -37,3 +45,7 @@ outline_size = 25
 uppercase = true
 autowrap_mode = 3
 width = 425.0
+
+[node name="MiniMapMarker" parent="." instance=ExtResource("4_esb2v")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.034, 0)
+mesh = SubResource("TextMesh_1q1en")

@@ -1,6 +1,7 @@
 extends Node
 
 signal boost_ready
+signal boost_used
 
 var flip_detection: FlipDetection
 var is_boost_ready: bool = false
@@ -27,6 +28,7 @@ func _process(_delta):
 func used():
 	is_boost_ready = false
 	boost_progress = 0.0
+	boost_used.emit()
 
 func _increase_through_air_time():
 	if not flip_detection.is_on_floor():
