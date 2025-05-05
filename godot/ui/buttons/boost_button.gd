@@ -17,8 +17,10 @@ func _process(_delta: float) -> void:
 
 func _on_boost_ready():
 	button.disabled = false
+	progress.material.set("shader_parameter/enabled", true)
 
 
 func _on_button_pressed() -> void:
 	boost_pressed.emit()
 	button.disabled = true
+	progress.material.set("shader_parameter/enabled", false)
