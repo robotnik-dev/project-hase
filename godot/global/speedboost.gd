@@ -26,24 +26,27 @@ func _process(_delta):
 ## so that the boost ist ready again
 func used():
 	is_boost_ready = false
+	boost_progress = 0.0
 
 func _increase_through_air_time():
 	if not flip_detection.is_on_floor():
 		boost_progress = clampf(boost_progress + car.boost_fill_speed / 1000.0, 0.0, 1.0)
 	
 	if boost_progress >= 1.0:
-		boost_progress = 0.0
+		boost_progress = 1.0
 		is_boost_ready = true
 		boost_ready.emit()
 
 func _on_car_flipped(_direction: StringName, _count: int):
-	is_boost_ready = true
-	boost_ready.emit()
+	boost_progress = 1.0
 
 func _on_camera_loaded():
+	call_deferred("set_process", true)
 	create_tween().tween_callback(_set_flip_detection).set_delay(0.2)
+	boost_progress = 0.0
 
 func _on_car_crashed(_pos, _last_poc, _abyss):
+	call_deferred("set_process", false)
 	boost_progress = 0.0
 	is_boost_ready = false
 

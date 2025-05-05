@@ -1,24 +1,26 @@
-extends Button
+extends Control
 class_name UIBoostButton
+
+@export var button: Button
+@export var progress: TextureProgressBar
 
 signal boost_pressed
 
-var spacebar_icon: CompressedTexture2D = preload("res://assets/ui/icons/spacebar_filled_icon.png")
-var a_button_icon: CompressedTexture2D = preload("res://assets/ui/icons/xbox_X.png")
-
 func _ready():
-	hide()
+	button.disabled = true
 	Speedboost.boost_ready.connect(_on_boost_ready)
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventJoypadMotion or event is InputEventJoypadButton:
-		icon = a_button_icon
-	else:
-		icon = spacebar_icon
 
-func _on_pressed():
-	boost_pressed.emit()
-	hide()
+func _process(_delta: float) -> void:
+	progress.value = Speedboost.boost_progress
+
 
 func _on_boost_ready():
-	show()
+	button.disabled = false
+	progress.material.set("shader_parameter/enabled", true)
+
+
+func _on_button_pressed() -> void:
+	boost_pressed.emit()
+	button.disabled = true
+	progress.material.set("shader_parameter/enabled", false)

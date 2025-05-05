@@ -137,12 +137,12 @@ jobs:
           presets_to_export: ${{ env.TARGET }}
           wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
 
-      - name: Upload Development Build
+      - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.platform.id }}
           path: build/
-          retention-days: 1
+          retention-days: 30
 
 
   results:
