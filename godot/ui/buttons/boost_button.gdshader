@@ -10,15 +10,15 @@ uniform bool vertical_wave = false;
 void fragment() {
 	// Create wave distortion
 	vec2 wave_uv = UV;
-	
+
 	if (enabled) {
-	    if (vertical_wave) {
-	        wave_uv.y += sin(UV.x * frequency + TIME * speed) * amplitude;
-	    } else {
-	        wave_uv.x += sin(UV.y * frequency + TIME * speed) * amplitude;
-	    }
+		if (vertical_wave) {
+			wave_uv.y += sin(UV.x * frequency + TIME * speed) * amplitude;
+		} else {
+			wave_uv.x += sin(UV.y * frequency + TIME * speed) * amplitude;
+		}
 	}
-	
+
 	// Sample the texture with the wave distortion
 	vec4 texture_color = texture(TEXTURE, wave_uv);
 	vec4 uni_color = color;
