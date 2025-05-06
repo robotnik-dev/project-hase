@@ -7,13 +7,20 @@ var mute: bool = false
 
 func _ready() -> void:
 	Signals.connect_toggle_music_button_pressed(_on_toggle_music)
+	FmodServer.mute_all_events()
+
+func play_main_track():
 	main_track.play()
+	FmodServer.unmute_all_events()
+
+func main_track_playing() -> bool:
+	return !mute
 
 func mute_music(_mute: bool):
 	if _mute:
-		main_track.stop()
+		FmodServer.mute_all_events()
 	else:
-		main_track.play()
+		FmodServer.unmute_all_events()
 
 func _on_toggle_music():
 	mute = !mute

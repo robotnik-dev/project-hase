@@ -12,7 +12,7 @@ func _exit_tree() -> void:
 	remove_child(performance_display)
 	performance_display.free()
 
-func _process(_delta):
+func _process(delta):
 	FmodServer.update()
 	
 func _notification(what):

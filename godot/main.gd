@@ -2,9 +2,8 @@ extends Node
 class_name Main
 
 @export var dev_ui: DeveloperUI
-
+@export var conductor: Conductor
 @export var ui: Control
-
 @export var wait_after_crash: float = 3.0
 
 ## In seconds
@@ -34,18 +33,33 @@ var hud_scene: PackedScene = preload("res://ui/hud/hud.tscn")
 var hud: HUD
 var end_of_game_scene: PackedScene = preload("res://ui/screens/end_of_game.tscn")
 var end_of_game: UIEndOfGame
+var splash_screen_scene: PackedScene = preload("res://ui/screens/splash_screen.tscn")
+var splash_screen: UISplashScreen
 
 var car_crashed: bool = false
 
 func _ready() -> void:
 	_connect_signals()
-	start_main_menu()
+	start_splash_screen()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("developer_ui"):
 		dev_ui.visible = !dev_ui.visible
 
+func start_splash_screen():
+	splash_screen = splash_screen_scene.instantiate()
+	add_child(splash_screen)
+	splash_screen.finished.connect(_on_splash_screen_finished)
+
+func _on_splash_screen_finished():
+	conductor.play_main_track()
+	start_main_menu()
+
 func start_main_menu():
+	# remove splash screen
+	if is_instance_valid(splash_screen):
+		splash_screen.queue_free()
+	
 	main_menu = main_menu_scene.instantiate()
 	ui.add_child(main_menu)
 	
