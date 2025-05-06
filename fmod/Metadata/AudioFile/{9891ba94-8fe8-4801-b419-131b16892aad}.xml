@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{9891ba94-8fe8-4801-b419-131b16892aad}">
+		<property name="assetPath">
+			<value>music/for-elise.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>63.503673469387756</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{1bb466bf-56c9-4ec5-9cc9-947e7e9c1e85}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,15 +1,19 @@
 extends Node
 class_name Conductor
 
-@export var music_player: AudioStreamPlayer
-
 var mute: bool = false
+
+@export var main_track: FmodEventEmitter3D
 
 func _ready() -> void:
 	Signals.connect_toggle_music_button_pressed(_on_toggle_music)
+	main_track.play()
 
 func mute_music(_mute: bool):
-	music_player.stream_paused = _mute
+	if _mute:
+		main_track.stop()
+	else:
+		main_track.play()
 
 func _on_toggle_music():
 	mute = !mute

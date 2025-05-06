@@ -42,3 +42,9 @@ godot/.godot/*
 ~*rapier**.dll
 
 .idea
+
+# fmod
+.user/
+.unsaved/
+.cache/
+Build/
