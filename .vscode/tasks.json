@@ -8,7 +8,7 @@
 			"dependsOn": "godot-rust: Build Debug",
 			"type": "shell",
 			"options": {
-				"cwd": "${config:godot-rust.environment.godotProjectPath}"
+				"cwd": "godot"
 			},
 			"windows": {
 				"command": "${config:godot-rust.environment.godotEditorPath} --editor",
@@ -19,7 +19,7 @@
 			"group": "build",
 			"presentation": {
 				"echo": true,
-				"reveal": "never",
+				"revealProblems": "onProblem",
 				"focus": false,
 				"panel": "shared",
 				"showReuseMessage": true,
@@ -32,7 +32,7 @@
 			"dependsOn": "godot-rust: Build Release",
 			"type": "shell",
 			"options": {
-				"cwd": "${config:godot-rust.environment.godotProjectPath}"
+				"cwd": "godot"
 			},
 			"windows":{
 				"command": "${config:godot-rust.environment.godotEditorPath} --headless --verbose --export-release windows \"export\\game.exe\"",
