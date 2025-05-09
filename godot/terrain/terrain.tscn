@@ -20,6 +20,7 @@ edge_update_with_line_thickness = false
 metadata/_edit_group_ = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+cast_shadow = 0
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
 cast_shadow = 0

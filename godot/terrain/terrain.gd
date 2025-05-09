@@ -163,8 +163,3 @@ func _on_curve_changed() -> void:
 			curve.set_point_in(i, Vector3(0, _in.y, _in.z))
 		if _out.x != 0:
 			curve.set_point_out(i, Vector3(0, _out.y, _out.z))
-
-#func _process(_delta: float) -> void:
-	#if Engine.is_editor_hint():
-		## lock rotation around y
-		#global_rotation_degrees.y = 0.0

@@ -96,7 +96,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.674203, 6.30795)
 curve = SubResource("Curve3D_owowt")
 material = ExtResource("5_nl2a5")
 thickness = 2.5
-edge_type = 1
+edge_update_with_line_thickness = true
 
 [node name="CSGCombiner3D" parent="Terrain" index="0"]
 material_override = ExtResource("5_nl2a5")
@@ -128,7 +128,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -21.5111, 140.584)
 curve = SubResource("Curve3D_6btvb")
 material = ExtResource("5_nl2a5")
 thickness = 2.5
-edge_type = 1
+edge_update_with_line_thickness = true
 
 [node name="CSGCombiner3D" parent="Terrain2" index="0"]
 material_override = ExtResource("5_nl2a5")
@@ -160,7 +160,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.2594, 220.005)
 curve = SubResource("Curve3D_rnjt0")
 material = ExtResource("5_nl2a5")
 thickness = 2.5
-edge_type = 1
+edge_update_with_line_thickness = true
 
 [node name="CSGCombiner3D" parent="Terrain3" index="0"]
 material_override = ExtResource("5_nl2a5")
@@ -192,7 +192,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -33.0539, 124.587)
 curve = SubResource("Curve3D_cmvtv")
 material = ExtResource("5_nl2a5")
 thickness = 5.0
-edge_type = 1
+edge_update_with_line_thickness = true
 
 [node name="CSGCombiner3D" parent="Terrain4" index="0"]
 material_override = ExtResource("5_nl2a5")
