@@ -1,11 +1,11 @@
 use godot::{
-    classes::{node::ProcessMode, Area3D, IRigidBody3D, RigidBody3D},
+    classes::{node::ProcessMode, Area3D, IRigidBody3D, PhysicsMaterial, RigidBody3D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
 };
 
-use crate::player_input::PlayerInput;
+use crate::{difficulty::DifficultySetting, player_input::PlayerInput};
 
 const SPEEDBOOST_TIME: f32 = 3.0;
 
@@ -19,6 +19,9 @@ pub enum Effect {
 #[derive(GodotClass)]
 #[class(init, base=RigidBody3D)]
 struct Car {
+    #[export]
+    difficulty_setting: Option<Gd<DifficultySetting>>,
+
     #[export]
     #[init(val = None)]
     player_input: Option<Gd<PlayerInput>>,
@@ -35,14 +38,6 @@ struct Car {
 
     #[export]
     effect: Effect,
-
-    #[export]
-    #[init(val = 1000.0)]
-    boost_power: f32,
-
-    #[export]
-    #[init(val = 1.0)]
-    boost_fill_speed: f32,
 
     #[export]
     #[init(val = array![])]
@@ -62,14 +57,6 @@ struct Car {
 
     #[export]
     carosserie: Option<Gd<Node3D>>,
-
-    #[export]
-    #[init(val = 1800.)]
-    engine_power: f32,
-
-    #[export]
-    #[init(val = 800.)]
-    tilt_speed: f32,
 
     #[init(val = Vector3 { x: 0.0, y: 0.0, z: 999.0 })]
     end_position: Vector3,
@@ -115,10 +102,22 @@ impl IRigidBody3D for Car {
 
         let input_direction = Vector3::BACK * forward_input;
 
-        let force = self.engine_power;
+        let force = self
+            .difficulty_setting
+            .as_ref()
+            .unwrap()
+            .bind()
+            .get_engine_power();
         self.base_mut().apply_central_force(input_direction * force);
 
-        let torque = Vector3::RIGHT * self.tilt_speed * tilt_input;
+        let torque = Vector3::RIGHT
+            * self
+                .difficulty_setting
+                .as_ref()
+                .unwrap()
+                .bind()
+                .get_tilt_speed()
+            * tilt_input;
         self.base_mut().apply_torque(torque);
 
         // rotate wheels manually
@@ -156,9 +155,38 @@ impl Car {
     fn speed_boost_applied();
 
     #[func]
-    fn setup(&mut self, start: Vector3, end: Vector3) {
+    fn setup(&mut self, start: Vector3, end: Vector3, difficulty_setting: Gd<DifficultySetting>) {
         self.base_mut().set_global_position(start);
         self.end_position = end;
+
+        // apply parameter from setting
+        // TODO: use THE tres directly instead of a copy here, to edit it in the editor
+        self.set_difficulty_setting(Some(difficulty_setting));
+        let mut physics_mat = PhysicsMaterial::new_gd();
+        physics_mat.set_friction(
+            self.difficulty_setting
+                .as_ref()
+                .unwrap()
+                .bind()
+                .get_friction(),
+        );
+        physics_mat.set_rough(self.difficulty_setting.as_ref().unwrap().bind().get_rough());
+        physics_mat.set_bounce(
+            self.difficulty_setting
+                .as_ref()
+                .unwrap()
+                .bind()
+                .get_bounce(),
+        );
+        physics_mat.set_absorbent(
+            self.difficulty_setting
+                .as_ref()
+                .unwrap()
+                .bind()
+                .get_absorbent(),
+        );
+        self.base_mut()
+            .set_physics_material_override(&physics_mat.to_godot());
 
         // connecting signals
         let _on_drive_forward_pressed = &self.to_gd().callable("_on_drive_forward_pressed");
@@ -188,7 +216,12 @@ impl Car {
     fn effect(&mut self) {
         match self.effect {
             Effect::Boost => {
-                let force = self.boost_power;
+                let force = self
+                    .difficulty_setting
+                    .as_ref()
+                    .unwrap()
+                    .bind()
+                    .get_boost_power();
                 let direction = self.get_facing_direction();
                 self.base_mut().apply_central_impulse(direction * force);
                 self.base_mut().emit_signal("speed_boost_applied", &[]);
@@ -333,7 +366,11 @@ impl Car {
             }
 
             // set engine power to 0
-            self.engine_power = 0.;
+            self.difficulty_setting
+                .as_mut()
+                .unwrap()
+                .bind_mut()
+                .set_engine_power(0.);
         }
     }
 

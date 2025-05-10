@@ -9,6 +9,7 @@ mod flip_detection;
 mod level;
 mod player_camera;
 mod player_input;
+mod difficulty;
 
 struct GodotRustExtension;
 
