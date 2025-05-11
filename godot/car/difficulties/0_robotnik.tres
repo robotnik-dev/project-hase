@@ -1,4 +1,9 @@
-[gd_resource type="DifficultySetting" format=3 uid="uid://dq4hxbo3q7ews"]
+[gd_resource type="DifficultySetting" load_steps=2 format=3 uid="uid://dq4hxbo3q7ews"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xjuyw"]
+friction = 0.4
+bounce = 0.3
 
 [resource]
-engine_power = 40.0
+angular_damp = 0.4
+physics_material = SubResource("PhysicsMaterial_xjuyw")

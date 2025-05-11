@@ -20,7 +20,7 @@ pub enum Effect {
 #[class(init, base=RigidBody3D)]
 struct Car {
     #[export]
-    difficulty_setting: Option<Gd<DifficultySetting>>,
+    properties: Option<Gd<DifficultySetting>>,
 
     #[export]
     #[init(val = None)]
@@ -102,22 +102,11 @@ impl IRigidBody3D for Car {
 
         let input_direction = Vector3::BACK * forward_input;
 
-        let force = self
-            .difficulty_setting
-            .as_ref()
-            .unwrap()
-            .bind()
-            .get_engine_power();
+        let force = self.properties.as_ref().unwrap().bind().get_engine_power();
         self.base_mut().apply_central_force(input_direction * force);
 
-        let torque = Vector3::RIGHT
-            * self
-                .difficulty_setting
-                .as_ref()
-                .unwrap()
-                .bind()
-                .get_tilt_speed()
-            * tilt_input;
+        let torque =
+            Vector3::RIGHT * self.properties.as_ref().unwrap().bind().get_tilt_speed() * tilt_input;
         self.base_mut().apply_torque(torque);
 
         // rotate wheels manually
@@ -155,38 +144,17 @@ impl Car {
     fn speed_boost_applied();
 
     #[func]
-    fn setup(&mut self, start: Vector3, end: Vector3, difficulty_setting: Gd<DifficultySetting>) {
+    fn setup(&mut self, start: Vector3, end: Vector3, mut setting: Gd<DifficultySetting>) {
         self.base_mut().set_global_position(start);
         self.end_position = end;
-
-        // apply parameter from setting
-        // TODO: use THE tres directly instead of a copy here, to edit it in the editor
-        self.set_difficulty_setting(Some(difficulty_setting));
-        let mut physics_mat = PhysicsMaterial::new_gd();
-        physics_mat.set_friction(
-            self.difficulty_setting
-                .as_ref()
-                .unwrap()
-                .bind()
-                .get_friction(),
-        );
-        physics_mat.set_rough(self.difficulty_setting.as_ref().unwrap().bind().get_rough());
-        physics_mat.set_bounce(
-            self.difficulty_setting
-                .as_ref()
-                .unwrap()
-                .bind()
-                .get_bounce(),
-        );
-        physics_mat.set_absorbent(
-            self.difficulty_setting
-                .as_ref()
-                .unwrap()
-                .bind()
-                .get_absorbent(),
-        );
         self.base_mut()
-            .set_physics_material_override(&physics_mat.to_godot());
+            .set_physics_material_override(&setting.bind().get_physics_material().unwrap());
+        self.set_properties(Some(setting.clone()));
+        setting
+            .signals()
+            .changed()
+            .connect_obj(self, Self::reapply_properties);
+        self.reapply_properties();
 
         // connecting signals
         let _on_drive_forward_pressed = &self.to_gd().callable("_on_drive_forward_pressed");
@@ -212,16 +180,22 @@ impl Car {
         self.base_mut().set_process(true);
     }
 
+    fn reapply_properties(&mut self) {
+        let mass = self.get_properties().unwrap().bind().get_mass();
+        self.base_mut().set_mass(mass);
+        let gravity_scale = self.get_properties().unwrap().bind().get_gravity_scale();
+        self.base_mut().set_gravity_scale(gravity_scale);
+        let linear_damp = self.get_properties().unwrap().bind().get_linear_damp();
+        self.base_mut().set_linear_damp(linear_damp);
+        let angular_damp = self.get_properties().unwrap().bind().get_angular_damp();
+        self.base_mut().set_angular_damp(angular_damp);
+    }
+
     #[func]
     fn effect(&mut self) {
         match self.effect {
             Effect::Boost => {
-                let force = self
-                    .difficulty_setting
-                    .as_ref()
-                    .unwrap()
-                    .bind()
-                    .get_boost_power();
+                let force = self.properties.as_ref().unwrap().bind().get_boost_power();
                 let direction = self.get_facing_direction();
                 self.base_mut().apply_central_impulse(direction * force);
                 self.base_mut().emit_signal("speed_boost_applied", &[]);
@@ -366,7 +340,7 @@ impl Car {
             }
 
             // set engine power to 0
-            self.difficulty_setting
+            self.properties
                 .as_mut()
                 .unwrap()
                 .bind_mut()

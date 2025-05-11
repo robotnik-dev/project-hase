@@ -32,7 +32,7 @@ func used():
 
 func _increase_through_air_time():
 	if not flip_detection.is_on_floor():
-		boost_progress = clampf(boost_progress + car.difficulty_setting.boost_fill_speed / 1000.0, 0.0, 1.0)
+		boost_progress = clampf(boost_progress + car.properties.boost_fill_speed / 1000.0, 0.0, 1.0)
 	
 	if boost_progress >= 1.0:
 		boost_progress = 1.0
