@@ -11,10 +11,10 @@
 				"cwd": "godot"
 			},
 			"windows": {
-				"command": "${config:godot-rust.environment.godotEditorPath} --editor",
+				"command": "${config:godot-rust.environment.godotEditorPath} --editor --verbose",
 			},
 			"osx":{
-				"command": "/Applications/Godot.app/Contents/MacOS/Godot --editor"
+				"command": "/Applications/Godot.app/Contents/MacOS/Godot --editor --verbose"
 			},
 			"group": "build",
 			"presentation": {
