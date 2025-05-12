@@ -1,5 +1,5 @@
 use godot::{
-    classes::{node::ProcessMode, Area3D, IRigidBody3D, PhysicsMaterial, RigidBody3D},
+    classes::{node::ProcessMode, Area3D, IRigidBody3D, RigidBody3D},
     global::sign,
     obj::WithBaseField,
     prelude::*,
@@ -144,16 +144,14 @@ impl Car {
     fn speed_boost_applied();
 
     #[func]
-    fn setup(&mut self, start: Vector3, end: Vector3, mut setting: Gd<DifficultySetting>) {
+    fn setup(&mut self, start: Vector3, end: Vector3, setting: Gd<DifficultySetting>) {
         self.base_mut().set_global_position(start);
         self.end_position = end;
+
+        // apply settings
         self.base_mut()
             .set_physics_material_override(&setting.bind().get_physics_material().unwrap());
         self.set_properties(Some(setting.clone()));
-        setting
-            .signals()
-            .changed()
-            .connect_obj(self, Self::reapply_properties);
         self.reapply_properties();
 
         // connecting signals
@@ -180,15 +178,18 @@ impl Car {
         self.base_mut().set_process(true);
     }
 
+    #[func]
     fn reapply_properties(&mut self) {
-        let mass = self.get_properties().unwrap().bind().get_mass();
-        self.base_mut().set_mass(mass);
-        let gravity_scale = self.get_properties().unwrap().bind().get_gravity_scale();
-        self.base_mut().set_gravity_scale(gravity_scale);
-        let linear_damp = self.get_properties().unwrap().bind().get_linear_damp();
-        self.base_mut().set_linear_damp(linear_damp);
-        let angular_damp = self.get_properties().unwrap().bind().get_angular_damp();
-        self.base_mut().set_angular_damp(angular_damp);
+        if let Some(properties) = self.get_properties() {
+            let mass = properties.bind().get_mass();
+            self.base_mut().set_mass(mass);
+            let gravity_scale = properties.bind().get_gravity_scale();
+            self.base_mut().set_gravity_scale(gravity_scale);
+            let linear_damp = properties.bind().get_linear_damp();
+            self.base_mut().set_linear_damp(linear_damp);
+            let angular_damp = properties.bind().get_angular_damp();
+            self.base_mut().set_angular_damp(angular_damp);
+        }
     }
 
     #[func]
@@ -340,11 +341,11 @@ impl Car {
             }
 
             // set engine power to 0
-            self.properties
-                .as_mut()
-                .unwrap()
-                .bind_mut()
-                .set_engine_power(0.);
+            // self.properties
+            //     .as_mut()
+            //     .unwrap()
+            //     .bind_mut()
+            //     .set_engine_power(0.);
         }
     }
 

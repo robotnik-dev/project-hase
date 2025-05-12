@@ -108,9 +108,16 @@ layout_mode = 2
 [node name="Difficulty" type="OptionButton" parent="MarginContainer/VBoxContainer/BotRow/CenterContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_502pm")
+alignment = 1
 selected = 0
-item_count = 2
+item_count = 5
 popup/item_0/text = "Robotnik"
 popup/item_0/id = 0
 popup/item_1/text = "Calcra"
 popup/item_1/id = 1
+popup/item_2/text = "Minokami"
+popup/item_2/id = 2
+popup/item_3/text = "Hedasama"
+popup/item_3/id = 3
+popup/item_4/text = "Fussingandfighting"
+popup/item_4/id = 4

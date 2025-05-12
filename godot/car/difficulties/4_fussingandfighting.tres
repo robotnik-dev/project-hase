@@ -1,0 +1,6 @@
+[gd_resource type="DifficultySetting" load_steps=2 format=3 uid="uid://daj6cpg006l6i"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lb532"]
+
+[resource]
+physics_material = SubResource("PhysicsMaterial_lb532")
