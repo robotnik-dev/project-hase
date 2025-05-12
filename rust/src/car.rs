@@ -339,13 +339,6 @@ impl Car {
             for mut area in self.crash_detects.iter_shared() {
                 area.call_deferred("set_process_mode", &[ProcessMode::DISABLED.to_variant()]);
             }
-
-            // set engine power to 0
-            // self.properties
-            //     .as_mut()
-            //     .unwrap()
-            //     .bind_mut()
-            //     .set_engine_power(0.);
         }
     }
 
