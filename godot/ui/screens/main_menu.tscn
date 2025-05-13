@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cr31reuuuoq00"]
+[gd_scene load_steps=8 format=3 uid="uid://cr31reuuuoq00"]
 
 [ext_resource type="Script" uid="uid://cvmxyh03twh7m" path="res://ui/screens/main_menu.gd" id="1_3fmwv"]
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_502pm"]
@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_xjybn"]
 [ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_jtdqd"]
 [ext_resource type="PackedScene" uid="uid://bi4ykef7jkxfp" path="res://ui/buttons/select_car_button.tscn" id="6_mwqv7"]
+[ext_resource type="PackedScene" uid="uid://bfrlfa4by2tr8" path="res://ui/buttons/select_level.tscn" id="6_wrge7"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("select_car", "start")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("select_car", "start", "cars", "level")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +19,8 @@ theme = ExtResource("1_502pm")
 script = ExtResource("1_3fmwv")
 select_car = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer2/SelectCarButton")
 start = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer/StartButton")
+cars = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer2")
+level = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer3")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -76,7 +79,16 @@ size_flags_vertical = 3
 [node name="StartButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer" instance=ExtResource("5_jtdqd")]
 layout_mode = 2
 
+[node name="CenterContainer3" type="CenterContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SelectLevel" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer3" instance=ExtResource("6_wrge7")]
+layout_mode = 2
+
 [node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 

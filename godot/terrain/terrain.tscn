@@ -16,7 +16,6 @@ script = ExtResource("1_eq2fa")
 static_body = NodePath("StaticBody3D")
 csg_combiner = NodePath("CSGCombiner3D")
 csg_polygon = NodePath("CSGCombiner3D/CSGPolygon3D")
-edge_update_with_line_thickness = false
 metadata/_edit_group_ = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfrlfa4by2tr8"]
+
+[ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_ssjqg"]
+[ext_resource type="Script" uid="uid://cwkq4ngas76yl" path="res://ui/buttons/select_level.gd" id="2_nrwrd"]
+
+[node name="SelectLevel" type="Button"]
+theme = ExtResource("1_ssjqg")
+theme_type_variation = &"BigMenuButton"
+text = "Select Level"
+script = ExtResource("2_nrwrd")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

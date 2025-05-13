@@ -1,29 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6xksxr1mxk5m"]
+[gd_scene load_steps=5 format=3 uid="uid://dhvg7royvm3jn"]
 
-[ext_resource type="Material" uid="uid://dcon0gtqgcumo" path="res://assets/terrain/material/fine_clumpy_sand/fine_clumpy_sand.tres" id="1_ruehd"]
-[ext_resource type="Texture2D" uid="uid://bdkbqemfyu3xu" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_basecolor.png" id="1_v27xr"]
-[ext_resource type="Texture2D" uid="uid://jji6xakpotpe" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_emissive.png" id="2_h6mmo"]
-[ext_resource type="Texture2D" uid="uid://c0frr821ua18l" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_metallic.png" id="3_etf6y"]
-[ext_resource type="Texture2D" uid="uid://ct8c3pk6kld36" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_normal.png" id="4_kh8dt"]
-[ext_resource type="Texture2D" uid="uid://cn01yo3w42dh8" path="res://assets/terrain/material/fine_clumpy_sand/FineClumpySand_roughness.png" id="5_stts0"]
+[ext_resource type="Material" uid="uid://d3jysijf7yqeo" path="res://assets/terrain/material/moss/mossy.tres" id="1_evl14"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_q1nqj"]
 size = Vector3(14.41, 6.065, 11.35)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04mo8"]
-albedo_texture = ExtResource("1_v27xr")
-metallic = 1.0
-metallic_texture = ExtResource("3_etf6y")
-roughness_texture = ExtResource("5_stts0")
-emission_enabled = true
-emission = Color(0.418618, 0.351117, 0.0671383, 1)
-emission_texture = ExtResource("2_h6mmo")
-normal_enabled = true
-normal_texture = ExtResource("4_kh8dt")
-rim = 0.22
-uv1_scale = Vector3(0.1, 0.1, 0.1)
-uv1_triplanar = true
-uv1_world_triplanar = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_0bov0"]
 radius = 0.1
@@ -38,7 +18,7 @@ point_count = 2
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 transform = Transform3D(0.965926, 0.258819, -1.13133e-08, 0, -4.37114e-08, -1, -0.258819, 0.965926, -4.2222e-08, 0, 2.45045, 0)
-material_override = ExtResource("1_ruehd")
+material_override = ExtResource("1_evl14")
 cast_shadow = 0
 
 [node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D"]
@@ -61,7 +41,7 @@ mesh = SubResource("BoxMesh_q1nqj")
 [node name="GPUParticles3D" type="CPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.60069, 4.7904, 1.48747)
 layers = 4
-material_override = SubResource("StandardMaterial3D_04mo8")
+material_override = ExtResource("1_evl14")
 amount = 1024
 lifetime = 1.19
 fixed_fps = 30

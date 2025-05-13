@@ -12,8 +12,7 @@
 script = ExtResource("1_10p37")
 dev_ui = NodePath("DeveloperUI")
 ui = NodePath("UI")
-replay_first_level = true
-level_scenes = Array[PackedScene]([ExtResource("2_272bh"), ExtResource("2_672or")])
+level_scenes = Array[PackedScene]([ExtResource("2_672or"), ExtResource("2_272bh")])
 
 [node name="UI" type="Control" parent="."]
 z_index = 100
