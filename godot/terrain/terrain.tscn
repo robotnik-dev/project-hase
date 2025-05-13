@@ -10,21 +10,32 @@ _data = {
 }
 point_count = 2
 
-[node name="Terrain" type="Path3D"]
+[node name="Terrain" type="Path3D" node_paths=PackedStringArray("static_body", "csg_combiner", "csg_polygon")]
 curve = SubResource("Curve3D_e7of6")
 script = ExtResource("1_eq2fa")
+static_body = NodePath("StaticBody3D")
+csg_combiner = NodePath("CSGCombiner3D")
+csg_polygon = NodePath("CSGCombiner3D/CSGPolygon3D")
+metadata/_edit_group_ = true
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(-2, -10, -2, 2, 2, 2, 2, -10)
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+cast_shadow = 0
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
+cast_shadow = 0
+polygon = PackedVector2Array(-2, -10, -2, 0, 2, 0, 2, -10)
 mode = 2
-path_node = NodePath("..")
+path_node = NodePath("../..")
 path_interval_type = 0
-path_interval = 1.0
+path_interval = 0.2
 path_simplify_angle = 0.0
 path_rotation = 0
+path_rotation_accurate = false
 path_local = true
 path_continuous_u = false
 path_u_distance = 1.0
 path_joined = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
 
 [connection signal="curve_changed" from="." to="." method="_on_curve_changed"]

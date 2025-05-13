@@ -23,7 +23,9 @@ var collected: int = 0:
 	get():
 		return Collectibles.get_sum_of_collected()
 var max_collectibles: int = 9
+var level_completed: int = 0
 
 func _ready() -> void:
 	Signals.connect_car_crashed(func(_a,_b,_c): crashes += 1)
 	Signals.connect_car_flipped(func(_a,_b): flips += 1)
+	#Signals.connect_car_finished(func(): level_completed += 1)

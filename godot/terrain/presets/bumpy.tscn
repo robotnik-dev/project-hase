@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://tjgfvjtotewi"]
+
+[ext_resource type="PackedScene" uid="uid://cr4sbtjtwextc" path="res://terrain/terrain.tscn" id="1_gsdd5"]
+
+[sub_resource type="Curve3D" id="Curve3D_gsdd5"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector3Array(0, 0, -3, 0, 0, 3, 0, 0, -5, 0, 0.0453773, -1.04368, 0, -0.0453773, 1.04368, 0, 0.996378, -1.78036, 0, -0.0181977, -1.6919, 0, 0.0181977, 1.6919, 0, -1.19095, 1.43313, 0, -0.0166771, -1.30079, 0, 0.0166771, 1.30079, 0, -0.307074, 4.5517, 0, 0.0395776, -1.3892, 0, -0.0395776, 1.3892, 0, -1.25917, 7.1351, 0, 0.0784819, -1.25303, 0, -0.0784819, 1.25303, 0, -0.655516, 9.28084, 0, 0.0590308, -1.4281, 0, -0.0590308, 1.4281, 0, -2.19535, 11.2111, 0, -0.153202, -0.71918, 0, 0.153202, 0.71918, 0, -1.85468, 12.994, 0, -0.111483, -1.46602, 0, 0.111483, 1.46602, 0, -1.8615, 14.8494, 0, 0.0115573, -2.79889, 0, -0.0115573, 2.79889, 0, 0, 18),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 10
+
+[node name="Terrain" instance=ExtResource("1_gsdd5")]
+curve = SubResource("Curve3D_gsdd5")
+
+[node name="CSGPolygon3D" parent="." index="0"]
+path_interval = 0.2

@@ -11,7 +11,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2euyv"]
 bg_color = Color(0.196078, 0.196078, 0.196078, 0.811765)
 
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("continue_button")]
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("continue_button", "cars")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -22,6 +22,7 @@ grow_vertical = 2
 theme = ExtResource("1_tnlr6")
 script = ExtResource("2_1xriq")
 continue_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer/ContinueButton")
+cars = NodePath("PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer3")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -82,6 +83,7 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="CenterContainer3" type="CenterContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 

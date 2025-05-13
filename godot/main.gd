@@ -172,10 +172,18 @@ func _connect_signals():
 	Signals.connect_car_finished(_on_car_finished)
 	Signals.connect_replay_level_button_pressed(reload_level)
 	Signals.connect_replay_level_button_pressed(_on_reload_level_pressed)
+	Signals.connect_select_level_button_pressed(_on_select_level_pressed)
 
 func _on_start_pressed():
 	Signals.emit_new_level_started(get_current_level_id() + 1)
 	start_level()
+
+func _on_select_level_pressed():
+	# TODO
+	# remove main menu
+	
+	# add level selection menu
+	pass
 
 func _on_select_car_button():
 	# removing main menu

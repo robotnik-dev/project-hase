@@ -81,6 +81,13 @@ func connect_replay_level_button_pressed(callable: Callable) -> Array:
 func emit_replay_level_button_pressed() -> Array:
 	return emit_deferred(_replay_level_button_pressed)
 
+signal _select_level_button_pressed
+func connect_select_level_button_pressed(callable: Callable) -> Array:
+	_select_level_button_pressed.connect(callable)
+	return _select_level_button_pressed.get_connections()
+func emit_select_level_button_pressed() -> Array:
+	return emit_deferred(_select_level_button_pressed)
+
 signal _continue_level_button_pressed
 func connect_continue_level_button_pressed(callable: Callable) -> Array:
 	_continue_level_button_pressed.connect(callable)
