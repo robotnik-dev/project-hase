@@ -2,6 +2,7 @@
     "recommendations": [
         "geequlim.godot-tools",
         "vadimcn.vscode-lldb",
-        "rust-lang.rust-analyzer"
+        "rust-lang.rust-analyzer",
+        "dsobotta.godot-rust-vscode"
     ]
 }
