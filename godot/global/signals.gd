@@ -115,3 +115,11 @@ func connect_quit_button_pressed(callable: Callable) -> Array:
 	return _quit_button_pressed.get_connections()
 func emit_quit_button_pressed() -> Array:
 	return emit_deferred(_quit_button_pressed)
+
+signal _difficulty_selected(difficulty: int)
+func connect_difficulty_selected(callable: Callable) -> Array:
+	_difficulty_selected.connect(callable)
+	return _difficulty_selected.get_connections()
+func emit_difficulty_selected(difficulty: int) -> Array:
+	_difficulty_selected.emit(difficulty)
+	return _difficulty_selected.get_connections()

@@ -1,9 +1,90 @@
-[gd_scene load_steps=3 format=3 uid="uid://1482sky7hw1m"]
+[gd_scene load_steps=3 format=3 uid="uid://cb72x382aubnh"]
 
-[ext_resource type="Script" uid="uid://ci7aeg3uos4f6" path="res://maps/shared/level_testing.gd" id="1_1psiu"]
 [ext_resource type="PackedScene" uid="uid://cxpqv846s0ivr" path="res://maps/level_1.tscn" id="2_3xowb"]
 
+[sub_resource type="GDScript" id="GDScript_8sggw"]
+script/source = "extends Node
+
+## In seconds
+@export var wait_until_next_level: float = 2.0
+## when on: replays the level as soon as the car hits the finish line.
+## when off: plays the next level or prints \"no more levels\" in case its only
+## one level left
+@export var replay_first_level: bool = false
+
+@export_subgroup(\"Level\")
+## In Order: First item is level 1 and so on.
+@export var level_scenes: Array[PackedScene]
+
+var current_level: Level = null
+var current_level_idx = 0
+var current_car: Car = null
+## Default car scene at \"res://car/default_car.tscn\"
+var path_to_car_scene: String = \"res://car/default_car.tscn\"
+
+func _ready() -> void:
+	_on_car_selected(\"res://car/default_car.tscn\")
+	_connect_signals()
+	start_level()
+
+func start_level():
+	# setup car
+	if current_car:
+		current_car.queue_free()
+	var car_scene = load(path_to_car_scene) as PackedScene
+	current_car = car_scene.instantiate()
+	add_child(current_car)
+	
+	# setup level
+	if current_level:
+		current_level.queue_free()
+	
+	var scene = level_scenes[current_level_idx]
+	current_level = scene.instantiate()
+	add_child(current_level)
+	
+	current_car.setup(current_level.start_position, current_level.end_position)
+
+func reload_level():
+	start_level()
+
+func next_level():
+	if level_scenes.size() <= current_level_idx + 1:
+		print(\"no more levels\")
+		return
+	current_level_idx += 1
+	start_level()
+
+func _connect_signals():
+	Signals.connect_car_flipped(_on_car_flipped)
+	Signals.connect_car_crashed(_on_car_crashed)
+	Signals.connect_car_finished(_on_car_finished)
+	Signals.connect_replay_level_button_pressed(_on_reload_level_pressed)
+
+func _on_reload_level_pressed():
+	reload_level.call_deferred()
+
+func _on_car_selected(path_to_scene: String):
+	path_to_car_scene = path_to_scene
+
+func _on_car_crashed(_position: Vector3, _last_poc: Vector3, _abyss: bool):
+	reload_level()
+
+func _on_car_finished():
+	if replay_first_level:
+		reload_level()
+	else:
+		get_tree().create_timer(wait_until_next_level).timeout.connect(next_level)
+
+func _on_car_flipped(direction: StringName, count: int):
+	match direction:
+		\"front\":
+			print(\"front flip number \" + str(count))
+		\"back\":
+			print(\"back flip number \" + str(count))
+"
+
 [node name="LevelTesting" type="Node"]
-script = ExtResource("1_1psiu")
+script = SubResource("GDScript_8sggw")
 replay_first_level = true
 level_scenes = Array[PackedScene]([ExtResource("2_3xowb")])

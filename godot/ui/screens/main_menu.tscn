@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cr31reuuuoq00"]
+[gd_scene load_steps=8 format=3 uid="uid://cr31reuuuoq00"]
 
 [ext_resource type="Script" uid="uid://cvmxyh03twh7m" path="res://ui/screens/main_menu.gd" id="1_3fmwv"]
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_502pm"]
@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_xjybn"]
 [ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_jtdqd"]
 [ext_resource type="PackedScene" uid="uid://bi4ykef7jkxfp" path="res://ui/buttons/select_car_button.tscn" id="6_mwqv7"]
+[ext_resource type="LabelSettings" uid="uid://djovojv4or3gm" path="res://ui/resources/labels/car_preview_name.tres" id="7_rsufx"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("select_car", "start")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("select_car", "start", "difficulty")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +19,7 @@ theme = ExtResource("1_502pm")
 script = ExtResource("1_3fmwv")
 select_car = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer2/SelectCarButton")
 start = NodePath("MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer/StartButton")
+difficulty = NodePath("MarginContainer/VBoxContainer/BotRow/CenterContainer/HBoxContainer/Difficulty")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -86,3 +88,36 @@ layout_mode = 2
 [node name="BotRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/BotRow"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BotRow/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/BotRow/CenterContainer/HBoxContainer"]
+layout_mode = 2
+text = "Difficulty"
+label_settings = ExtResource("7_rsufx")
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/BotRow/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Difficulty" type="OptionButton" parent="MarginContainer/VBoxContainer/BotRow/CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_502pm")
+alignment = 1
+selected = 0
+item_count = 5
+popup/item_0/text = "Robotnik"
+popup/item_0/id = 0
+popup/item_1/text = "Calcra"
+popup/item_1/id = 1
+popup/item_2/text = "Minokami"
+popup/item_2/id = 2
+popup/item_3/text = "Hedasama"
+popup/item_3/id = 3
+popup/item_4/text = "Fussingandfighting"
+popup/item_4/id = 4

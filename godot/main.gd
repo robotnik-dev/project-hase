@@ -37,6 +37,9 @@ var end_of_game: UIEndOfGame
 
 var car_crashed: bool = false
 
+var difficulty_setting: DifficultySetting
+var difficulty_index: int = 0
+
 func _ready() -> void:
 	_connect_signals()
 	start_main_menu()
@@ -134,7 +137,12 @@ func start_level():
 	current_level = scene.instantiate()
 	add_child(current_level, true)
 	
-	current_car.setup(current_level.start_position, current_level.end_position)
+	current_car.setup(current_level.start_position, current_level.end_position, difficulty_setting)
+	if !difficulty_setting.changed.is_connected(current_car.reapply_properties):
+		difficulty_setting.changed.connect(current_car.reapply_properties)
+	
+	if !difficulty_setting.physics_material.changed.is_connected(current_car.reapply_properties):
+		difficulty_setting.physics_material.changed.connect(current_car.reapply_properties)
 
 func reload_level():
 	start_level()
@@ -172,8 +180,14 @@ func _connect_signals():
 	Signals.connect_car_finished(_on_car_finished)
 	Signals.connect_replay_level_button_pressed(reload_level)
 	Signals.connect_replay_level_button_pressed(_on_reload_level_pressed)
+	Signals.connect_difficulty_selected(_set_difficulty)
+
+func _set_difficulty(index: int):
+	difficulty_index = index
+	difficulty_setting = DifficultySetting.from_index(difficulty_index)
 
 func _on_start_pressed():
+	_set_difficulty(difficulty_index)
 	Signals.emit_new_level_started(get_current_level_id() + 1)
 	start_level()
 
