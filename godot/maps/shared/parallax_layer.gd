@@ -7,6 +7,7 @@ const LAYER_OFFSET: int = 50
 
 @export var texture: Texture2D
 @export var enabled := true
+@export var foreground := false
 ## The higher, the farther away from the camera. Lower value means it gets rendered
 ## before everything else.
 ## Maximum 50 layer
@@ -16,11 +17,11 @@ const LAYER_OFFSET: int = 50
 @export var constant_speed: bool = false
 ## not influenced by camera speed or anything
 @export var far_away: bool = false
-@export_range(0, 50, 0.1) var speed := 1.0
+@export_range(0, 200, 0.1) var speed := 1.0
 
 @onready var camera: PlayerCamera = get_viewport().get_camera_3d()
+@export var scaling_factor: float = 58
 
-var scaling_factor: float = 0.00058
 var start_pos := Vector3.ZERO
 var current_offset: float = 0.0
 var last_camera_pos: Vector3 = Vector3.ZERO
@@ -30,9 +31,14 @@ func _ready() -> void:
 	mat.set("albedo_texture", texture)
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	mesh.surface_set_material(0, mat)
-	scale.y = camera.distance * DIMENSIONS.y * scaling_factor
-	scale.z = camera.distance * DIMENSIONS.x * scaling_factor
 	global_position.x = LAYER_OFFSET - layer
+	
+	if foreground:
+		global_position.x = -10 - layer
+	
+	#camera.ready.connect(func(): self.scaling_factor = self.scaling_factor)
+	scale.y = camera.distance * DIMENSIONS.y * scaling_factor / 100000
+	scale.z = camera.distance * DIMENSIONS.x * scaling_factor / 100000
 
 func _physics_process(_delta: float) -> void:
 	if !enabled:

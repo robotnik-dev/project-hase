@@ -1,11 +1,20 @@
-[gd_scene load_steps=27 format=3 uid="uid://b4v00o2jhxr08"]
+[gd_scene load_steps=38 format=3 uid="uid://b4v00o2jhxr08"]
 
 [ext_resource type="PackedScene" uid="uid://b08hw7fk4rfap" path="res://maps/shared/start.tscn" id="1_bht22"]
+[ext_resource type="PackedScene" uid="uid://bwqs1g45dsk5a" path="res://maps/shared/parallax_layer.tscn" id="2_cmvtv"]
+[ext_resource type="Texture2D" uid="uid://ddu01kk5aew41" path="res://assets/backgrounds/jungle/0_BG.svg" id="3_i2k6i"]
 [ext_resource type="PackedScene" uid="uid://coxl0dthgu5s0" path="res://collectibles/collectible.tscn" id="3_rnjt0"]
+[ext_resource type="Texture2D" uid="uid://bnlf8182uyb0t" path="res://assets/backgrounds/jungle/1_BG.svg" id="4_i2k6i"]
 [ext_resource type="PackedScene" uid="uid://dhvg7royvm3jn" path="res://maps/shared/portal_jungle.tscn" id="5_6btvb"]
+[ext_resource type="Texture2D" uid="uid://qas58tbvoaj8" path="res://assets/backgrounds/jungle/2_BG.svg" id="5_fpwaj"]
 [ext_resource type="Material" uid="uid://d3jysijf7yqeo" path="res://assets/terrain/material/moss/mossy.tres" id="5_nl2a5"]
 [ext_resource type="PackedScene" uid="uid://cr4sbtjtwextc" path="res://terrain/terrain.tscn" id="6_nl2a5"]
+[ext_resource type="Texture2D" uid="uid://bnqufdl3tun5n" path="res://assets/backgrounds/jungle/3_MG.svg" id="6_nssg6"]
 [ext_resource type="PackedScene" uid="uid://drk0idftg3w0o" path="res://maps/shared/crash_zone.tscn" id="6_rnjt0"]
+[ext_resource type="Texture2D" uid="uid://bw6ce0hiv4j67" path="res://assets/backgrounds/jungle/4_FG.svg" id="7_1xq73"]
+[ext_resource type="Texture2D" uid="uid://bxh7serf6p43h" path="res://assets/backgrounds/jungle/5_FRONT.svg" id="8_nq622"]
+[ext_resource type="Texture2D" uid="uid://bdjmrdl52sdls" path="res://assets/backgrounds/jungle/6_FRONT.svg" id="9_bk4mr"]
+[ext_resource type="Texture2D" uid="uid://dpbyneme3ikuc" path="res://assets/backgrounds/jungle/7_FRONT.svg" id="10_kid14"]
 [ext_resource type="PackedScene" uid="uid://lj24pc10v5og" path="res://collectibles/collectible_manager.tscn" id="19_l4oyi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_guk5d"]
@@ -19,6 +28,16 @@ sky_material = SubResource("ProceduralSkyMaterial_guk5d")
 background_mode = 2
 sky = SubResource("Sky_p53i6")
 tonemap_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fpwaj"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ut7cs"]
+resource_local_to_scene = true
+flip_faces = true
+orientation = 0
 
 [sub_resource type="Curve3D" id="Curve3D_owowt"]
 resource_local_to_scene = true
@@ -133,6 +152,64 @@ environment = SubResource("Environment_sjlnm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01963, 0.0457821)
 
 [node name="ParallaxLayers" type="Node" parent="."]
+
+[node name="ParallaxLayer" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_fpwaj")
+texture = ExtResource("3_i2k6i")
+far_away = true
+scaling_factor = 46.26
+
+[node name="ParallaxLayer2" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_ut7cs")
+texture = ExtResource("4_i2k6i")
+layer = 2
+speed = 3.0
+scaling_factor = 46.26
+
+[node name="ParallaxLayer3" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_ut7cs")
+texture = ExtResource("5_fpwaj")
+layer = 3
+speed = 6.0
+scaling_factor = 46.26
+
+[node name="ParallaxLayer4" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_ut7cs")
+texture = ExtResource("6_nssg6")
+layer = 4
+speed = 7.0
+scaling_factor = 46.26
+
+[node name="ParallaxLayer5" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_ut7cs")
+texture = ExtResource("7_1xq73")
+layer = 5
+speed = 8.0
+scaling_factor = 46.26
+
+[node name="ParallaxLayer6" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_ut7cs")
+texture = ExtResource("8_nq622")
+foreground = true
+layer = 6
+speed = 100.0
+scaling_factor = 46.26
+
+[node name="ParallaxLayer7" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_ut7cs")
+texture = ExtResource("9_bk4mr")
+foreground = true
+layer = 7
+speed = 100.0
+scaling_factor = 46.26
+
+[node name="ParallaxLayer8" parent="ParallaxLayers" instance=ExtResource("2_cmvtv")]
+mesh = SubResource("PlaneMesh_ut7cs")
+texture = ExtResource("10_kid14")
+foreground = true
+layer = 8
+speed = 100.0
+scaling_factor = 46.26
 
 [node name="CollectibleManager" parent="." instance=ExtResource("19_l4oyi")]
 

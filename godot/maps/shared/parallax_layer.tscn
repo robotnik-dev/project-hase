@@ -8,6 +8,7 @@ flip_faces = true
 orientation = 0
 
 [node name="ParallaxLayer" type="MeshInstance3D"]
+layers = 2
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_37fvb")
 skeleton = NodePath("../..")

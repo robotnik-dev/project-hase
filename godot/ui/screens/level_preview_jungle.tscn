@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://be5krdveyid4g"]
+[gd_scene load_steps=10 format=3 uid="uid://b3gm8q8g23pe7"]
 
-[ext_resource type="Texture2D" uid="uid://dg8iery0p0kd2" path="res://assets/backgrounds/desert/2_BirdsBG.png" id="2_celbu"]
-[ext_resource type="Texture2D" uid="uid://d0qgtw46c3dbp" path="res://assets/backgrounds/desert/3_MountainsBG.png" id="3_dkgqf"]
-[ext_resource type="Texture2D" uid="uid://7f0rxmm0rajj" path="res://assets/backgrounds/desert/4_BirdsMG.png" id="4_jiyda"]
-[ext_resource type="Texture2D" uid="uid://dbwf2m7m8cpta" path="res://assets/backgrounds/desert/5_CloudsBG.png" id="5_43b6e"]
-[ext_resource type="Texture2D" uid="uid://bytn8jeq8cndp" path="res://assets/backgrounds/desert/6_MountainsFG.png" id="6_4ahrx"]
-[ext_resource type="Texture2D" uid="uid://cirnfdl16fl6w" path="res://assets/backgrounds/desert/7_CloudsFG.png" id="7_ldcea"]
+[ext_resource type="Texture2D" uid="uid://ddu01kk5aew41" path="res://assets/backgrounds/jungle/0_BG.svg" id="1_yguss"]
+[ext_resource type="Texture2D" uid="uid://bnlf8182uyb0t" path="res://assets/backgrounds/jungle/1_BG.svg" id="2_celbu"]
+[ext_resource type="Texture2D" uid="uid://qas58tbvoaj8" path="res://assets/backgrounds/jungle/2_BG.svg" id="3_dkgqf"]
+[ext_resource type="Texture2D" uid="uid://bnqufdl3tun5n" path="res://assets/backgrounds/jungle/3_MG.svg" id="4_jiyda"]
+[ext_resource type="Texture2D" uid="uid://bw6ce0hiv4j67" path="res://assets/backgrounds/jungle/4_FG.svg" id="5_43b6e"]
+[ext_resource type="Texture2D" uid="uid://bxh7serf6p43h" path="res://assets/backgrounds/jungle/5_FRONT.svg" id="6_4ahrx"]
+[ext_resource type="Texture2D" uid="uid://bdjmrdl52sdls" path="res://assets/backgrounds/jungle/6_FRONT.svg" id="7_ldcea"]
+[ext_resource type="Texture2D" uid="uid://dpbyneme3ikuc" path="res://assets/backgrounds/jungle/7_FRONT.svg" id="8_15juh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqf5f"]
 bg_color = Color(0, 0, 0, 1)
@@ -43,6 +45,7 @@ theme_override_constants/margin_bottom = 15
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
+texture = ExtResource("1_yguss")
 expand_mode = 3
 
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
@@ -73,4 +76,9 @@ expand_mode = 3
 [node name="TextureRect7" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("7_ldcea")
+expand_mode = 3
+
+[node name="TextureRect8" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("8_15juh")
 expand_mode = 3
