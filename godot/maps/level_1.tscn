@@ -238,14 +238,12 @@ shape = SubResource("ConcavePolygonShape3D_x1js7")
 [node name="ParallaxLayers" type="Node" parent="."]
 
 [node name="ParallaxLayer" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
-layers = 2
 mesh = SubResource("PlaneMesh_xl1sn")
 texture = ExtResource("8_gd3fd")
 constant_speed = true
 far_away = true
 
 [node name="ParallaxLayer2" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
-layers = 2
 mesh = SubResource("PlaneMesh_re7ly")
 texture = ExtResource("9_5ohc2")
 layer = 2
@@ -253,14 +251,12 @@ constant_speed = true
 speed = 3.6
 
 [node name="ParallaxLayer3" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
-layers = 2
 mesh = SubResource("PlaneMesh_do87p")
 texture = ExtResource("10_y46h7")
 layer = 3
 speed = 6.1
 
 [node name="ParallaxLayer4" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
-layers = 2
 mesh = SubResource("PlaneMesh_tcuel")
 texture = ExtResource("11_lx3oc")
 layer = 4
@@ -268,7 +264,6 @@ constant_speed = true
 speed = 2.2
 
 [node name="ParallaxLayer5" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
-layers = 2
 mesh = SubResource("PlaneMesh_ywcw1")
 texture = ExtResource("12_jcknf")
 layer = 5
@@ -276,14 +271,12 @@ constant_speed = true
 speed = 4.4
 
 [node name="ParallaxLayer6" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
-layers = 2
 mesh = SubResource("PlaneMesh_a6lta")
 texture = ExtResource("13_o75ra")
 layer = 6
 speed = 14.2
 
 [node name="ParallaxLayer7" parent="ParallaxLayers" instance=ExtResource("7_ehoub")]
-layers = 2
 mesh = SubResource("PlaneMesh_tnksx")
 texture = ExtResource("14_4v1id")
 layer = 7

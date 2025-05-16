@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dddxyu7hsbaa8" path="res://ui/screens/level_selection.gd" id="1_2p5ld"]
 [ext_resource type="PackedScene" uid="uid://cpg6vkvou8gyy" path="res://ui/screens/level_preview_desert.tscn" id="2_rfjc2"]
-[ext_resource type="PackedScene" uid="uid://be5krdveyid4g" path="res://ui/screens/level_preview_jungle.tscn" id="3_frfry"]
+[ext_resource type="PackedScene" uid="uid://b3gm8q8g23pe7" path="res://ui/screens/level_preview_jungle.tscn" id="3_frfry"]
 
 [node name="LevelSelection" type="Control" node_paths=PackedStringArray("preview_viewport")]
 layout_mode = 3
