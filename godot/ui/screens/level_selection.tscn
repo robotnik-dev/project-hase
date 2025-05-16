@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8p0gr8lgmdcl"]
+
+[ext_resource type="Script" uid="uid://dddxyu7hsbaa8" path="res://ui/screens/level_selection.gd" id="1_2p5ld"]
+[ext_resource type="PackedScene" uid="uid://cpg6vkvou8gyy" path="res://ui/screens/level_preview_desert.tscn" id="2_rfjc2"]
+[ext_resource type="PackedScene" uid="uid://be5krdveyid4g" path="res://ui/screens/level_preview_jungle.tscn" id="3_frfry"]
+
+[node name="LevelSelection" type="Control" node_paths=PackedStringArray("preview_viewport")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2p5ld")
+level_previews = Array[PackedScene]([ExtResource("2_rfjc2"), ExtResource("3_frfry")])
+preview_viewport = NodePath("MarginContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LevelPreviewDesert" parent="MarginContainer" instance=ExtResource("2_rfjc2")]
+layout_mode = 2

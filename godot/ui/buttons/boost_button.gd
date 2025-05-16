@@ -38,6 +38,7 @@ func _on_boost_used():
 
 
 func _on_button_pressed() -> void:
-	boost_pressed.emit()
-	button.disabled = true
-	progress.material.set("shader_parameter/enabled", false)
+	if Speedboost.is_boost_ready:
+		boost_pressed.emit()
+		button.disabled = true
+		progress.material.set("shader_parameter/enabled", false)

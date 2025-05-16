@@ -22,7 +22,7 @@ var current_level: Level = null
 var current_level_idx = 0
 var current_car: Car = null
 ## Default car scene at "res://car/car.tscn"
-var car_scene: PackedScene = preload("res://car/car.tscn")
+@export var default_car_scene: PackedScene = preload("res://car/car.tscn")
 
 var main_menu_scene: PackedScene = preload("res://ui/screens/main_menu.tscn")
 var main_menu: UIMainMenu
@@ -34,6 +34,8 @@ var hud_scene: PackedScene = preload("res://ui/hud/hud.tscn")
 var hud: HUD
 var end_of_game_scene: PackedScene = preload("res://ui/screens/end_of_game.tscn")
 var end_of_game: UIEndOfGame
+var level_selection_scene: PackedScene = preload("res://ui/screens/level_selection.tscn")
+var level_selection: UILevelSelection
 
 var car_crashed: bool = false
 
@@ -61,10 +63,6 @@ func start_main_menu():
 		hud.queue_free()
 		hud = null
 	
-	if select_car_menu:
-		select_car_menu.queue_free()
-		select_car_menu = null
-	
 	if is_instance_valid(current_car):
 		current_car.queue_free()
 		current_car = null
@@ -82,12 +80,6 @@ func start_main_menu():
 func start_level():
 	car_crashed = false
 	
-	# grab selected car from the selection menu
-	if select_car_menu:
-		car_scene = select_car_menu.cars[select_car_menu.current_idx]
-		select_car_menu.queue_free()
-		select_car_menu = null
-	
 	# removing main menu
 	if main_menu:
 		ui.remove_child(main_menu)
@@ -103,7 +95,7 @@ func start_level():
 	# setup car
 	if is_instance_valid(current_car):
 		current_car.queue_free()
-	current_car = car_scene.instantiate()
+	current_car = default_car_scene.instantiate()
 	add_child(current_car)
 	
 	# removing HUD
@@ -179,11 +171,28 @@ func _on_start_pressed():
 	start_level()
 
 func _on_select_level_pressed():
-	# TODO
-	# remove main menu
+	# removing main menu
+	if main_menu:
+		ui.remove_child(main_menu)
+		main_menu.queue_free()
+		main_menu = null
 	
 	# add level selection menu
-	pass
+	level_selection = level_selection_scene.instantiate()
+	ui.add_child(level_selection)
+	level_selection.selected.connect(_on_level_selected)
+
+func _on_level_selected(idx: int):
+	# remove level selection
+	if level_selection:
+		ui.remove_child(level_selection)
+		level_selection.queue_free()
+		level_selection = null
+	
+	current_level_idx = idx
+	
+	Signals.emit_new_level_started(get_current_level_id() + 1)
+	call_deferred("start_level")
 
 func _on_select_car_button():
 	# removing main menu
@@ -213,6 +222,19 @@ func _on_select_car_button():
 	
 	select_car_menu = select_car_menu_scene.instantiate()
 	ui.add_child(select_car_menu)
+	select_car_menu.selected.connect(_on_car_selected)
+
+func _on_car_selected(idx: int):
+	# set car scene
+	default_car_scene = select_car_menu.cars[idx]
+	
+	# remove car selection
+	if select_car_menu:
+		select_car_menu.queue_free()
+		select_car_menu = null
+	
+	# start main menu
+	call_deferred("start_main_menu")
 
 func _on_reload_level_pressed():
 	reload_level.call_deferred()

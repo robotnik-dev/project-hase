@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cmq7275sgi63j"]
+[gd_scene load_steps=8 format=3 uid="uid://cmq7275sgi63j"]
 
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_tnlr6"]
 [ext_resource type="Script" uid="uid://xoicsko1pobl" path="res://ui/screens/pause_menu.gd" id="2_1xriq"]
@@ -6,12 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_ctr0n"]
 [ext_resource type="PackedScene" uid="uid://c7uovkkq6ub3u" path="res://ui/buttons/continue_button.tscn" id="5_qnrcv"]
 [ext_resource type="PackedScene" uid="uid://bp1cx50ngcjnc" path="res://ui/buttons/back_to_menu_button.tscn" id="6_1lf7p"]
-[ext_resource type="PackedScene" uid="uid://bi4ykef7jkxfp" path="res://ui/buttons/select_car_button.tscn" id="6_j8tib"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2euyv"]
 bg_color = Color(0.196078, 0.196078, 0.196078, 0.811765)
 
-[node name="PauseMenu" type="Control" node_paths=PackedStringArray("continue_button", "cars")]
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("continue_button")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -22,7 +21,6 @@ grow_vertical = 2
 theme = ExtResource("1_tnlr6")
 script = ExtResource("2_1xriq")
 continue_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer/ContinueButton")
-cars = NodePath("PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer3")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -80,14 +78,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ContinueButton" parent="PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer" instance=ExtResource("5_qnrcv")]
-layout_mode = 2
-
-[node name="CenterContainer3" type="CenterContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SelectCarButton" parent="PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer3" instance=ExtResource("6_j8tib")]
 layout_mode = 2
 
 [node name="CenterContainer2" type="CenterContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MidRow/VBoxContainer"]

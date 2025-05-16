@@ -1,18 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://dmr0ls0h3fhm2"]
 
-[ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="1_4iug3"]
 [ext_resource type="PackedScene" uid="uid://cspp6l7d3n610" path="res://car/previews/base_car_preview.tscn" id="1_x3euc"]
 [ext_resource type="PackedScene" uid="uid://b5c5jjndrhfi5" path="res://assets/carosserie/CarosserieDefault.glb" id="2_1ewkb"]
+[ext_resource type="PackedScene" uid="uid://boapkx8pe8uut" path="res://car/wheel/wheels_car.tscn" id="3_w12m5"]
 
 [node name="Basepreview" instance=ExtResource("1_x3euc")]
 
-[node name="Wheels" type="Node3D" parent="." index="1"]
+[node name="CarosserieDefault" parent="." index="1" instance=ExtResource("2_1ewkb")]
 
-[node name="WheelBack" parent="Wheels" index="0" instance=ExtResource("1_4iug3")]
-transform = Transform3D(-0.5, 0, 4.37114e-08, 0, 0.5, 0, -4.37114e-08, 0, -0.5, -1, 0, -1)
-
-[node name="WheelFront" parent="Wheels" index="1" instance=ExtResource("1_4iug3")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -1, 0, 1)
-
-[node name="CarosserieDefault" parent="." index="2" instance=ExtResource("2_1ewkb")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+[node name="WheelsCar" parent="." index="2" instance=ExtResource("3_w12m5")]

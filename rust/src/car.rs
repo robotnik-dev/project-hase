@@ -192,8 +192,10 @@ impl Car {
                 let direction = self.get_facing_direction();
                 self.base_mut().apply_central_impulse(direction * force);
                 self.base_mut().emit_signal("speed_boost_applied", &[]);
-                // Change wheel rotation axis for funny visual effect
-                self.wheel_rotation_axis = Vector3::UP;
+                // Change wheel rotation for funny visual effect
+                self.get_wheels().iter_shared().for_each(|mut wheel| {
+                    wheel.set_rotation(Vector3::new(0.0, -90.0_f32.to_radians(), 0.0));
+                });
                 let cb = self.base().callable("set_wheel_rotation_to_normal");
                 self.base_mut().create_tween().map(|mut t| {
                     t.tween_callback(&cb)
@@ -205,9 +207,8 @@ impl Car {
 
     #[func]
     fn set_wheel_rotation_to_normal(&mut self) {
-        self.wheel_rotation_axis = Vector3::RIGHT;
         self.get_wheels().iter_shared().for_each(|mut wheel| {
-            wheel.set_rotation(Vector3::new(0.0, -180.0_f32.to_radians(), 0.0));
+            wheel.set_rotation(Vector3::ZERO);
         });
     }
 

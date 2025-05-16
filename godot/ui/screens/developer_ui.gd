@@ -27,5 +27,5 @@ func _on_replay_level_button_pressed() -> void:
 	Signals.emit_replay_level_button_pressed()
 
 func _on_unlock_all_cars_button_pressed():
-	for i in 9:
+	for i in GameStats.max_collectibles:
 		Collectibles.collected_in_level(i, 1)
