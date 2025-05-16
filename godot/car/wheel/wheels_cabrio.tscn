@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfgvprx0yqxhs"]
+
+[ext_resource type="PackedScene" uid="uid://b36tcndx02aom" path="res://assets/wheel/WheelsCabrio.glb" id="1_w351k"]
+
+[node name="WheelsCabrio" instance=ExtResource("1_w351k")]
+
+[node name="WheelCabrioFront" parent="." index="0"]
+layers = 16
+cast_shadow = 0
+
+[node name="WheelCabrioBack" parent="." index="1"]
+layers = 16
+cast_shadow = 0

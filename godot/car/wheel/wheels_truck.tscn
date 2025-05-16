@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://5fsmfh1tbibe"]
+
+[ext_resource type="PackedScene" uid="uid://b4ffilvej27i8" path="res://assets/wheel/WheelsTruck.glb" id="1_br551"]
+
+[node name="WheelsTruck" instance=ExtResource("1_br551")]
+
+[node name="WheelTruckFront" parent="." index="0"]
+layers = 16
+cast_shadow = 0
+
+[node name="WheelTruckBack" parent="." index="1"]
+layers = 16
+cast_shadow = 0

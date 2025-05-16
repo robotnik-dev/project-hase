@@ -1,12 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://cfm3ui1m7bqcn"]
+[gd_scene load_steps=24 format=3 uid="uid://cfm3ui1m7bqcn"]
 
 [ext_resource type="PackedScene" uid="uid://lcydl2mrj708" path="res://car/previews/cabrio_preview.tscn" id="1_0n2f3"]
-[ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_8krvb"]
 [ext_resource type="PackedScene" uid="uid://clfi6ka6mhdnr" path="res://car/carosserie/carosserie_cabrio.tscn" id="3_kctjg"]
 [ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_2t6no"]
-[ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_vxw76"]
-[ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_8m57j"]
+[ext_resource type="PackedScene" uid="uid://cfgvprx0yqxhs" path="res://car/wheel/wheels_cabrio.tscn" id="7_vhjut"]
 [ext_resource type="PackedScene" uid="uid://c5eiudclllj8v" path="res://ui/hud/mini_map_marker.tscn" id="8_8857a"]
+[ext_resource type="PackedScene" uid="uid://cktae6qcxedow" path="res://car/hase_driver.tscn" id="8_m4uv7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -56,25 +55,6 @@ button_index = 9
 [sub_resource type="BoxShape3D" id="BoxShape3D_cneas"]
 size = Vector3(1, 0.400391, 1.88086)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0spe"]
-transparency = 1
-albedo_color = Color(0.682132, 0.583949, 0.31109, 1)
-albedo_texture = ExtResource("6_8m57j")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_vhjut"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_o0spe")
-flip_faces = true
-size = Vector2(1, 1)
-orientation = 0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_m4uv7"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_o0spe")
-flip_faces = true
-size = Vector2(1, 1)
-orientation = 0
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wp82x"]
 radius = 0.31
 height = 3.435
@@ -85,7 +65,7 @@ collectables_needed_to_unlock = 3
 ui_preview = ExtResource("1_0n2f3")
 ui_display_name = &"Cabrio"
 crash_detects = [NodePath("HitBox")]
-wheels = [NodePath("Wheels/WheelBack"), NodePath("Wheels/WheelFront")]
+wheels = [NodePath("WheelsCabrio/WheelCabrioFront"), NodePath("WheelsCabrio/WheelCabrioBack")]
 carosserie_tilt_angle = 4.0
 carosserie = NodePath("CarosserieCabrio")
 engine_power = 8000.0
@@ -104,20 +84,12 @@ max_contacts_reported = 1
 linear_damp = 0.6
 angular_damp = 1.5
 
-[node name="Wheels" type="Node3D" parent="."]
-
-[node name="WheelBack" parent="Wheels" instance=ExtResource("2_8krvb")]
-transform = Transform3D(-0.3, 0, 4.52987e-08, 0, 0.3, 0, -4.52987e-08, 0, -0.3, -1, 0.15, -1.25586)
-
-[node name="WheelFront" parent="Wheels" instance=ExtResource("2_8krvb")]
-transform = Transform3D(-0.3, 0, -4.52987e-08, 0, 0.3, 0, 4.52987e-08, 0, -0.3, -1, 0.15, 1.05)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(4.52987e-08, -0.6, 0, 0.6, 4.52987e-08, 0, 0, 0, 0.6, -1, 0.15, -1.25586)
+transform = Transform3D(4.52987e-08, -0.6, 0, 0.6, 4.52987e-08, 0, 0, 0, 0.6, 0, 0.197, -1.152)
 shape = SubResource("ConvexPolygonShape3D_tfl63")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(4.52987e-08, -0.6, 0, 0.6, 4.52987e-08, 0, 0, 0, 0.6, -1, 0.15, 1.05)
+transform = Transform3D(4.52987e-08, -0.6, 0, 0.6, 4.52987e-08, 0, 0, 0, 0.6, 0, 0.197, 1.163)
 shape = SubResource("ConvexPolygonShape3D_0s2c7")
 
 [node name="PlayerCamera" type="PlayerCamera" parent="." node_paths=PackedStringArray("follow")]
@@ -140,7 +112,6 @@ tilt_backward = Array[InputEvent]([SubResource("InputEventKey_svn7l"), SubResour
 [node name="FlipDetection" type="FlipDetection" parent="."]
 
 [node name="CarosserieCabrio" parent="." instance=ExtResource("3_kctjg")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="HitBox" parent="." instance=ExtResource("4_2t6no")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.715865, 0)
@@ -149,16 +120,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.715865, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.116211)
 shape = SubResource("BoxShape3D_cneas")
 
-[node name="Dust" parent="." instance=ExtResource("5_vxw76")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00991571, -1.25832)
-mesh = SubResource("PlaneMesh_vhjut")
-
-[node name="Dust2" parent="." instance=ExtResource("5_vxw76")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00991571, 1.06194)
-mesh = SubResource("PlaneMesh_m4uv7")
-
 [node name="MiniMapMarker" parent="." instance=ExtResource("8_8857a")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.534104, -0.0508971)
+visible = false
 mesh = SubResource("CapsuleMesh_wp82x")
 
+[node name="WheelsCabrio" parent="." instance=ExtResource("7_vhjut")]
+
+[node name="Hase" parent="." instance=ExtResource("8_m4uv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.983954, 0.585866)
+
 [editable path="HitBox"]
+[editable path="WheelsCabrio"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cktae6qcxedow"]
+
+[ext_resource type="Texture2D" uid="uid://b85bx4sl1ferg" path="res://assets/hase/hase.png" id="1_7ajha"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72ido"]
+transparency = 1
+albedo_texture = ExtResource("1_7ajha")
+uv1_scale = Vector3(1, 1, -1)
+uv1_offset = Vector3(0, -0.5, -0.47)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_coc8s"]
+
+[node name="Hase" type="MeshInstance3D"]
+layers = 16
+material_override = SubResource("StandardMaterial3D_72ido")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_coc8s")
+skeleton = NodePath("../..")

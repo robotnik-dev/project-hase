@@ -22,7 +22,7 @@ var current_level: Level = null
 var current_level_idx = 0
 var current_car: Car = null
 ## Default car scene at "res://car/car.tscn"
-var car_scene: PackedScene = preload("res://car/car.tscn")
+@export var default_car_scene: PackedScene = preload("res://car/car.tscn")
 
 var main_menu_scene: PackedScene = preload("res://ui/screens/main_menu.tscn")
 var main_menu: UIMainMenu
@@ -84,7 +84,7 @@ func start_level():
 	
 	# grab selected car from the selection menu
 	if select_car_menu:
-		car_scene = select_car_menu.cars[select_car_menu.current_idx]
+		default_car_scene = select_car_menu.cars[select_car_menu.current_idx]
 		select_car_menu.queue_free()
 		select_car_menu = null
 	
@@ -103,7 +103,7 @@ func start_level():
 	# setup car
 	if is_instance_valid(current_car):
 		current_car.queue_free()
-	current_car = car_scene.instantiate()
+	current_car = default_car_scene.instantiate()
 	add_child(current_car)
 	
 	# removing HUD

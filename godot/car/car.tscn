@@ -1,12 +1,11 @@
-[gd_scene load_steps=29 format=3 uid="uid://1b78wtvecq6o"]
+[gd_scene load_steps=25 format=3 uid="uid://1b78wtvecq6o"]
 
 [ext_resource type="PackedScene" uid="uid://dmr0ls0h3fhm2" path="res://car/previews/default_car_preview.tscn" id="1_tu35q"]
-[ext_resource type="PackedScene" uid="uid://drmod8wjjnf0w" path="res://car/wheel/wheel.tscn" id="2_2fhm1"]
 [ext_resource type="PackedScene" uid="uid://bauufh0v6ugxd" path="res://car/hit_box.tscn" id="4_5hced"]
-[ext_resource type="PackedScene" uid="uid://ehb5yttghf4x" path="res://car/particles/dust.tscn" id="5_61syv"]
 [ext_resource type="PackedScene" uid="uid://bh5gtta3tyrtg" path="res://car/carosserie/carosserie_default.tscn" id="6_dfo3r"]
-[ext_resource type="Texture2D" uid="uid://bnsi3cnynh5rv" path="res://assets/particles/smoke1.png" id="6_xk0xn"]
+[ext_resource type="PackedScene" uid="uid://cktae6qcxedow" path="res://car/hase_driver.tscn" id="6_vl2bd"]
 [ext_resource type="PackedScene" uid="uid://c5eiudclllj8v" path="res://ui/hud/mini_map_marker.tscn" id="8_42oha"]
+[ext_resource type="PackedScene" uid="uid://boapkx8pe8uut" path="res://car/wheel/wheels_car.tscn" id="8_72ido"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ov87"]
 friction = 0.01
@@ -64,25 +63,6 @@ button_index = 9
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ya22"]
 size = Vector3(1, 2.05811, 0.347015)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0spe"]
-transparency = 1
-albedo_color = Color(0.682132, 0.583949, 0.31109, 1)
-albedo_texture = ExtResource("6_xk0xn")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_vl2bd"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_o0spe")
-flip_faces = true
-size = Vector2(1, 1)
-orientation = 0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_72ido"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_o0spe")
-flip_faces = true
-size = Vector2(1, 1)
-orientation = 0
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gnqnw"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7pbxj"]
@@ -95,7 +75,8 @@ player_input = NodePath("PlayerInput")
 ui_preview = ExtResource("1_tu35q")
 ui_display_name = &"Car"
 crash_detects = [NodePath("HitBox")]
-wheels = [NodePath("Wheels/WheelBack"), NodePath("Wheels/WheelFront")]
+wheels = [NodePath("WheelsCar/WheelBack"), NodePath("WheelsCar/WheelFront")]
+carosserie_tilt_angle = 2.0
 carosserie = NodePath("CarosserieDefault")
 tilt_speed = 400.0
 collision_layer = 2
@@ -112,20 +93,12 @@ max_contacts_reported = 1
 linear_damp = 0.6
 angular_damp = 1.5
 
-[node name="Wheels" type="Node3D" parent="."]
-
-[node name="WheelBack" parent="Wheels" instance=ExtResource("2_2fhm1")]
-transform = Transform3D(-0.5, 0, 4.37114e-08, 0, 0.5, 0, -4.37114e-08, 0, -0.5, -1, 0, -1)
-
-[node name="WheelFront" parent="Wheels" instance=ExtResource("2_2fhm1")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -1, 0, 1)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.98023e-08, -1, 0, 1, 2.98023e-08, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(6.22858e-08, -0.825, 0, 0.825, 6.22858e-08, 0, 0, 0, 0.825, 0, 0.15, -1.18207)
 shape = SubResource("ConvexPolygonShape3D_tfl63")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.98023e-08, -1, 0, 1, 2.98023e-08, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(6.22858e-08, -0.825, 0, 0.825, 6.22858e-08, 0, 0, 0, 0.825, 0, 0.15, 1.13)
 shape = SubResource("ConvexPolygonShape3D_0s2c7")
 
 [node name="PlayerCamera" type="PlayerCamera" parent="." node_paths=PackedStringArray("follow")]
@@ -154,19 +127,18 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0323486, 0.171402)
 shape = SubResource("BoxShape3D_7ya22")
 
-[node name="Dust" parent="." instance=ExtResource("5_61syv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.336309, -1.00731)
-mesh = SubResource("PlaneMesh_vl2bd")
-
-[node name="Dust2" parent="." instance=ExtResource("5_61syv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.336309, 0.992694)
-mesh = SubResource("PlaneMesh_72ido")
+[node name="Hase" parent="." instance=ExtResource("6_vl2bd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49846e-09, 0.880115, 0.0311565)
+skeleton = NodePath("..")
 
 [node name="CarosserieDefault" parent="." instance=ExtResource("6_dfo3r")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="MiniMapMarker" parent="." instance=ExtResource("8_42oha")]
 transform = Transform3D(1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0.705824, -0.0605893)
+visible = false
 mesh = SubResource("CapsuleMesh_7pbxj")
 
+[node name="WheelsCar" parent="." instance=ExtResource("8_72ido")]
+
 [editable path="HitBox"]
+[editable path="WheelsCar"]
