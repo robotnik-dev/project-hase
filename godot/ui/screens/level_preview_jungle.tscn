@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=3 uid="uid://be5krdveyid4g"]
+
+[ext_resource type="Texture2D" uid="uid://dg8iery0p0kd2" path="res://assets/backgrounds/desert/2_BirdsBG.png" id="2_celbu"]
+[ext_resource type="Texture2D" uid="uid://d0qgtw46c3dbp" path="res://assets/backgrounds/desert/3_MountainsBG.png" id="3_dkgqf"]
+[ext_resource type="Texture2D" uid="uid://7f0rxmm0rajj" path="res://assets/backgrounds/desert/4_BirdsMG.png" id="4_jiyda"]
+[ext_resource type="Texture2D" uid="uid://dbwf2m7m8cpta" path="res://assets/backgrounds/desert/5_CloudsBG.png" id="5_43b6e"]
+[ext_resource type="Texture2D" uid="uid://bytn8jeq8cndp" path="res://assets/backgrounds/desert/6_MountainsFG.png" id="6_4ahrx"]
+[ext_resource type="Texture2D" uid="uid://cirnfdl16fl6w" path="res://assets/backgrounds/desert/7_CloudsFG.png" id="7_ldcea"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqf5f"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="LevelPreviewJungle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lqf5f")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+expand_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_celbu")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("3_dkgqf")
+expand_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("4_jiyda")
+expand_mode = 3
+
+[node name="TextureRect5" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("5_43b6e")
+expand_mode = 3
+
+[node name="TextureRect6" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("6_4ahrx")
+expand_mode = 3
+
+[node name="TextureRect7" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("7_ldcea")
+expand_mode = 3

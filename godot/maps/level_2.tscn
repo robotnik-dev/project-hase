@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4v00o2jhxr08"]
+[gd_scene load_steps=27 format=3 uid="uid://b4v00o2jhxr08"]
 
 [ext_resource type="PackedScene" uid="uid://b08hw7fk4rfap" path="res://maps/shared/start.tscn" id="1_bht22"]
+[ext_resource type="PackedScene" uid="uid://coxl0dthgu5s0" path="res://collectibles/collectible.tscn" id="3_rnjt0"]
 [ext_resource type="PackedScene" uid="uid://dhvg7royvm3jn" path="res://maps/shared/portal_jungle.tscn" id="5_6btvb"]
 [ext_resource type="Material" uid="uid://d3jysijf7yqeo" path="res://assets/terrain/material/moss/mossy.tres" id="5_nl2a5"]
 [ext_resource type="PackedScene" uid="uid://cr4sbtjtwextc" path="res://terrain/terrain.tscn" id="6_nl2a5"]
@@ -134,6 +135,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01963, 0.0457821)
 [node name="ParallaxLayers" type="Node" parent="."]
 
 [node name="CollectibleManager" parent="." instance=ExtResource("19_l4oyi")]
+
+[node name="Collectible" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35.1784, 99.6736)
+
+[node name="Collectible2" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35.0538, 102.207)
+
+[node name="Collectible3" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -34.8461, 104.741)
+
+[node name="Collectible4" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11.1459, 231.84)
+
+[node name="Collectible5" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.2192, 234.876)
+
+[node name="Collectible6" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.5177, 264.296)
+
+[node name="Collectible7" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -39.6018, 280.845)
+
+[node name="Collectible8" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -214.636, 804.317)
+
+[node name="Collectible10" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -214.636, 801.718)
+
+[node name="Collectible9" parent="CollectibleManager" instance=ExtResource("3_rnjt0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -214.636, 807.227)
 
 [node name="Terrain" parent="." instance=ExtResource("6_nl2a5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.674203, 6.30795)
