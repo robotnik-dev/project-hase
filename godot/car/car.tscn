@@ -73,7 +73,7 @@ height = 3.565
 [node name="DefaultCar" type="Car" node_paths=PackedStringArray("player_input", "crash_detects", "wheels", "carosserie")]
 player_input = NodePath("PlayerInput")
 ui_preview = ExtResource("1_tu35q")
-ui_display_name = &"Car"
+ui_display_name = &"your everyday vehicle"
 crash_detects = [NodePath("HitBox")]
 wheels = [NodePath("WheelsCar/WheelBack"), NodePath("WheelsCar/WheelFront")]
 carosserie_tilt_angle = 2.0

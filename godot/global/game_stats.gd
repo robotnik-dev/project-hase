@@ -9,11 +9,11 @@ var playtime: float = 0.0:
 var cars_unlocked: int = 1:
 	get():
 		var sum_collected = Collectibles.get_sum_of_collected()
-		if sum_collected >= 6:
+		if sum_collected >= 12:
 			return 3
 		elif sum_collected <= 0:
 			return 1
-		elif sum_collected >= 3:
+		elif sum_collected >= 6:
 			return 2
 		else:
 			return 0

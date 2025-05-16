@@ -48,9 +48,9 @@ func _on_camera_loaded():
 	boost_progress = 0.0
 
 func _on_car_crashed(_pos, _last_poc, _abyss):
-	call_deferred("set_process", false)
-	boost_progress = 0.0
 	is_boost_ready = false
+	boost_progress = 0.0
+	call_deferred("set_process", false)
 
 func _set_flip_detection():
 	flip_detection = get_tree().get_first_node_in_group("FlipDetection")

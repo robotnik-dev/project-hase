@@ -79,20 +79,19 @@ size_flags_vertical = 3
 [node name="StartButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer" instance=ExtResource("5_jtdqd")]
 layout_mode = 2
 
+[node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SelectCarButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer2" instance=ExtResource("6_mwqv7")]
+layout_mode = 2
+
 [node name="CenterContainer3" type="CenterContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="SelectLevel" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer3" instance=ExtResource("6_wrge7")]
-layout_mode = 2
-
-[node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SelectCarButton" parent="MarginContainer/VBoxContainer/MidRow/VBoxContainer/CenterContainer2" instance=ExtResource("6_mwqv7")]
 layout_mode = 2
 
 [node name="BotRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
