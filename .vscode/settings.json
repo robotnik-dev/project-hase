@@ -1,4 +1,9 @@
 {
     "godotTools.editorPath.godot4": "c:\\Godot\\Godot.exe",
-    "godot-rust.environment.godotProjectPath": "${workaspaceFolder}/godot/"
+    "godot-rust.environment.godotProjectPath": "${workaspaceFolder}/godot/",
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "Use conventional commit message format for a video game project. Keep the first line under 50 characters. Add any details in the third line and following. Keep the second line empty.",
+        }
+    ],
 }
