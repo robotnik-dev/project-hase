@@ -26,10 +26,11 @@ func change_track(idx: int):
 		music_player.stream = jungle_track
 		music_player.play()
 	current_track = idx
+	music_player.stream_paused = mute
 
 func mute_music(_mute: bool):
-	music_player.stream_paused = _mute
+	mute = _mute
+	music_player.stream_paused = mute
 
 func _on_toggle_music():
-	mute = !mute
-	mute_music(mute)
+	mute_music(!mute)

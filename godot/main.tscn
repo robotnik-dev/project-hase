@@ -26,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_sqd80")
 
-[node name="Conductor" type="Node" parent="." node_paths=PackedStringArray("music_player")]
+[node name="Conductor" type="Node" parent="." node_paths=PackedStringArray("music_player") groups=["Conductor"]]
 process_mode = 3
 script = ExtResource("4_wvrni")
 music_player = NodePath("AudioStreamPlayer")
