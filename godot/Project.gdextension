@@ -16,3 +16,13 @@ web.debug.wasm32 =       "res://../rust/target/wasm32-unknown-emscripten/debug/r
 web.release.wasm32 =     "res://../rust/target/wasm32-unknown-emscripten/release/rust.wasm"
 android.debug.arm64 =    "res://../rust/target/aarch64-linux-android/debug/librust.so"
 android.release.arm64 =    "res://../rust/target/aarch64-linux-android/release/librust.so"
+
+[icons]
+Car = "res://assets/RustNode.svg"
+Collectibles = "res://assets/RustNode.svg"
+ContentLoader = "res://assets/RustNode.svg"
+GraveTexts = "res://assets/RustNode.svg"
+FlipDetection = "res://assets/RustNode.svg"
+Level = "res://assets/RustNode.svg"
+PlayerCamera = "res://assets/RustNode.svg"
+PlayerInput = "res://assets/RustNode.svg"

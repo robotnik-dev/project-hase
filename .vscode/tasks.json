@@ -77,7 +77,11 @@
 			"detail": "Builds debug rust game library for HTML5",
 			"type": "shell",
 			"windows":{
-				"command": "${userHome}\\emsdk\\emsdk activate 3.1.62 && ${userHome}\\emsdk\\emsdk_env.bat && cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten",
+				"command": "powershell.exe",
+				"args": [
+					"-Command",
+					"& '$env:USERPROFILE\\emsdk\\emsdk.ps1' activate 3.1.62; & '$env:USERPROFILE\\emsdk\\emsdk_env.ps1'; cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten"
+				]
 			},
 			"osx":{
 				"command": "${userHome}/emsdk/emsdk activate 3.1.62 && source ${userHome}/emsdk/emsdk_env.sh && cargo +nightly build -Zbuild-std --target wasm32-unknown-emscripten",
