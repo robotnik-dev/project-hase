@@ -14,15 +14,17 @@ class_name Main
 ## one level left
 @export var replay_first_level: bool = false
 
+@export var conductor: Conductor
+
 @export_subgroup("Level")
 ## In Order: First item is level 1 and so on.
 @export var level_scenes: Array[PackedScene]
+## Default car scene at "res://car/car.tscn"
+@export var default_car_scene: PackedScene = preload("res://car/car.tscn")
 
 var current_level: Level = null
 var current_level_idx = 0
 var current_car: Car = null
-## Default car scene at "res://car/car.tscn"
-@export var default_car_scene: PackedScene = preload("res://car/car.tscn")
 
 var main_menu_scene: PackedScene = preload("res://ui/screens/main_menu.tscn")
 var main_menu: UIMainMenu
@@ -48,6 +50,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		dev_ui.visible = !dev_ui.visible
 
 func start_main_menu():
+	conductor.change_track(-1)
 	main_menu = main_menu_scene.instantiate()
 	ui.add_child(main_menu)
 	
@@ -78,6 +81,7 @@ func start_main_menu():
 		end_of_game = null
 
 func start_level():
+	conductor.change_track(current_level_idx)
 	car_crashed = false
 	
 	# removing main menu
