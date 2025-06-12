@@ -34,6 +34,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/rust_lib/plugin.cfg")
 
+[global_group]
+
+Conductor=""
+
 [input]
 
 ui_accept={

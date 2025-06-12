@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cr31reuuuoq00"]
+[gd_scene load_steps=7 format=3 uid="uid://cr31reuuuoq00"]
 
 [ext_resource type="Script" uid="uid://cvmxyh03twh7m" path="res://ui/screens/main_menu.gd" id="1_3fmwv"]
 [ext_resource type="Theme" uid="uid://b73ijg5mce5ga" path="res://ui/main_theme.tres" id="1_502pm"]
 [ext_resource type="PackedScene" uid="uid://qemyf63hw3n" path="res://ui/buttons/toggle_fullscreen_button.tscn" id="2_nqx3e"]
-[ext_resource type="PackedScene" uid="uid://crlfbnyp1i804" path="res://ui/buttons/toggle_music_button.tscn" id="4_xjybn"]
 [ext_resource type="PackedScene" uid="uid://p33autbbkout" path="res://ui/buttons/start_button.tscn" id="5_jtdqd"]
 [ext_resource type="PackedScene" uid="uid://bi4ykef7jkxfp" path="res://ui/buttons/select_car_button.tscn" id="6_mwqv7"]
 [ext_resource type="PackedScene" uid="uid://bfrlfa4by2tr8" path="res://ui/buttons/select_level.tscn" id="6_wrge7"]
@@ -45,7 +44,6 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-focus_neighbor_right = NodePath("../../TopRight/ToggleMusicButton")
 focus_neighbor_bottom = NodePath("../../../MidRow/VBoxContainer/CenterContainer/StartButton")
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/TopRow"]
@@ -55,13 +53,6 @@ size_flags_horizontal = 3
 [node name="TopRight" type="MarginContainer" parent="MarginContainer/VBoxContainer/TopRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="ToggleMusicButton" parent="MarginContainer/VBoxContainer/TopRow/TopRight" instance=ExtResource("4_xjybn")]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-focus_neighbor_left = NodePath("../../TopLeft/ToggleFullscreenButton")
-focus_neighbor_bottom = NodePath("../../../MidRow/VBoxContainer/CenterContainer/StartButton")
 
 [node name="MidRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
